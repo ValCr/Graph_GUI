@@ -27,4 +27,4 @@ hs_err_pid*
 /.idea/
 /Graph_interactor.iml
 /src/module-info.java
-/src/interactor/interactor.fxml
+/fxml/interactor.fxml
