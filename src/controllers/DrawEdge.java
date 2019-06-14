@@ -1,10 +1,14 @@
-package interactor;
+package controllers;
 
 import javafx.scene.shape.Line;
 
 public class DrawEdge extends Line {
+
+    private final static float defaultStrokeWidth = 2.0f;
+
     public DrawEdge() {
         super();
+        this.setStrokeWidth(defaultStrokeWidth);
     }
 
     //Copy constructor
@@ -16,10 +20,12 @@ public class DrawEdge extends Line {
 
     public DrawEdge(double startX, double startY, double endX, double endY) {
         super(startX, startY, endX, endY);
+        this.setStrokeWidth(defaultStrokeWidth);
     }
 
     public DrawEdge(DrawVertex v1, DrawVertex v2) {
         super(v1.getCenterX(), v1.getCenterY(), v2.getCenterX(), v2.getCenterY());
+        this.setStrokeWidth(defaultStrokeWidth);
     }
 
     public boolean isNull() {
