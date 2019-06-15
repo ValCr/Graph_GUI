@@ -15,7 +15,7 @@ public class GraphPaneController {
     private MainController mainController;
 
     @FXML
-    void addVertex(MouseEvent event) {
+    private void addVertex(MouseEvent event) {
         if (!event.isPrimaryButtonDown()) {
             return;
         }

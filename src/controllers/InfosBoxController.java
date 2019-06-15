@@ -24,7 +24,7 @@ public class InfosBoxController {
     private MainController mainController;
 
     @FXML
-    public void clearGraph() {
+    private void clearGraph() {
         mainController.clearGraph();
     }
 
