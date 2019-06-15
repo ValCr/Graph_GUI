@@ -1,5 +1,6 @@
 package controllers;
 
+import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
 import javafx.fxml.FXML;
@@ -12,34 +13,34 @@ public class GraphPaneController {
     @FXML
     private Pane graphPane;
     private MainController mainController;
-    private int vertexId;
 
     @FXML
     void addVertex(MouseEvent event) {
         if (!event.isPrimaryButtonDown()) {
             return;
         }
-        ///////////////////////////////////// Logic /////////////////////////////////////
         Graph graph = mainController.getGraph();
-        graph.getVertices().add(new Vertex());
+        Vertex newVertex = new Vertex(event.getX(), event.getY(), 15.0f, Color.RED);
+        graph.getVertices().add(newVertex);
         graph.update();
-
-        ///////////////////////////////////// Drawing /////////////////////////////////////
-        DrawVertex newVertex = new DrawVertex(event.getX(), event.getY(), 15.0f, Color.RED);
-        newVertex.setId(String.valueOf(vertexId++));
-        newVertex.injectMainController(mainController);
-        newVertex.injectGraphPane(graphPane);
+        newVertex.injectGraphPaneController(this);
         graphPane.getChildren().addAll(newVertex, newVertex.getEdge());
 
         graphPane.setOnMouseDragReleased(mouseDragEvent -> {
-            DrawVertex startVertex = (DrawVertex) mouseDragEvent.getGestureSource();
+            Vertex startVertex = (Vertex) mouseDragEvent.getGestureSource();
             startVertex.getEdge().resetEdge();
         });
     }
 
+    public void addEdge(Edge newEdge) {
+        Graph graph = mainController.getGraph();
+        graphPane.getChildren().add(newEdge);
+        newEdge.toBack();
+        graph.update();
+    }
+
     @FXML
     private void initialize() {
-        vertexId = 0;
     }
 
     public void injectMainController(MainController mainController) {
@@ -47,7 +48,6 @@ public class GraphPaneController {
     }
 
     public void clearGraph() {
-        vertexId = 0;
         graphPane.getChildren().clear();
     }
 }
