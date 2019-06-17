@@ -13,13 +13,13 @@ public class GraphPaneController {
     @FXML
     private Pane graphPane;
     private MainController mainController;
+    private Graph graph;
 
     @FXML
     private void addVertex(MouseEvent event) {
         if (!event.isPrimaryButtonDown()) {
             return;
         }
-        Graph graph = mainController.getGraph();
         Vertex newVertex = new Vertex(event.getX(), event.getY(), 15.0f, Color.RED);
         graph.getVertices().add(newVertex);
         graph.update();
@@ -29,13 +29,33 @@ public class GraphPaneController {
         graphPane.setOnMouseDragReleased(mouseDragEvent -> {
             Vertex startVertex = (Vertex) mouseDragEvent.getGestureSource();
             startVertex.getEdge().resetEdge();
+            startVertex.setFill(Color.RED);
         });
     }
 
     public void addEdge(Edge newEdge) {
-        Graph graph = mainController.getGraph();
+        graph.getEdges().add(newEdge);
         graphPane.getChildren().add(newEdge);
         newEdge.toBack();
+        graph.update();
+    }
+
+    public void removeVertex(Vertex vertex) {
+        for (Edge edge : vertex.getEdges()) {
+            edge.getComplementaryAdjacentVertex(vertex).getEdges().remove(edge);
+        }
+        graph.getEdges().removeAll(vertex.getEdges());
+        graph.getVertices().remove(vertex);
+        graphPane.getChildren().removeAll(vertex.getEdges());
+        graphPane.getChildren().remove(vertex);
+        graph.update();
+    }
+
+    public void removeEdge(Edge edge) {
+        edge.getStart().getEdges().remove(edge);
+        edge.getEnd().getEdges().remove(edge);
+        graph.getEdges().remove(edge);
+        graphPane.getChildren().remove(edge);
         graph.update();
     }
 
@@ -45,9 +65,11 @@ public class GraphPaneController {
 
     public void injectMainController(MainController mainController) {
         this.mainController = mainController;
+        graph = mainController.getGraph();
     }
 
     public void clearGraph() {
         graphPane.getChildren().clear();
     }
+
 }

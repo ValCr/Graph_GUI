@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Graph {
     private List<Vertex> vertices;
+    private List<Edge> edges;
     private SimpleIntegerProperty order;
     private SimpleIntegerProperty size;
     private SimpleIntegerProperty maxDegree;
@@ -14,6 +15,7 @@ public class Graph {
 
     public Graph() {
         vertices = new LinkedList<>();
+        edges = new LinkedList<>();
         order = new SimpleIntegerProperty(0);
         size = new SimpleIntegerProperty(0);
         maxDegree = new SimpleIntegerProperty(0);
@@ -30,6 +32,10 @@ public class Graph {
     ///////////////////////////////////////////// Getters /////////////////////////////////////////////
     public List<Vertex> getVertices() {
         return vertices;
+    }
+
+    public List<Edge> getEdges() {
+        return edges;
     }
 
     public int getOrder() {
@@ -64,8 +70,8 @@ public class Graph {
         return minDegree;
     }
 
-    ///////////////////////////////////////////// Setters /////////////////////////////////////////////
 
+    ///////////////////////////////////////////// Setters /////////////////////////////////////////////
     public void setMinDegree() {
         minDegree.set(vertices.stream().mapToInt(v -> v.getEdges().size()).min().orElse(0));
     }
@@ -78,10 +84,7 @@ public class Graph {
         order.set(vertices.size());
     }
 
-    /*
-     * Graph's size is : sum of all vertices degree / 2
-     */
     public void setSize() {
-        size.set(vertices.stream().mapToInt(v -> v.getEdges().size()).sum() / 2);
+        size.set(edges.size());
     }
 }

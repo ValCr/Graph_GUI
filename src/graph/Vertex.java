@@ -19,12 +19,17 @@ public class Vertex extends Circle {
         edge = new Edge(this);
 
         this.setOnMousePressed(mouseEvent -> {
-            if (edge.isNull()) {
-                edge.setStart(this);
-                edge.setEndX(mouseEvent.getX());
-                edge.setEndY(mouseEvent.getY());
-                edge.setMouseTransparent(true);
-                edge.toBack();
+            if (mouseEvent.isPrimaryButtonDown() && !mouseEvent.isControlDown()) {
+                if (edge.isNull()) {
+                    edge.setStart(this);
+                    edge.setEndX(mouseEvent.getX());
+                    edge.setEndY(mouseEvent.getY());
+                    edge.setMouseTransparent(true);
+                    edge.toBack();
+                }
+
+            } else if (mouseEvent.isSecondaryButtonDown()) {
+                graphPaneController.removeVertex(this);
             }
             mouseEvent.consume();
         });
@@ -37,20 +42,40 @@ public class Vertex extends Circle {
                 Edge newEdge = new Edge(startVertex, endVertex);
                 startVertex.getEdges().add(newEdge);
                 endVertex.getEdges().add(newEdge);
+                newEdge.injectGraphPaneController(graphPaneController);
                 graphPaneController.addEdge(newEdge);
             }
             startVertex.getEdge().resetEdge();
-            mouseDragEvent.consume();
+            startVertex.setFill(Color.RED);
         });
 
         this.setOnDragDetected(mouseEvent -> {
-            this.startFullDrag();
+            if (mouseEvent.isPrimaryButtonDown()) {
+                this.startFullDrag();
+            }
         });
 
         this.setOnMouseDragged(mouseEvent -> {
-            edge.setEndX(mouseEvent.getX());
-            edge.setEndY(mouseEvent.getY());
+            if (mouseEvent.isPrimaryButtonDown()) {
+                if (mouseEvent.isControlDown()) {
+                    setCenterX(mouseEvent.getX());
+                    setCenterY(mouseEvent.getY());
+                    edges.forEach(e -> e.updatePositionToIncidentVertex(this));
+                } else if (!edge.isNull()) {
+                    edge.setEndX(mouseEvent.getX());
+                    edge.setEndY(mouseEvent.getY());
+                    this.setFill(Color.TOMATO);
+                }
+            }
         });
+
+        this.setOnMouseEntered(mouseEvent -> this.setFill(Color.TOMATO));
+
+        this.setOnMouseExited(mouseEvent -> this.setFill(Color.RED));
+
+        this.setOnMouseDragEntered(mouseEvent -> this.setFill(Color.TOMATO));
+
+        this.setOnMouseDragExited(mouseEvent -> this.setFill(Color.RED));
     }
 
     private boolean isAdjacentTo(Vertex endVertex) {

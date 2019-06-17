@@ -1,24 +1,37 @@
 package graph;
 
+import controllers.GraphPaneController;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 public class Edge extends Line {
 
-    private final static float defaultStrokeWidth = 2.0f;
+    private final static float DEFAULT_STROKE_WIDTH = 3.0f;
     private Vertex start;
     private Vertex end;
+    private GraphPaneController graphPaneController;
 
     public Edge(Vertex start) {
         super();
         this.start = start;
-        this.setStrokeWidth(defaultStrokeWidth);
+        this.setStrokeWidth(DEFAULT_STROKE_WIDTH);
     }
 
     public Edge(Vertex start, Vertex end) {
         super(start.getCenterX(), start.getCenterY(), end.getCenterX(), end.getCenterY());
-        this.setStrokeWidth(defaultStrokeWidth);
+        this.setStrokeWidth(DEFAULT_STROKE_WIDTH);
         this.start = start;
         this.end = end;
+
+        this.setOnMousePressed(mouseEvent -> {
+            if (mouseEvent.isSecondaryButtonDown()) {
+                graphPaneController.removeEdge(this);
+            }
+        });
+
+        this.setOnMouseEntered(mouseEvent -> this.setStroke(Color.GREY));
+
+        this.setOnMouseExited(mouseEvent -> this.setStroke(Color.BLACK));
     }
 
     public boolean isNull() {
@@ -36,6 +49,20 @@ public class Edge extends Line {
         return start == v || end == v;
     }
 
+    public void injectGraphPaneController(GraphPaneController graphPaneController) {
+        this.graphPaneController = graphPaneController;
+    }
+
+    public void updatePositionToIncidentVertex(Vertex vertex) {
+        if (vertex == start) {
+            this.setStartX(vertex.getCenterX());
+            this.setStartY(vertex.getCenterY());
+        } else if (vertex == end) {
+            this.setEndX(vertex.getCenterX());
+            this.setEndY(vertex.getCenterY());
+        }
+    }
+
     ///////////////////////////////////////////// Getters /////////////////////////////////////////////
     public Vertex getStart() {
         return start;
@@ -43,6 +70,10 @@ public class Edge extends Line {
 
     public Vertex getEnd() {
         return end;
+    }
+
+    public Vertex getComplementaryAdjacentVertex(Vertex v) {
+        return v == start ? end : start;
     }
 
     ///////////////////////////////////////////// Setters /////////////////////////////////////////////
