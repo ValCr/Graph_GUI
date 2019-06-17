@@ -3,6 +3,7 @@ package graph;
 import controllers.GraphPaneController;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -12,6 +13,7 @@ public class Vertex extends Circle {
     private List<Edge> edges;
     private Edge edge;
     private GraphPaneController graphPaneController;
+    private Text text;
 
     public Vertex(double centerX, double centerY, double radius, Color color) {
         super(centerX, centerY, radius, color);
@@ -60,7 +62,6 @@ public class Vertex extends Circle {
                 if (mouseEvent.isControlDown()) {
                     setCenterX(mouseEvent.getX());
                     setCenterY(mouseEvent.getY());
-                    edges.forEach(e -> e.updatePositionToIncidentVertex(this));
                 } else if (!edge.isNull()) {
                     edge.setEndX(mouseEvent.getX());
                     edge.setEndY(mouseEvent.getY());
@@ -95,4 +96,16 @@ public class Vertex extends Circle {
         return edges;
     }
 
+    public Text getText() {
+        return text;
+    }
+
+    ///////////////////////////////////////////// Setters /////////////////////////////////////////////
+    public void setText() {
+        text = new Text();
+        text.textProperty().bind(idProperty());
+        text.xProperty().bind(centerXProperty().add(-text.getLayoutBounds().getWidth() / 2));
+        text.yProperty().bind(centerYProperty().add(text.getLayoutBounds().getHeight() / 4));
+        text.setMouseTransparent(true);
+    }
 }
