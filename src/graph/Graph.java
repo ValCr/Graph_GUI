@@ -4,7 +4,6 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import java.util.List;
 
@@ -13,8 +12,10 @@ public class Graph {
     private SimpleListProperty<Edge> edges;
     private SimpleIntegerProperty order;
     private SimpleIntegerProperty size;
-    private SimpleIntegerProperty maxDegree;
-    private SimpleIntegerProperty minDegree;
+    private SimpleIntegerProperty maxDegree; // also outdegree when graph is oriented
+    private SimpleIntegerProperty minDegree; // also outdegree when graph is oriented
+    private SimpleIntegerProperty maxIndegree;
+    private SimpleIntegerProperty minIndegree;
 
     public Graph() {
         vertices = new SimpleListProperty<>(FXCollections.observableArrayList());
@@ -23,6 +24,8 @@ public class Graph {
         size = new SimpleIntegerProperty(0);
         maxDegree = new SimpleIntegerProperty(0);
         minDegree = new SimpleIntegerProperty(0);
+        maxIndegree = new SimpleIntegerProperty(0);
+        minIndegree = new SimpleIntegerProperty(0);
 
         order.bind(vertices.sizeProperty());
         size.bind(edges.sizeProperty());
@@ -32,6 +35,22 @@ public class Graph {
         ));
         minDegree.bind(Bindings.createIntegerBinding(
                 () -> vertices.stream().mapToInt(v -> v.getEdges().size()).min().orElse(0),
+                vertices.sizeProperty(), edges.sizeProperty()
+        ));
+        maxIndegree.bind(Bindings.createIntegerBinding(
+                () -> vertices
+                        .stream()
+                        .mapToInt(v -> Math.toIntExact(edges.stream().filter(e -> e.getEnd() == v).count()))
+                        .max()
+                        .orElse(0),
+                vertices.sizeProperty(), edges.sizeProperty()
+        ));
+        minIndegree.bind(Bindings.createIntegerBinding(
+                () -> vertices
+                        .stream()
+                        .mapToInt(v -> Math.toIntExact(edges.stream().filter(e -> e.getEnd() == v).count()))
+                        .min()
+                        .orElse(0),
                 vertices.sizeProperty(), edges.sizeProperty()
         ));
     }
@@ -77,8 +96,19 @@ public class Graph {
         return minDegree;
     }
 
-    ///////////////////////////////////////////// Setters /////////////////////////////////////////////
-    public void setEdges(ObservableList<Edge> edges) {
-        this.edges.set(edges);
+    public int getMaxIndegree() {
+        return maxIndegree.get();
+    }
+
+    public SimpleIntegerProperty maxIndegreeProperty() {
+        return maxIndegree;
+    }
+
+    public int getMinIndegree() {
+        return minIndegree.get();
+    }
+
+    public SimpleIntegerProperty minIndegreeProperty() {
+        return minIndegree;
     }
 }

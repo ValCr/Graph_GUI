@@ -94,13 +94,4 @@ public class GraphPaneController {
     public boolean graphIsOriented() {
         return mainController.getInfosBoxController().getOrientedGraphCheckBox().isSelected();
     }
-
-    ///////////////////////////////////////////// Getters /////////////////////////////////////////////
-    public int getVertexId() {
-        return vertexId;
-    }
-
-    public Pane getGraphPane() {
-        return graphPane;
-    }
 }

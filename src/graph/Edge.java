@@ -8,10 +8,10 @@ import javafx.scene.shape.Line;
 
 public class Edge extends Line {
 
-    protected final static float DEFAULT_STROKE_WIDTH = 3.0f;
-    protected Vertex start;
-    protected Vertex end;
-    protected GraphPaneController graphPaneController;
+    private final static float DEFAULT_STROKE_WIDTH = 3.0f;
+    private Vertex start;
+    private Vertex end;
+    private GraphPaneController graphPaneController;
     protected Group shapes;
 
     public Edge(Vertex start) {
@@ -85,24 +85,7 @@ public class Edge extends Line {
         return end;
     }
 
-    public Vertex getOtherIncidentVertex(Vertex v) {
-        return v == start ? end : start;
-    }
-
     public Group getShapes() {
         return shapes;
-    }
-
-    ///////////////////////////////////////////// Setters /////////////////////////////////////////////
-    public void setStart(Vertex start) {
-        this.setStartX(start.getCenterX());
-        this.setStartY(start.getCenterY());
-        this.start = start;
-    }
-
-    public void setEnd(Vertex end) {
-        this.setEndX(end.getCenterX());
-        this.setEndY(end.getCenterY());
-        this.end = end;
     }
 }
