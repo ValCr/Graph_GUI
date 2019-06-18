@@ -1,32 +1,38 @@
 package graph;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class Graph {
-    private List<Vertex> vertices;
-    private List<Edge> edges;
+    private SimpleListProperty<Vertex> vertices;
+    private SimpleListProperty<Edge> edges;
     private SimpleIntegerProperty order;
     private SimpleIntegerProperty size;
     private SimpleIntegerProperty maxDegree;
     private SimpleIntegerProperty minDegree;
 
     public Graph() {
-        vertices = new LinkedList<>();
-        edges = new LinkedList<>();
+        vertices = new SimpleListProperty<>(FXCollections.observableArrayList());
+        edges = new SimpleListProperty<>(FXCollections.observableArrayList());
         order = new SimpleIntegerProperty(0);
         size = new SimpleIntegerProperty(0);
         maxDegree = new SimpleIntegerProperty(0);
         minDegree = new SimpleIntegerProperty(0);
-    }
 
-    public void update() {
-        setOrder();
-        setSize();
-        setMinDegree();
-        setMaxDegree();
+        order.bind(vertices.sizeProperty());
+        size.bind(edges.sizeProperty());
+        maxDegree.bind(Bindings.createIntegerBinding(
+                () -> vertices.stream().mapToInt(v -> v.getEdges().size()).max().orElse(0),
+                vertices.sizeProperty(), edges.sizeProperty()
+        ));
+        minDegree.bind(Bindings.createIntegerBinding(
+                () -> vertices.stream().mapToInt(v -> v.getEdges().size()).min().orElse(0),
+                vertices.sizeProperty(), edges.sizeProperty()
+        ));
     }
 
     ///////////////////////////////////////////// Getters /////////////////////////////////////////////
@@ -68,23 +74,5 @@ public class Graph {
 
     public SimpleIntegerProperty minDegreeProperty() {
         return minDegree;
-    }
-
-
-    ///////////////////////////////////////////// Setters /////////////////////////////////////////////
-    public void setMinDegree() {
-        minDegree.set(vertices.stream().mapToInt(v -> v.getEdges().size()).min().orElse(0));
-    }
-
-    public void setMaxDegree() {
-        maxDegree.set(vertices.stream().mapToInt(v -> v.getEdges().size()).max().orElse(0));
-    }
-
-    public void setOrder() {
-        order.set(vertices.size());
-    }
-
-    public void setSize() {
-        size.set(edges.size());
     }
 }

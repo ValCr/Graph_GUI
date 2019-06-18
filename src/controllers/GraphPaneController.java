@@ -26,7 +26,6 @@ public class GraphPaneController {
         newVertex.setId(String.valueOf(vertexId++));
         newVertex.setText();
         graph.getVertices().add(newVertex);
-        graph.update();
         graphPane.getChildren().addAll(newVertex, newVertex.getEdge(), newVertex.getText());
 
         graphPane.setOnMouseDragReleased(mouseDragEvent -> {
@@ -40,7 +39,6 @@ public class GraphPaneController {
         graph.getEdges().add(newEdge);
         graphPane.getChildren().add(newEdge);
         newEdge.toBack();
-        graph.update();
     }
 
     public void removeVertex(Vertex vertex) {
@@ -57,7 +55,6 @@ public class GraphPaneController {
         graphPane.getChildren().remove(vertex.getText());
         graphPane.getChildren().remove(vertex);
         vertexId--;
-        graph.update();
     }
 
     public void removeEdge(Edge edge) {
@@ -65,7 +62,6 @@ public class GraphPaneController {
         edge.getEnd().getEdges().remove(edge);
         graph.getEdges().remove(edge);
         graphPane.getChildren().remove(edge);
-        graph.update();
     }
 
     @FXML

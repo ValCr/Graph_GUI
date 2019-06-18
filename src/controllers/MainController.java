@@ -28,7 +28,7 @@ public class MainController {
 
     public void clearGraph() {
         graph.getVertices().clear();
+        graph.getEdges().clear();
         graphPaneController.clearGraph();
-        graph.update();
     }
 }
