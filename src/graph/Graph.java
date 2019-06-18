@@ -4,6 +4,7 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.util.List;
 
@@ -74,5 +75,10 @@ public class Graph {
 
     public SimpleIntegerProperty minDegreeProperty() {
         return minDegree;
+    }
+
+    ///////////////////////////////////////////// Setters /////////////////////////////////////////////
+    public void setEdges(ObservableList<Edge> edges) {
+        this.edges.set(edges);
     }
 }

@@ -18,19 +18,14 @@ public class Vertex extends Circle {
     public Vertex(double centerX, double centerY, double radius, Color color) {
         super(centerX, centerY, radius, color);
         edges = new LinkedList<>();
-        edge = new Edge(this);
+        if (graphPaneController == null) {
+            edge = new Edge(this);
+        } else {
+            edge = graphPaneController.graphIsOriented() ? new Arc(this) : new Edge(this);
+        }
 
         this.setOnMousePressed(mouseEvent -> {
-            if (mouseEvent.isPrimaryButtonDown() && !mouseEvent.isControlDown()) {
-                if (edge.isNull()) {
-                    edge.setStart(this);
-                    edge.setEndX(mouseEvent.getX());
-                    edge.setEndY(mouseEvent.getY());
-                    edge.setMouseTransparent(true);
-                    edge.toBack();
-                }
-
-            } else if (mouseEvent.isSecondaryButtonDown()) {
+            if (mouseEvent.isSecondaryButtonDown()) {
                 graphPaneController.removeVertex(this);
             }
             mouseEvent.consume();
@@ -41,9 +36,11 @@ public class Vertex extends Circle {
             Vertex endVertex = (Vertex) mouseDragEvent.getTarget();
 
             if (startVertex != endVertex && !startVertex.isAdjacentTo(endVertex)) {
-                Edge newEdge = new Edge(startVertex, endVertex);
+                Edge newEdge = graphPaneController.graphIsOriented() ? new Arc(startVertex, endVertex) : new Edge(startVertex, endVertex);
                 startVertex.getEdges().add(newEdge);
-                endVertex.getEdges().add(newEdge);
+                if (!graphPaneController.graphIsOriented()) {
+                    endVertex.getEdges().add(newEdge);
+                }
                 newEdge.injectGraphPaneController(graphPaneController);
                 graphPaneController.addEdge(newEdge);
             }
@@ -53,6 +50,14 @@ public class Vertex extends Circle {
 
         this.setOnDragDetected(mouseEvent -> {
             if (mouseEvent.isPrimaryButtonDown()) {
+                if (!mouseEvent.isControlDown() && edge.isNull()) {
+                    edge.endXProperty().unbind();
+                    edge.endYProperty().unbind();
+                    edge.setEndX(mouseEvent.getX());
+                    edge.setEndY(mouseEvent.getY());
+                    edge.setMouseTransparent(true);
+                    edge.toBack();
+                }
                 this.startFullDrag();
             }
         });
@@ -62,7 +67,10 @@ public class Vertex extends Circle {
                 if (mouseEvent.isControlDown()) {
                     setCenterX(mouseEvent.getX());
                     setCenterY(mouseEvent.getY());
-                } else if (!edge.isNull()) {
+                }
+                if (!edge.isNull()) {
+                    edge.endXProperty().unbind();
+                    edge.endYProperty().unbind();
                     edge.setEndX(mouseEvent.getX());
                     edge.setEndY(mouseEvent.getY());
                     this.setFill(Color.TOMATO);

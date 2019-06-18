@@ -31,4 +31,13 @@ public class MainController {
         graph.getEdges().clear();
         graphPaneController.clearGraph();
     }
+
+    ///////////////////////////////////////////// Getters /////////////////////////////////////////////
+    public GraphPaneController getGraphPaneController() {
+        return graphPaneController;
+    }
+
+    public InfosBoxController getInfosBoxController() {
+        return infosBoxController;
+    }
 }

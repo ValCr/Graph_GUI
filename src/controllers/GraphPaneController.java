@@ -8,7 +8,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
 public class GraphPaneController {
+    private final static float VERTEX_RADIUS = 15.0f;
 
     @FXML
     private Pane graphPane;
@@ -21,12 +25,13 @@ public class GraphPaneController {
         if (!event.isPrimaryButtonDown()) {
             return;
         }
-        Vertex newVertex = new Vertex(event.getX(), event.getY(), 15.0f, Color.RED);
+        Vertex newVertex = new Vertex(event.getX(), event.getY(), VERTEX_RADIUS, Color.RED);
         newVertex.injectGraphPaneController(this);
         newVertex.setId(String.valueOf(vertexId++));
         newVertex.setText();
         graph.getVertices().add(newVertex);
-        graphPane.getChildren().addAll(newVertex, newVertex.getEdge(), newVertex.getText());
+        graphPane.getChildren().addAll(newVertex, newVertex.getEdge().getShapes(), newVertex.getText());
+        newVertex.getEdge().getShapes().toBack();
 
         graphPane.setOnMouseDragReleased(mouseDragEvent -> {
             Vertex startVertex = (Vertex) mouseDragEvent.getGestureSource();
@@ -37,23 +42,30 @@ public class GraphPaneController {
 
     public void addEdge(Edge newEdge) {
         graph.getEdges().add(newEdge);
-        graphPane.getChildren().add(newEdge);
-        newEdge.toBack();
+        graphPane.getChildren().add(newEdge.getShapes());
+        newEdge.getShapes().toBack();
     }
 
     public void removeVertex(Vertex vertex) {
-        for (Edge edge : vertex.getEdges()) {
-            edge.getComplementaryAdjacentVertex(vertex).getEdges().remove(edge);
-        }
+        // remove adjacent edges
+        graph.getVertices().forEach(
+                v -> v.getEdges()
+                        .stream()
+                        .filter(e -> e.getEnd() == vertex)
+                        .collect(Collectors.toList())
+                        .forEach(this::removeEdge)
+        );
+        new ArrayList<>(vertex.getEdges()).forEach(this::removeEdge);
+
+        // remove vertex
+        graph.getVertices().remove(vertex);
+        graphPane.getChildren().removeAll(vertex.getText(), vertex.getEdge().getShapes(), vertex);
+
+        // update vertices ids
         graph.getVertices()
                 .stream()
                 .filter(v -> Integer.valueOf(v.getId()) > Integer.valueOf(vertex.getId()))
                 .forEach(v -> v.setId(String.valueOf(Integer.valueOf(v.getId()) - 1)));
-        graph.getEdges().removeAll(vertex.getEdges());
-        graph.getVertices().remove(vertex);
-        graphPane.getChildren().removeAll(vertex.getEdges());
-        graphPane.getChildren().remove(vertex.getText());
-        graphPane.getChildren().remove(vertex);
         vertexId--;
     }
 
@@ -61,7 +73,7 @@ public class GraphPaneController {
         edge.getStart().getEdges().remove(edge);
         edge.getEnd().getEdges().remove(edge);
         graph.getEdges().remove(edge);
-        graphPane.getChildren().remove(edge);
+        graphPane.getChildren().remove(edge.getShapes());
     }
 
     @FXML
@@ -79,8 +91,16 @@ public class GraphPaneController {
         vertexId = 1;
     }
 
+    public boolean graphIsOriented() {
+        return mainController.getInfosBoxController().getOrientedGraphCheckBox().isSelected();
+    }
+
     ///////////////////////////////////////////// Getters /////////////////////////////////////////////
     public int getVertexId() {
         return vertexId;
+    }
+
+    public Pane getGraphPane() {
+        return graphPane;
     }
 }

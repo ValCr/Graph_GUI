@@ -2,24 +2,33 @@ package graph;
 
 import controllers.GraphPaneController;
 import javafx.beans.binding.Bindings;
+import javafx.scene.Group;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 public class Edge extends Line {
 
-    private final static float DEFAULT_STROKE_WIDTH = 3.0f;
-    private Vertex start;
-    private Vertex end;
-    private GraphPaneController graphPaneController;
+    protected final static float DEFAULT_STROKE_WIDTH = 3.0f;
+    protected Vertex start;
+    protected Vertex end;
+    protected GraphPaneController graphPaneController;
+    protected Group shapes;
 
     public Edge(Vertex start) {
         super();
+        this.shapes = new Group(this);
+        this.startXProperty().bind(start.centerXProperty());
+        this.startYProperty().bind(start.centerYProperty());
+        this.endXProperty().bind(start.centerXProperty());
+        this.endYProperty().bind(start.centerYProperty());
         this.start = start;
+        this.end = start;
         this.setStrokeWidth(DEFAULT_STROKE_WIDTH);
     }
 
     public Edge(Vertex start, Vertex end) {
         super(start.getCenterX(), start.getCenterY(), end.getCenterX(), end.getCenterY());
+        this.shapes = new Group(this);
         this.start = start;
         this.end = end;
         this.startYProperty().bind(start.centerYProperty());
@@ -45,7 +54,7 @@ public class Edge extends Line {
         this.setOnMouseExited(mouseEvent -> this.setStroke(Color.BLACK));
     }
 
-    private double length() {
+    protected double length() {
         return Math.sqrt(Math.pow(end.getCenterX() - start.getCenterX(), 2) + Math.pow(end.getCenterY() - start.getCenterY(), 2));
     }
 
@@ -54,10 +63,9 @@ public class Edge extends Line {
     }
 
     public void resetEdge() {
-        this.setStartX(0.0f);
-        this.setStartY(0.0f);
-        this.setEndX(0.0f);
-        this.setEndY(0.0f);
+        this.endXProperty().bind(start.centerXProperty());
+        this.endYProperty().bind(start.centerYProperty());
+        this.end = start;
     }
 
     public boolean isIncidentTo(Vertex v) {
@@ -77,8 +85,12 @@ public class Edge extends Line {
         return end;
     }
 
-    public Vertex getComplementaryAdjacentVertex(Vertex v) {
+    public Vertex getOtherIncidentVertex(Vertex v) {
         return v == start ? end : start;
+    }
+
+    public Group getShapes() {
+        return shapes;
     }
 
     ///////////////////////////////////////////// Setters /////////////////////////////////////////////
