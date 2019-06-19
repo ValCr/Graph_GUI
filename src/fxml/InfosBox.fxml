@@ -9,11 +9,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox fx:id="infosBox" alignment="TOP_CENTER" maxWidth="-Infinity" prefHeight="398.0" prefWidth="181.0" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.InfosBoxController">
+<VBox fx:id="infosBox" alignment="TOP_CENTER" maxWidth="-Infinity" prefHeight="398.0" prefWidth="189.0" spacing="10.0" style="-fx-background-color: royalblue;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.InfosBoxController">
     <children>
-        <CheckBox fx:id="orientedGraph" mnemonicParsing="false" onAction="#clearGraph" prefHeight="45.0" prefWidth="186.0" text="Make graph oriented" />
+        <CheckBox fx:id="orientedGraph" mnemonicParsing="false" onAction="#clearGraph" prefHeight="32.0" prefWidth="169.0" text="Make graph oriented" />
         <Button alignment="CENTER" mnemonicParsing="false" onAction="#clearGraph" prefHeight="26.0" prefWidth="158.0" text="Clear" />
-        <GridPane maxHeight="-Infinity" minHeight="-Infinity" prefHeight="155.0" prefWidth="161.0">
+        <GridPane prefHeight="155.0" prefWidth="161.0" style="-fx-background-color: royalblue;">
             <columnConstraints>
                 <ColumnConstraints maxWidth="151.0" minWidth="10.0" prefWidth="151.0" />
             </columnConstraints>
@@ -26,7 +26,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Text fx:id="graphOrder" strokeType="OUTSIDE" strokeWidth="0.0" text="Order : 0" wrappingWidth="148.72948360443115" />
+                <Text fx:id="graphOrder" strokeType="OUTSIDE" strokeWidth="0.0" text="Order : 0" wrappingWidth="147.72948360443115" />
                 <Text fx:id="graphSize" strokeType="OUTSIDE" strokeWidth="0.0" text="Size : 0" wrappingWidth="151.72948360443115" GridPane.rowIndex="1" />
                 <Text fx:id="maxDegree" strokeType="OUTSIDE" strokeWidth="0.0" text="Max degree : 0" wrappingWidth="150.27099609375" GridPane.rowIndex="2" />
                 <Text fx:id="minDegree" strokeType="OUTSIDE" strokeWidth="0.0" text="Min degree : 0" wrappingWidth="154.27099609375" GridPane.rowIndex="3" />
