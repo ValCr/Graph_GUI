@@ -3,7 +3,9 @@ package controllers;
 import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
+import info.HelpText;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -13,7 +15,8 @@ import java.util.stream.Collectors;
 
 public class GraphPaneController {
     private final static float VERTEX_RADIUS = 15.0f;
-
+    @FXML
+    private Label infoText;
     @FXML
     private Pane graphPane;
     private MainController mainController;
@@ -79,6 +82,8 @@ public class GraphPaneController {
     @FXML
     private void initialize() {
         vertexId = 1;
+        graphPane.setOnMouseEntered(mouseEvent -> infoText.setText(HelpText.INFO_GRAPH));
+        graphPane.setOnMouseExited(mouseEvent -> infoText.setText(HelpText.NULL));
     }
 
     public void injectMainController(MainController mainController) {
@@ -93,5 +98,10 @@ public class GraphPaneController {
 
     public boolean graphIsOriented() {
         return mainController.getInfosBoxController().getOrientedGraphCheckBox().isSelected();
+    }
+
+    ///////////////////////////////////////////// Getters /////////////////////////////////////////////
+    public Label getInfoText() {
+        return infoText;
     }
 }

@@ -1,6 +1,7 @@
 package graph;
 
 import controllers.GraphPaneController;
+import info.HelpText;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -79,9 +80,17 @@ public class Vertex extends Circle {
             }
         });
 
-        this.setOnMouseEntered(mouseEvent -> this.setFill(DEFAULT_SECOND_COLOR));
+        this.setOnMouseEntered(mouseEvent -> {
+            this.setFill(DEFAULT_SECOND_COLOR);
+            graphPaneController.getInfoText().setText(
+                    graphPaneController.graphIsOriented() ? HelpText.INFO_VERTEX_ARC : HelpText.INFO_VERTEX_EDGE
+            );
+        });
 
-        this.setOnMouseExited(mouseEvent -> this.setFill(DEFAULT_COLOR));
+        this.setOnMouseExited(mouseEvent -> {
+            this.setFill(DEFAULT_COLOR);
+            graphPaneController.getInfoText().setText(HelpText.INFO_GRAPH);
+        });
 
         this.setOnMouseDragEntered(mouseEvent -> this.setFill(DEFAULT_SECOND_COLOR));
 

@@ -7,7 +7,7 @@ public class MainController {
     @FXML
     private GraphPaneController graphPaneController;
     @FXML
-    private InfosBoxController infosBoxController;
+    private InfoBoxController infosBoxController;
 
     private Graph graph;
 
@@ -20,7 +20,7 @@ public class MainController {
         graph = new Graph();
         infosBoxController.injectMainController(this);
         graphPaneController.injectMainController(this);
-        infosBoxController.bindInfosToGraph();
+        infosBoxController.bindInfoToGraph();
     }
 
     public void clearGraph() {
@@ -34,7 +34,7 @@ public class MainController {
         return graphPaneController;
     }
 
-    public InfosBoxController getInfosBoxController() {
+    public InfoBoxController getInfosBoxController() {
         return infosBoxController;
     }
 }

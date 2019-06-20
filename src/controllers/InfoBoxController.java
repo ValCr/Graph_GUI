@@ -7,9 +7,9 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-public class InfosBoxController {
+public class InfoBoxController {
     @FXML
-    private VBox infosBox;
+    private VBox infoBox;
     @FXML
     private Text maxIndegree;
     @FXML
@@ -31,7 +31,7 @@ public class InfosBoxController {
         mainController.clearGraph();
     }
 
-    public void bindInfosToGraph() {
+    public void bindInfoToGraph() {
         Graph graph = mainController.getGraph();
         graphOrder.textProperty().bind(Bindings.concat("Order : ", graph.orderProperty().asString()));
         graphSize.textProperty().bind(Bindings.concat("Size : ", graph.sizeProperty().asString()));

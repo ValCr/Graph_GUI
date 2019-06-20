@@ -1,6 +1,7 @@
 package graph;
 
 import controllers.GraphPaneController;
+import info.HelpText;
 import javafx.beans.binding.Bindings;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
@@ -52,9 +53,17 @@ public class Edge extends Line {
             }
         });
 
-        this.setOnMouseEntered(mouseEvent -> this.setStroke(DEFAULT_SECOND_COLOR));
+        this.setOnMouseEntered(mouseEvent -> {
+            this.setStroke(DEFAULT_SECOND_COLOR);
+            graphPaneController.getInfoText().setText(
+                    graphPaneController.graphIsOriented() ? HelpText.INFO_ARC : HelpText.INFO_EDGE
+            );
+        });
 
-        this.setOnMouseExited(mouseEvent -> this.setStroke(DEFAULT_COLOR));
+        this.setOnMouseExited(mouseEvent -> {
+            this.setStroke(DEFAULT_COLOR);
+            graphPaneController.getInfoText().setText(HelpText.INFO_GRAPH);
+        });
     }
 
     protected double length() {
