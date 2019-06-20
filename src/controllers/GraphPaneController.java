@@ -5,11 +5,18 @@ import graph.Graph;
 import graph.Vertex;
 import info.HelpText;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import main.Main;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -49,6 +56,23 @@ public class GraphPaneController {
         newEdge.getShapes().toBack();
     }
 
+    public void renameVertex(Vertex vertex) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/RenameVertex.fxml"));
+            Stage stage = new Stage();
+            stage.setTitle("Rename a Vertex");
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(Main.getPrimaryStage());
+            stage.setScene(new Scene(root, 200, 100));
+            stage.setX(Main.getPrimaryStage().getX() + Main.getPrimaryStage().getWidth() / 2 - 100);
+            stage.setY(Main.getPrimaryStage().getY() + Main.getPrimaryStage().getHeight() / 2 - 50);
+            stage.show();
+            RenameVertexController.setVertexToRename(vertex);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void removeVertex(Vertex vertex) {
         // remove adjacent edges
         graph.getVertices().forEach(
@@ -67,7 +91,11 @@ public class GraphPaneController {
         // update vertices ids
         graph.getVertices()
                 .stream()
-                .filter(v -> Integer.valueOf(v.getId()) > Integer.valueOf(vertex.getId()))
+                .filter(
+                        v -> vertex.getId().matches("\\d+") &&
+                                v.getId().matches("\\d+") &&
+                                Integer.valueOf(v.getId()) > Integer.valueOf(vertex.getId())
+                )
                 .forEach(v -> v.setId(String.valueOf(Integer.valueOf(v.getId()) - 1)));
         vertexId--;
     }
