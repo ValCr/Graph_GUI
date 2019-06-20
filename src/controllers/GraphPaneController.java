@@ -36,7 +36,7 @@ public class GraphPaneController {
         graphPane.setOnMouseDragReleased(mouseDragEvent -> {
             Vertex startVertex = (Vertex) mouseDragEvent.getGestureSource();
             startVertex.getEdge().resetEdge();
-            startVertex.setFill(Color.RED);
+            startVertex.setFill(Vertex.getDefaultColor());
         });
     }
 

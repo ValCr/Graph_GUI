@@ -9,7 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Vertex extends Circle {
-
+    private final static Color DEFAULT_COLOR = Color.web("#FF2C16");
+    private final static Color DEFAULT_SECOND_COLOR = Color.web("#EB8243");
     private List<Edge> edges;
     private Edge edge;
     private GraphPaneController graphPaneController;
@@ -45,7 +46,7 @@ public class Vertex extends Circle {
                 graphPaneController.addEdge(newEdge);
             }
             startVertex.getEdge().resetEdge();
-            startVertex.setFill(Color.RED);
+            startVertex.setFill(DEFAULT_COLOR);
         });
 
         this.setOnDragDetected(mouseEvent -> {
@@ -73,18 +74,18 @@ public class Vertex extends Circle {
                     edge.endYProperty().unbind();
                     edge.setEndX(mouseEvent.getX());
                     edge.setEndY(mouseEvent.getY());
-                    this.setFill(Color.TOMATO);
+                    this.setFill(DEFAULT_SECOND_COLOR);
                 }
             }
         });
 
-        this.setOnMouseEntered(mouseEvent -> this.setFill(Color.TOMATO));
+        this.setOnMouseEntered(mouseEvent -> this.setFill(DEFAULT_SECOND_COLOR));
 
-        this.setOnMouseExited(mouseEvent -> this.setFill(Color.RED));
+        this.setOnMouseExited(mouseEvent -> this.setFill(DEFAULT_COLOR));
 
-        this.setOnMouseDragEntered(mouseEvent -> this.setFill(Color.TOMATO));
+        this.setOnMouseDragEntered(mouseEvent -> this.setFill(DEFAULT_SECOND_COLOR));
 
-        this.setOnMouseDragExited(mouseEvent -> this.setFill(Color.RED));
+        this.setOnMouseDragExited(mouseEvent -> this.setFill(DEFAULT_COLOR));
     }
 
     private boolean isAdjacentTo(Vertex endVertex) {
@@ -108,6 +109,10 @@ public class Vertex extends Circle {
         return text;
     }
 
+    public static Color getDefaultColor() {
+        return DEFAULT_COLOR;
+    }
+
     ///////////////////////////////////////////// Setters /////////////////////////////////////////////
     public void setText() {
         text = new Text();
@@ -116,4 +121,6 @@ public class Vertex extends Circle {
         text.yProperty().bind(centerYProperty().add(text.getLayoutBounds().getHeight() / 4));
         text.setMouseTransparent(true);
     }
+
+
 }

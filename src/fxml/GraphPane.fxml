@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
 
-
-<VBox prefHeight="525.0" prefWidth="846.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GraphPaneController">
-   <children>
-        <Pane fx:id="graphPane" onMousePressed="#addVertex" prefHeight="680.0" prefWidth="1034.0" style="-fx-background-color: lightgrey;" VBox.vgrow="ALWAYS" />
-      <Separator maxHeight="-Infinity" minHeight="-Infinity" prefHeight="8.0" prefWidth="846.0" />
-      <Label alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="88.0" prefWidth="846.0" style="-fx-background-color: lightgrey;" VBox.vgrow="ALWAYS" />
-   </children>
-</VBox>
+<SplitPane dividerPositions="0.7544802867383512" orientation="VERTICAL" prefHeight="560.0" prefWidth="848.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GraphPaneController">
+   <items>
+      <Pane fx:id="graphPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onMousePressed="#addVertex" prefHeight="500.0" prefWidth="846.0" style="-fx-background-color: #E5E2D1;" />
+      <Label alignment="TOP_LEFT" maxWidth="1.7976931348623157E308" prefHeight="220.0" prefWidth="846.0" style="-fx-background-color: #E5E2D1;" />
+   </items>
+</SplitPane>

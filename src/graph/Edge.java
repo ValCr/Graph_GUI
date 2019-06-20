@@ -7,7 +7,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 public class Edge extends Line {
-
+    private final static Color DEFAULT_COLOR = Color.web("#1D2129");
+    private final static Color DEFAULT_SECOND_COLOR = Color.web("#3F5E7F");
     private final static float DEFAULT_STROKE_WIDTH = 3.0f;
     private Vertex start;
     private Vertex end;
@@ -24,6 +25,7 @@ public class Edge extends Line {
         this.start = start;
         this.end = start;
         this.setStrokeWidth(DEFAULT_STROKE_WIDTH);
+        this.setStroke(DEFAULT_COLOR);
     }
 
     public Edge(Vertex start, Vertex end) {
@@ -42,6 +44,7 @@ public class Edge extends Line {
                 end.centerYProperty(), start.centerYProperty()
         ));
         this.setStrokeWidth(DEFAULT_STROKE_WIDTH);
+        this.setStroke(DEFAULT_COLOR);
 
         this.setOnMousePressed(mouseEvent -> {
             if (mouseEvent.isSecondaryButtonDown()) {
@@ -49,9 +52,9 @@ public class Edge extends Line {
             }
         });
 
-        this.setOnMouseEntered(mouseEvent -> this.setStroke(Color.GREY));
+        this.setOnMouseEntered(mouseEvent -> this.setStroke(DEFAULT_SECOND_COLOR));
 
-        this.setOnMouseExited(mouseEvent -> this.setStroke(Color.BLACK));
+        this.setOnMouseExited(mouseEvent -> this.setStroke(DEFAULT_COLOR));
     }
 
     protected double length() {
