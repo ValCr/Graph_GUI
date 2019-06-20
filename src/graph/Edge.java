@@ -11,18 +11,22 @@ public class Edge extends Line {
     private final static Color DEFAULT_COLOR = Color.web("#1D2129");
     private final static Color DEFAULT_SECOND_COLOR = Color.web("#3F5E7F");
     private final static float DEFAULT_STROKE_WIDTH = 3.0f;
+    protected Group shapes;
     private Vertex start;
     private Vertex end;
     private GraphPaneController graphPaneController;
-    protected Group shapes;
 
     public Edge(Vertex start) {
         super();
         this.shapes = new Group(this);
-        this.startXProperty().bind(start.centerXProperty());
-        this.startYProperty().bind(start.centerYProperty());
-        this.endXProperty().bind(start.centerXProperty());
-        this.endYProperty().bind(start.centerYProperty());
+        this.startXProperty()
+                .bind(start.centerXProperty());
+        this.startYProperty()
+                .bind(start.centerYProperty());
+        this.endXProperty()
+                .bind(start.centerXProperty());
+        this.endYProperty()
+                .bind(start.centerYProperty());
         this.start = start;
         this.end = start;
         this.setStrokeWidth(DEFAULT_STROKE_WIDTH);
@@ -30,20 +34,29 @@ public class Edge extends Line {
     }
 
     public Edge(Vertex start, Vertex end) {
-        super(start.getCenterX(), start.getCenterY(), end.getCenterX(), end.getCenterY());
+        super(start.getCenterX(),
+                start.getCenterY(),
+                end.getCenterX(),
+                end.getCenterY());
         this.shapes = new Group(this);
         this.start = start;
         this.end = end;
-        this.startYProperty().bind(start.centerYProperty());
-        this.startXProperty().bind(start.centerXProperty());
-        this.endXProperty().bind(Bindings.createDoubleBinding(
-                () -> end.getCenterX() + (start.getCenterX() - end.getCenterX()) / length() * end.getRadius(),
-                end.centerXProperty(), start.centerXProperty()
-        ));
-        this.endYProperty().bind(Bindings.createDoubleBinding(
-                () -> end.getCenterY() + (start.getCenterY() - end.getCenterY()) / length() * end.getRadius(),
-                end.centerYProperty(), start.centerYProperty()
-        ));
+        this.startYProperty()
+                .bind(start.centerYProperty());
+        this.startXProperty()
+                .bind(start.centerXProperty());
+        this.endXProperty()
+                .bind(Bindings.createDoubleBinding(
+                        () -> end.getCenterX() + (start.getCenterX() - end.getCenterX()) / length() * end.getRadius(),
+                        end.centerXProperty(),
+                        start.centerXProperty()
+                ));
+        this.endYProperty()
+                .bind(Bindings.createDoubleBinding(
+                        () -> end.getCenterY() + (start.getCenterY() - end.getCenterY()) / length() * end.getRadius(),
+                        end.centerYProperty(),
+                        start.centerYProperty()
+                ));
         this.setStrokeWidth(DEFAULT_STROKE_WIDTH);
         this.setStroke(DEFAULT_COLOR);
 
@@ -55,19 +68,23 @@ public class Edge extends Line {
 
         this.setOnMouseEntered(mouseEvent -> {
             this.setStroke(DEFAULT_SECOND_COLOR);
-            graphPaneController.getInfoText().setText(
-                    graphPaneController.graphIsOriented() ? HelpText.INFO_ARC : HelpText.INFO_EDGE
-            );
+            graphPaneController.getInfoText()
+                    .setText(
+                            graphPaneController.graphIsOriented() ? HelpText.INFO_ARC : HelpText.INFO_EDGE
+                    );
         });
 
         this.setOnMouseExited(mouseEvent -> {
             this.setStroke(DEFAULT_COLOR);
-            graphPaneController.getInfoText().setText(HelpText.INFO_GRAPH);
+            graphPaneController.getInfoText()
+                    .setText(HelpText.INFO_GRAPH);
         });
     }
 
     protected double length() {
-        return Math.sqrt(Math.pow(end.getCenterX() - start.getCenterX(), 2) + Math.pow(end.getCenterY() - start.getCenterY(), 2));
+        return Math.sqrt(Math.pow(end.getCenterX() - start.getCenterX(),
+                2) + Math.pow(end.getCenterY() - start.getCenterY(),
+                2));
     }
 
     public boolean isNull() {
@@ -75,8 +92,10 @@ public class Edge extends Line {
     }
 
     public void resetEdge() {
-        this.endXProperty().bind(start.centerXProperty());
-        this.endYProperty().bind(start.centerYProperty());
+        this.endXProperty()
+                .bind(start.centerXProperty());
+        this.endYProperty()
+                .bind(start.centerYProperty());
         this.end = start;
     }
 

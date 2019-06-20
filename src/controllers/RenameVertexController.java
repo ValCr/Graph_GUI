@@ -12,9 +12,13 @@ import javafx.stage.Stage;
 
 public class RenameVertexController {
 
+    private static Vertex vertexToRename;
     @FXML
     private TextField newName;
-    private static Vertex vertexToRename;
+
+    public static void setVertexToRename(Vertex vertexToRename) {
+        RenameVertexController.vertexToRename = vertexToRename;
+    }
 
     @FXML
     private void close(Event event) {
@@ -34,9 +38,5 @@ public class RenameVertexController {
         if (keyEvent.getCode().equals(KeyCode.ENTER)) {
             close(keyEvent);
         }
-    }
-
-    public static void setVertexToRename(Vertex vertexToRename) {
-        RenameVertexController.vertexToRename = vertexToRename;
     }
 }

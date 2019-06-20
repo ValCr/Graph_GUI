@@ -10,8 +10,8 @@ import java.util.List;
 public class Graph {
     private SimpleListProperty<Vertex> vertices;
     private SimpleListProperty<Edge> edges;
-    private SimpleIntegerProperty order;
     private SimpleIntegerProperty size;
+    private SimpleIntegerProperty order;
     private SimpleIntegerProperty maxDegree; // also outdegree when graph is oriented
     private SimpleIntegerProperty minDegree; // also outdegree when graph is oriented
     private SimpleIntegerProperty maxIndegree;
@@ -30,28 +30,43 @@ public class Graph {
         order.bind(vertices.sizeProperty());
         size.bind(edges.sizeProperty());
         maxDegree.bind(Bindings.createIntegerBinding(
-                () -> vertices.stream().mapToInt(v -> v.getEdges().size()).max().orElse(0),
-                vertices.sizeProperty(), edges.sizeProperty()
-        ));
-        minDegree.bind(Bindings.createIntegerBinding(
-                () -> vertices.stream().mapToInt(v -> v.getEdges().size()).min().orElse(0),
-                vertices.sizeProperty(), edges.sizeProperty()
-        ));
-        maxIndegree.bind(Bindings.createIntegerBinding(
-                () -> vertices
-                        .stream()
-                        .mapToInt(v -> Math.toIntExact(edges.stream().filter(e -> e.getEnd() == v).count()))
+                () -> vertices.stream()
+                        .mapToInt(v -> v.getEdges()
+                                .size())
                         .max()
                         .orElse(0),
-                vertices.sizeProperty(), edges.sizeProperty()
+                vertices.sizeProperty(),
+                edges.sizeProperty()
+        ));
+        minDegree.bind(Bindings.createIntegerBinding(
+                () -> vertices.stream()
+                        .mapToInt(v -> v.getEdges()
+                                .size())
+                        .min()
+                        .orElse(0),
+                vertices.sizeProperty(),
+                edges.sizeProperty()
+        ));
+        maxIndegree.bind(Bindings.createIntegerBinding(
+                () -> vertices.stream()
+                        .mapToInt(v -> Math.toIntExact(edges.stream()
+                                .filter(e -> e.getEnd() == v)
+                                .count()))
+                        .max()
+                        .orElse(0),
+                vertices.sizeProperty(),
+                edges.sizeProperty()
         ));
         minIndegree.bind(Bindings.createIntegerBinding(
                 () -> vertices
                         .stream()
-                        .mapToInt(v -> Math.toIntExact(edges.stream().filter(e -> e.getEnd() == v).count()))
+                        .mapToInt(v -> Math.toIntExact(edges.stream()
+                                .filter(e -> e.getEnd() == v)
+                                .count()))
                         .min()
                         .orElse(0),
-                vertices.sizeProperty(), edges.sizeProperty()
+                vertices.sizeProperty(),
+                edges.sizeProperty()
         ));
     }
 

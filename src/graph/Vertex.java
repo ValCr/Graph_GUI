@@ -100,6 +100,10 @@ public class Vertex extends Circle {
         this.setOnMouseDragExited(mouseEvent -> this.setFill(DEFAULT_COLOR));
     }
 
+    public static Color getDefaultColor() {
+        return DEFAULT_COLOR;
+    }
+
     private boolean isAdjacentTo(Vertex endVertex) {
         return edges.stream().anyMatch(e -> e.isIncidentTo(endVertex));
     }
@@ -119,10 +123,6 @@ public class Vertex extends Circle {
 
     public Text getText() {
         return text;
-    }
-
-    public static Color getDefaultColor() {
-        return DEFAULT_COLOR;
     }
 
     ///////////////////////////////////////////// Setters /////////////////////////////////////////////

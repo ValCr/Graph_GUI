@@ -33,24 +33,38 @@ public class InfoBoxController {
 
     public void bindInfoToGraph() {
         Graph graph = mainController.getGraph();
-        graphOrder.textProperty().bind(Bindings.concat("Order : ", graph.orderProperty().asString()));
-        graphSize.textProperty().bind(Bindings.concat("Size : ", graph.sizeProperty().asString()));
-        maxDegree.textProperty().bind(Bindings.createStringBinding(
-                () -> "Max " + (orientedGraph.isSelected() ? "outdegre : " : "degree : ") + graph.getMaxDegree(),
-                orientedGraph.selectedProperty(), graph.maxDegreeProperty()
-        ));
-        minDegree.textProperty().bind(Bindings.createStringBinding(
-                () -> "Min " + (orientedGraph.isSelected() ? "outdegre : " : "degree : ") + graph.getMinDegree(),
-                orientedGraph.selectedProperty(), graph.minDegreeProperty()
-        ));
-        maxIndegree.textProperty().bind(Bindings.createStringBinding(
-                () -> (orientedGraph.isSelected() ? "Max indegree : " + graph.getMaxIndegree() : ""),
-                orientedGraph.selectedProperty(), graph.maxIndegreeProperty()
-        ));
-        minIndegree.textProperty().bind(Bindings.createStringBinding(
-                () -> (orientedGraph.isSelected() ? "Min indegree : " + graph.getMinIndegree() : ""),
-                orientedGraph.selectedProperty(), graph.minIndegreeProperty()
-        ));
+        graphOrder.textProperty()
+                .bind(Bindings.concat("Order : ",
+                        graph.orderProperty()
+                                .asString()));
+        graphSize.textProperty()
+                .bind(Bindings.concat("Size : ",
+                        graph.sizeProperty()
+                                .asString()));
+        maxDegree.textProperty()
+                .bind(Bindings.createStringBinding(
+                        () -> "Max " + (orientedGraph.isSelected() ? "outdegre : " : "degree : ") + graph.getMaxDegree(),
+                        orientedGraph.selectedProperty(),
+                        graph.maxDegreeProperty()
+                ));
+        minDegree.textProperty()
+                .bind(Bindings.createStringBinding(
+                        () -> "Min " + (orientedGraph.isSelected() ? "outdegre : " : "degree : ") + graph.getMinDegree(),
+                        orientedGraph.selectedProperty(),
+                        graph.minDegreeProperty()
+                ));
+        maxIndegree.textProperty()
+                .bind(Bindings.createStringBinding(
+                        () -> (orientedGraph.isSelected() ? "Max indegree : " + graph.getMaxIndegree() : ""),
+                        orientedGraph.selectedProperty(),
+                        graph.maxIndegreeProperty()
+                ));
+        minIndegree.textProperty()
+                .bind(Bindings.createStringBinding(
+                        () -> (orientedGraph.isSelected() ? "Min indegree : " + graph.getMinIndegree() : ""),
+                        orientedGraph.selectedProperty(),
+                        graph.minIndegreeProperty()
+                ));
     }
 
 
