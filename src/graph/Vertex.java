@@ -27,6 +27,9 @@ public class Vertex extends Circle {
         }
 
         this.setOnMousePressed(mouseEvent -> {
+            if (mouseEvent.isPrimaryButtonDown() && mouseEvent.isShiftDown()) {
+                graphPaneController.renameVertex(this);
+            }
             if (mouseEvent.isSecondaryButtonDown()) {
                 graphPaneController.removeVertex(this);
             }
