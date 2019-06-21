@@ -2,8 +2,11 @@ package controllers;
 
 import graph.Graph;
 import javafx.fxml.FXML;
+import javafx.scene.control.SplitPane;
 
 public class MainController {
+    @FXML
+    private SplitPane mainSplitPane;
     @FXML
     private GraphPaneController graphPaneController;
     @FXML
@@ -38,5 +41,9 @@ public class MainController {
 
     public InfoBoxController getInfosBoxController() {
         return infosBoxController;
+    }
+
+    public SplitPane getMainSplitPane() {
+        return mainSplitPane;
     }
 }

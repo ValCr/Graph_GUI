@@ -10,8 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Vertex extends Circle {
-    private final static Color DEFAULT_COLOR = Color.web("#FF2C16");
-    private final static Color DEFAULT_SECOND_COLOR = Color.web("#EB8243");
+    public final static Color DEFAULT_COLOR = Color.web("#FF2C16");
+    public final static Color DEFAULT_SECOND_COLOR = Color.web("#EB8243");
     private List<Edge> edges;
     private Edge edge;
     private GraphPaneController graphPaneController;
@@ -100,12 +100,12 @@ public class Vertex extends Circle {
         this.setOnMouseDragExited(mouseEvent -> this.setFill(DEFAULT_COLOR));
     }
 
-    public static Color getDefaultColor() {
-        return DEFAULT_COLOR;
-    }
-
-    private boolean isAdjacentTo(Vertex endVertex) {
-        return edges.stream().anyMatch(e -> e.isIncidentTo(endVertex));
+    public boolean isAdjacentTo(Vertex v) {
+        return edges.stream()
+                .anyMatch(e -> e.isIncidentTo(v))
+                || v.getEdges()
+                .stream()
+                .anyMatch(e -> e.isIncidentTo(this));
     }
 
     public void injectGraphPaneController(GraphPaneController graphPaneController) {
@@ -125,6 +125,17 @@ public class Vertex extends Circle {
         return text;
     }
 
+    public Edge getEdgeFromAdjacentVertex(Vertex v) {
+        return edges.stream()
+                .filter(e -> e.isIncidentTo(v))
+                .findFirst()
+                .orElseGet(() -> v.getEdges()
+                        .stream()
+                        .filter(e -> e.isIncidentTo(this))
+                        .findFirst()
+                        .orElse(null));
+    }
+
     ///////////////////////////////////////////// Setters /////////////////////////////////////////////
     public void setText() {
         text = new Text();
@@ -133,6 +144,5 @@ public class Vertex extends Circle {
         text.yProperty().bind(centerYProperty().add(text.getLayoutBounds().getHeight() / 4));
         text.setMouseTransparent(true);
     }
-
 
 }

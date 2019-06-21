@@ -1,5 +1,8 @@
 package controllers;
 
+import algorithms.BFS;
+import algorithms.DFS;
+import algorithms.SearchingAlgorithm;
 import graph.Graph;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -29,6 +32,30 @@ public class InfoBoxController {
     @FXML
     private void clearGraph() {
         mainController.clearGraph();
+    }
+
+    @FXML
+    private void depthFirstSearch() {
+        mainController.getMainSplitPane()
+                .setDisable(true);
+        SearchingAlgorithm dfs = new DFS(mainController.getGraph());
+        dfs.injectMainController(mainController);
+        dfs.apply(mainController.getGraph()
+                .getVertices()
+                .get(0));
+        dfs.drawAnimation();
+    }
+
+    @FXML
+    private void breadthFirstSearch() {
+        mainController.getMainSplitPane()
+                .setDisable(true);
+        SearchingAlgorithm bfs = new BFS(mainController.getGraph());
+        bfs.injectMainController(mainController);
+        bfs.apply(mainController.getGraph()
+                .getVertices()
+                .get(0));
+        bfs.drawAnimation();
     }
 
     public void bindInfoToGraph() {

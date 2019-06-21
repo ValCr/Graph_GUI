@@ -57,7 +57,7 @@ public class GraphPaneController {
             Vertex startVertex = (Vertex) mouseDragEvent.getGestureSource();
             startVertex.getEdge()
                     .resetEdge();
-            startVertex.setFill(Vertex.getDefaultColor());
+            startVertex.setFill(Vertex.DEFAULT_COLOR);
         });
     }
 

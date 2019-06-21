@@ -8,9 +8,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 public class Edge extends Line {
-    private final static Color DEFAULT_COLOR = Color.web("#1D2129");
-    private final static Color DEFAULT_SECOND_COLOR = Color.web("#3F5E7F");
-    private final static float DEFAULT_STROKE_WIDTH = 3.0f;
+    public final static Color DEFAULT_COLOR = Color.web("#1D2129");
+    public final static Color DEFAULT_SECOND_COLOR = Color.web("#3F5E7F");
+    public final static float DEFAULT_STROKE_WIDTH = 3.0f;
     protected Group shapes;
     private Vertex start;
     private Vertex end;
@@ -118,5 +118,9 @@ public class Edge extends Line {
 
     public Group getShapes() {
         return shapes;
+    }
+
+    public Vertex getOtherEnd(Vertex v) {
+        return start == v ? end : start;
     }
 }
