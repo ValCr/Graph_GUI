@@ -36,26 +36,24 @@ public class InfoBoxController {
 
     @FXML
     private void depthFirstSearch() {
-        mainController.getMainSplitPane()
-                .setDisable(true);
-        SearchingAlgorithm dfs = new DFS(mainController.getGraph());
-        dfs.injectMainController(mainController);
-        dfs.apply(mainController.getGraph()
-                .getVertices()
-                .get(0));
-        dfs.drawAnimation();
+        applySearchAlgorithm(new DFS(mainController.getGraph()));
     }
 
     @FXML
     private void breadthFirstSearch() {
-        mainController.getMainSplitPane()
+        applySearchAlgorithm(new BFS(mainController.getGraph()));
+    }
+
+    private void applySearchAlgorithm(SearchingAlgorithm algo) {
+        mainController.getGraphPaneController()
+                .getGraphPane()
                 .setDisable(true);
-        SearchingAlgorithm bfs = new BFS(mainController.getGraph());
-        bfs.injectMainController(mainController);
-        bfs.apply(mainController.getGraph()
+        infoBox.setDisable(true);
+        algo.injectMainController(mainController);
+        algo.apply(mainController.getGraph()
                 .getVertices()
                 .get(0));
-        bfs.drawAnimation();
+        algo.drawAnimation();
     }
 
     public void bindInfoToGraph() {
@@ -101,5 +99,9 @@ public class InfoBoxController {
 
     public CheckBox getOrientedGraphCheckBox() {
         return orientedGraph;
+    }
+
+    public VBox getInfoBox() {
+        return infoBox;
     }
 }

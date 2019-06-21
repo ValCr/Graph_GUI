@@ -68,7 +68,7 @@ public class Edge extends Line {
 
         this.setOnMouseEntered(mouseEvent -> {
             this.setStroke(DEFAULT_SECOND_COLOR);
-            graphPaneController.getInfoText()
+            graphPaneController.getHelpInfo()
                     .setText(
                             graphPaneController.graphIsOriented() ? HelpText.INFO_ARC : HelpText.INFO_EDGE
                     );
@@ -76,7 +76,7 @@ public class Edge extends Line {
 
         this.setOnMouseExited(mouseEvent -> {
             this.setStroke(DEFAULT_COLOR);
-            graphPaneController.getInfoText()
+            graphPaneController.getHelpInfo()
                     .setText(HelpText.INFO_GRAPH);
         });
     }

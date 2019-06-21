@@ -23,7 +23,9 @@ import java.util.stream.Collectors;
 public class GraphPaneController {
     private final static float VERTEX_RADIUS = 15.0f;
     @FXML
-    private Label infoText;
+    private Label infoAlgo;
+    @FXML
+    private Label helpInfo;
     @FXML
     private Pane graphPane;
     private MainController mainController;
@@ -144,8 +146,8 @@ public class GraphPaneController {
     @FXML
     private void initialize() {
         vertexId = 1;
-        graphPane.setOnMouseEntered(mouseEvent -> infoText.setText(HelpText.INFO_GRAPH));
-        graphPane.setOnMouseExited(mouseEvent -> infoText.setText(HelpText.NULL));
+        graphPane.setOnMouseEntered(mouseEvent -> helpInfo.setText(HelpText.INFO_GRAPH));
+        graphPane.setOnMouseExited(mouseEvent -> helpInfo.setText(HelpText.NULL));
     }
 
     public void injectMainController(MainController mainController) {
@@ -157,6 +159,7 @@ public class GraphPaneController {
         graphPane.getChildren()
                 .clear();
         vertexId = 1;
+        infoAlgo.setText("");
     }
 
     public boolean graphIsOriented() {
@@ -166,7 +169,15 @@ public class GraphPaneController {
     }
 
     ///////////////////////////////////////////// Getters /////////////////////////////////////////////
-    public Label getInfoText() {
-        return infoText;
+    public Label getHelpInfo() {
+        return helpInfo;
+    }
+
+    public Label getInfoAlgo() {
+        return infoAlgo;
+    }
+
+    public Pane getGraphPane() {
+        return graphPane;
     }
 }

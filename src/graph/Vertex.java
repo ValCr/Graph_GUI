@@ -40,7 +40,7 @@ public class Vertex extends Circle {
             Vertex startVertex = (Vertex) mouseDragEvent.getGestureSource();
             Vertex endVertex = (Vertex) mouseDragEvent.getTarget();
 
-            if (startVertex != endVertex && !startVertex.isAdjacentTo(endVertex)) {
+            if (startVertex != endVertex && !startVertex.pointsTo(endVertex)) {
                 Edge newEdge = graphPaneController.graphIsOriented() ? new Arc(startVertex, endVertex) : new Edge(startVertex, endVertex);
                 startVertex.getEdges().add(newEdge);
                 if (!graphPaneController.graphIsOriented()) {
@@ -85,19 +85,26 @@ public class Vertex extends Circle {
 
         this.setOnMouseEntered(mouseEvent -> {
             this.setFill(DEFAULT_SECOND_COLOR);
-            graphPaneController.getInfoText().setText(
+            graphPaneController.getHelpInfo()
+                    .setText(
                     graphPaneController.graphIsOriented() ? HelpText.INFO_VERTEX_ARC : HelpText.INFO_VERTEX_EDGE
             );
         });
 
         this.setOnMouseExited(mouseEvent -> {
             this.setFill(DEFAULT_COLOR);
-            graphPaneController.getInfoText().setText(HelpText.INFO_GRAPH);
+            graphPaneController.getHelpInfo()
+                    .setText(HelpText.INFO_GRAPH);
         });
 
         this.setOnMouseDragEntered(mouseEvent -> this.setFill(DEFAULT_SECOND_COLOR));
 
         this.setOnMouseDragExited(mouseEvent -> this.setFill(DEFAULT_COLOR));
+    }
+
+    private boolean pointsTo(Vertex v) {
+        return edges.stream()
+                .anyMatch(e -> e.isIncidentTo(v));
     }
 
     public boolean isAdjacentTo(Vertex v) {
@@ -110,6 +117,11 @@ public class Vertex extends Circle {
 
     public void injectGraphPaneController(GraphPaneController graphPaneController) {
         this.graphPaneController = graphPaneController;
+    }
+
+    @Override
+    public String toString() {
+        return getId();
     }
 
     ///////////////////////////////////////////// Getters /////////////////////////////////////////////
@@ -139,9 +151,14 @@ public class Vertex extends Circle {
     ///////////////////////////////////////////// Setters /////////////////////////////////////////////
     public void setText() {
         text = new Text();
-        text.textProperty().bind(idProperty());
-        text.xProperty().bind(centerXProperty().add(-text.getLayoutBounds().getWidth() / 2));
-        text.yProperty().bind(centerYProperty().add(text.getLayoutBounds().getHeight() / 4));
+        text.textProperty()
+                .bind(idProperty());
+        text.xProperty()
+                .bind(centerXProperty().add(-text.getLayoutBounds()
+                        .getWidth() / 2));
+        text.yProperty()
+                .bind(centerYProperty().add(text.getLayoutBounds()
+                        .getHeight() / 4));
         text.setMouseTransparent(true);
     }
 

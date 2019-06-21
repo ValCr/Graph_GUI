@@ -6,17 +6,32 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-
-<SplitPane dividerPositions="0.7401433691756273" orientation="VERTICAL" prefHeight="560.0" prefWidth="848.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.GraphPaneController">
+<SplitPane xmlns:fx="http://javafx.com/fxml/1" dividerPositions="0.7401433691756273" orientation="VERTICAL"
+           prefHeight="560.0" prefWidth="848.0" xmlns="http://javafx.com/javafx/11.0.1"
+           fx:controller="controllers.GraphPaneController">
    <items>
       <Pane fx:id="graphPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" onMousePressed="#addVertex" prefHeight="409.0" prefWidth="846.0" style="-fx-background-color: #E5E2D1;" />
       <HBox spacing="10.0" style="-fx-background-color: #0E0FA8;">
          <children>
-            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="121.0" prefWidth="1019.0" style="-fx-background-color: #E5E2D1;" />
+            <VBox spacing="10.0" style="-fx-background-color: #E5E2D1;">
+               <children>
+                  <Label fx:id="infoAlgo" alignment="TOP_LEFT" maxHeight="1.7976931348623157E308"
+                         maxWidth="1.7976931348623157E308" prefHeight="121.0" prefWidth="1019.0"
+                         style="-fx-background-color: #E5E2D1;"/>
+               </children>
+               <opaqueInsets>
+                  <Insets/>
+               </opaqueInsets>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+               </padding>
+            </VBox>
             <VBox spacing="10.0" style="-fx-background-color: #E5E2D1;">
                <children>
                   <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="16.0" prefWidth="300.0" style="-fx-background-color: #E5E2D1; -fx-font-weight: bold;" text="Help" underline="true" />
-                  <Label fx:id="infoText" alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="220.0" prefWidth="846.0" style="-fx-background-color: #E5E2D1;" />
+                  <Label fx:id="helpInfo" alignment="TOP_LEFT" maxHeight="1.7976931348623157E308"
+                         maxWidth="1.7976931348623157E308" prefHeight="220.0" prefWidth="846.0"
+                         style="-fx-background-color: #E5E2D1;"/>
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

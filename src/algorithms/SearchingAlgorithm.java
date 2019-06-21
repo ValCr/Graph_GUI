@@ -7,32 +7,36 @@ import graph.Vertex;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public abstract class SearchingAlgorithm {
     private static Color DEFAULT_COLOR_WHEN_VISITED = Color.web("#00CC14");
     protected boolean[] discovered;
     protected Graph graph;
-    protected List<Vertex> orderOfDiscovery;
+    protected SimpleListProperty<Vertex> orderOfDiscovery;
     private MainController mainController;
 
     public SearchingAlgorithm(Graph graph) {
         this.graph = graph;
         this.discovered = new boolean[graph.getVertices()
                 .size()];
-        this.orderOfDiscovery = new LinkedList<>();
+        this.orderOfDiscovery = new SimpleListProperty<>(FXCollections.observableArrayList());
     }
 
     public abstract void apply(Vertex vertex);
 
     public void drawAnimation() {
         final IntegerProperty i = new SimpleIntegerProperty(0);
+        showInfo(i);
         Timeline timeline = new Timeline(
                 new KeyFrame(
                         Duration.seconds(0.5),
@@ -58,7 +62,15 @@ public abstract class SearchingAlgorithm {
                                 PauseTransition pause = new PauseTransition(Duration.seconds(1));
                                 pause.setOnFinished(e -> {
                                     resetGraphColor();
-                                    mainController.getMainSplitPane()
+                                    mainController.getGraphPaneController()
+                                            .getInfoAlgo()
+                                            .textProperty()
+                                            .unbind();
+                                    mainController.getGraphPaneController()
+                                            .getGraphPane()
+                                            .setDisable(false);
+                                    mainController.getInfosBoxController()
+                                            .getInfoBox()
                                             .setDisable(false);
                                 });
                                 pause.play();
@@ -68,6 +80,22 @@ public abstract class SearchingAlgorithm {
         );
         timeline.setCycleCount(orderOfDiscovery.size());
         timeline.play();
+    }
+
+    private void showInfo(IntegerProperty i) {
+        mainController.getGraphPaneController()
+                .getInfoAlgo()
+                .textProperty()
+                .bind(Bindings.createStringBinding(
+                        () -> this.getClass()
+                                .getSimpleName() + " : " + orderOfDiscovery.subList(0,
+                                Math.min(orderOfDiscovery.size(),
+                                        i.get() + 1))
+                                .stream()
+                                .map(Objects::toString)
+                                .collect(Collectors.joining("->")),
+                        i
+                ));
     }
 
 
