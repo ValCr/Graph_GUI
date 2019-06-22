@@ -45,15 +45,28 @@ public class InfoBoxController {
     }
 
     private void applySearchAlgorithm(SearchingAlgorithm algo) {
-        mainController.getGraphPaneController()
-                .getGraphPane()
-                .setDisable(true);
+        if (mainController.getGraph().getVertices().isEmpty()) {
+            return;
+        }
+
+        mainController.getGraphPaneController().getHelpInfo().setVisible(false);
+        mainController.getGraphPaneController().getInfoAlgo().setText("Select a starting vertex");
         infoBox.setDisable(true);
         algo.injectMainController(mainController);
-        algo.apply(mainController.getGraph()
+        mainController.setAllVertexEventsToNull();
+        mainController.setAllEdgesEventsToNull();
+        mainController.getGraphPaneController().getGraphPane().setOnMousePressed(null);
+        mainController.getGraph()
                 .getVertices()
-                .get(0));
-        algo.drawAnimation();
+                .forEach(v -> {
+                    v.setOnMouseEntered(v::handleMouseEntered);
+                    v.setOnMouseExited(v::handleMouseExited);
+                    v.setOnMousePressed(mouseEvent -> {
+                        mainController.setAllVertexEventsToNull();
+                        algo.apply(v);
+                        algo.drawAnimation();
+                    });
+                });
     }
 
     public void bindInfoToGraph() {

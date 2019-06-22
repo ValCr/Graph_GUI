@@ -1,6 +1,8 @@
 package controllers;
 
+import graph.Edge;
 import graph.Graph;
+import graph.Vertex;
 import javafx.fxml.FXML;
 import javafx.scene.control.SplitPane;
 
@@ -45,5 +47,21 @@ public class MainController {
 
     public SplitPane getMainSplitPane() {
         return mainSplitPane;
+    }
+
+    public void setAllVertexEventsToNull() {
+        graph.getVertices().forEach(Vertex::setAllMouseEventsToNull);
+    }
+
+    public void setAllEdgesEventsToNull() {
+        graph.getEdges().forEach(Edge::setAllMouseEventsToNull);
+    }
+
+    public void setAllVertexEventsToDefault() {
+        graph.getVertices().forEach(Vertex::setAllMouseEventsToDefault);
+    }
+
+    public void setAllEdgesEventsToDefault() {
+        graph.getEdges().forEach(Edge::setAllMouseEventsToDefault);
     }
 }

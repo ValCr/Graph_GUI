@@ -1,5 +1,6 @@
 package algorithms;
 
+import controllers.GraphPaneController;
 import controllers.MainController;
 import graph.Edge;
 import graph.Graph;
@@ -66,9 +67,12 @@ public abstract class SearchingAlgorithm {
                                             .getInfoAlgo()
                                             .textProperty()
                                             .unbind();
-                                    mainController.getGraphPaneController()
-                                            .getGraphPane()
-                                            .setDisable(false);
+                                    GraphPaneController controller = mainController.getGraphPaneController();
+                                    controller.getGraphPane()
+                                            .setOnMousePressed(controller::addVertex);
+                                    mainController.getGraphPaneController().getHelpInfo().setVisible(true);
+                                    mainController.setAllVertexEventsToDefault();
+                                    mainController.setAllEdgesEventsToDefault();
                                     mainController.getInfosBoxController()
                                             .getInfoBox()
                                             .setDisable(false);

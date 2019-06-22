@@ -4,6 +4,7 @@ import controllers.GraphPaneController;
 import info.HelpText;
 import javafx.beans.binding.Bindings;
 import javafx.scene.Group;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
@@ -60,25 +61,27 @@ public class Edge extends Line {
         this.setStrokeWidth(DEFAULT_STROKE_WIDTH);
         this.setStroke(DEFAULT_COLOR);
 
-        this.setOnMousePressed(mouseEvent -> {
-            if (mouseEvent.isSecondaryButtonDown()) {
-                graphPaneController.removeEdge(this);
-            }
-        });
+        setAllMouseEventsToDefault();
+    }
 
-        this.setOnMouseEntered(mouseEvent -> {
-            this.setStroke(DEFAULT_SECOND_COLOR);
-            graphPaneController.getHelpInfo()
-                    .setText(
-                            graphPaneController.graphIsOriented() ? HelpText.INFO_ARC : HelpText.INFO_EDGE
-                    );
-        });
+    private void handleMousePressed(MouseEvent mouseEvent) {
+        if (mouseEvent.isSecondaryButtonDown()) {
+            graphPaneController.removeEdge(this);
+        }
+    }
 
-        this.setOnMouseExited(mouseEvent -> {
-            this.setStroke(DEFAULT_COLOR);
-            graphPaneController.getHelpInfo()
-                    .setText(HelpText.INFO_GRAPH);
-        });
+    private void handleMouseEntered(MouseEvent mouseEvent) {
+        this.setStroke(DEFAULT_SECOND_COLOR);
+        graphPaneController.getHelpInfo()
+                .setText(
+                        graphPaneController.graphIsOriented() ? HelpText.INFO_ARC : HelpText.INFO_EDGE
+                );
+    }
+
+    private void handleMouseExited(MouseEvent mouseEvent) {
+        this.setStroke(DEFAULT_COLOR);
+        graphPaneController.getHelpInfo()
+                .setText(HelpText.INFO_GRAPH);
     }
 
     protected double length() {
@@ -122,5 +125,18 @@ public class Edge extends Line {
 
     public Vertex getOtherEnd(Vertex v) {
         return start == v ? end : start;
+    }
+
+    ///////////////////////////////////////////// Setters /////////////////////////////////////////////
+    public void setAllMouseEventsToDefault() {
+        this.setOnMousePressed(this::handleMousePressed);
+        this.setOnMouseEntered(this::handleMouseEntered);
+        this.setOnMouseExited(this::handleMouseExited);
+    }
+
+    public void setAllMouseEventsToNull() {
+        this.setOnMousePressed(null);
+        this.setOnMouseEntered(null);
+        this.setOnMouseExited(null);
     }
 }

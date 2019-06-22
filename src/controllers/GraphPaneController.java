@@ -33,7 +33,7 @@ public class GraphPaneController {
     private int vertexId;
 
     @FXML
-    private void addVertex(MouseEvent event) {
+    public void addVertex(MouseEvent event) {
         if (!event.isPrimaryButtonDown()) {
             return;
         }
@@ -54,13 +54,6 @@ public class GraphPaneController {
         newVertex.getEdge()
                 .getShapes()
                 .toBack();
-
-        graphPane.setOnMouseDragReleased(mouseDragEvent -> {
-            Vertex startVertex = (Vertex) mouseDragEvent.getGestureSource();
-            startVertex.getEdge()
-                    .resetEdge();
-            startVertex.setFill(Vertex.DEFAULT_COLOR);
-        });
     }
 
     public void addEdge(Edge newEdge) {
@@ -148,6 +141,12 @@ public class GraphPaneController {
         vertexId = 1;
         graphPane.setOnMouseEntered(mouseEvent -> helpInfo.setText(HelpText.INFO_GRAPH));
         graphPane.setOnMouseExited(mouseEvent -> helpInfo.setText(HelpText.NULL));
+        graphPane.setOnMouseDragReleased(mouseDragEvent -> {
+            Vertex startVertex = (Vertex) mouseDragEvent.getGestureSource();
+            startVertex.getEdge()
+                    .resetEdge();
+            startVertex.setFill(Vertex.DEFAULT_COLOR);
+        });
     }
 
     public void injectMainController(MainController mainController) {

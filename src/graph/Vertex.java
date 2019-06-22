@@ -2,6 +2,8 @@ package graph;
 
 import controllers.GraphPaneController;
 import info.HelpText;
+import javafx.scene.input.MouseDragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -26,80 +28,94 @@ public class Vertex extends Circle {
             edge = graphPaneController.graphIsOriented() ? new Arc(this) : new Edge(this);
         }
 
-        this.setOnMousePressed(mouseEvent -> {
-            if (mouseEvent.isPrimaryButtonDown() && mouseEvent.isShiftDown()) {
-                graphPaneController.renameVertex(this);
+        setAllMouseEventsToDefault();
+    }
+
+    public void handleMousePressed(MouseEvent mouseEvent) {
+        if (mouseEvent.isPrimaryButtonDown() && mouseEvent.isShiftDown()) {
+            graphPaneController.renameVertex(this);
+        }
+        if (mouseEvent.isSecondaryButtonDown()) {
+            graphPaneController.removeVertex(this);
+        }
+        mouseEvent.consume();
+    }
+
+    public void handleMouseDragReleased(MouseDragEvent mouseDragEvent) {
+        Vertex startVertex = (Vertex) mouseDragEvent.getGestureSource();
+        Vertex endVertex = (Vertex) mouseDragEvent.getTarget();
+
+        if (startVertex != endVertex && !startVertex.pointsTo(endVertex)) {
+            Edge newEdge = graphPaneController.graphIsOriented() ? new Arc(startVertex,
+                    endVertex) : new Edge(startVertex,
+                    endVertex);
+            startVertex.getEdges()
+                    .add(newEdge);
+            if (!graphPaneController.graphIsOriented()) {
+                endVertex.getEdges()
+                        .add(newEdge);
             }
-            if (mouseEvent.isSecondaryButtonDown()) {
-                graphPaneController.removeVertex(this);
+            newEdge.injectGraphPaneController(graphPaneController);
+            graphPaneController.addEdge(newEdge);
+        }
+        startVertex.getEdge()
+                .resetEdge();
+        startVertex.setFill(DEFAULT_COLOR);
+    }
+
+    public void handleDragDetected(MouseEvent mouseEvent) {
+        if (mouseEvent.isPrimaryButtonDown()) {
+            if (!mouseEvent.isControlDown() && edge.isNull()) {
+                edge.endXProperty()
+                        .unbind();
+                edge.endYProperty()
+                        .unbind();
+                edge.setEndX(mouseEvent.getX());
+                edge.setEndY(mouseEvent.getY());
+                edge.setMouseTransparent(true);
+                edge.toBack();
             }
-            mouseEvent.consume();
-        });
+            this.startFullDrag();
+        }
+    }
 
-        this.setOnMouseDragReleased(mouseDragEvent -> {
-            Vertex startVertex = (Vertex) mouseDragEvent.getGestureSource();
-            Vertex endVertex = (Vertex) mouseDragEvent.getTarget();
-
-            if (startVertex != endVertex && !startVertex.pointsTo(endVertex)) {
-                Edge newEdge = graphPaneController.graphIsOriented() ? new Arc(startVertex, endVertex) : new Edge(startVertex, endVertex);
-                startVertex.getEdges().add(newEdge);
-                if (!graphPaneController.graphIsOriented()) {
-                    endVertex.getEdges().add(newEdge);
-                }
-                newEdge.injectGraphPaneController(graphPaneController);
-                graphPaneController.addEdge(newEdge);
+    public void handleMouseDragged(MouseEvent mouseEvent) {
+        if (mouseEvent.isPrimaryButtonDown()) {
+            if (mouseEvent.isControlDown()) {
+                setCenterX(mouseEvent.getX());
+                setCenterY(mouseEvent.getY());
             }
-            startVertex.getEdge().resetEdge();
-            startVertex.setFill(DEFAULT_COLOR);
-        });
-
-        this.setOnDragDetected(mouseEvent -> {
-            if (mouseEvent.isPrimaryButtonDown()) {
-                if (!mouseEvent.isControlDown() && edge.isNull()) {
-                    edge.endXProperty().unbind();
-                    edge.endYProperty().unbind();
-                    edge.setEndX(mouseEvent.getX());
-                    edge.setEndY(mouseEvent.getY());
-                    edge.setMouseTransparent(true);
-                    edge.toBack();
-                }
-                this.startFullDrag();
+            if (!edge.isNull()) {
+                edge.endXProperty()
+                        .unbind();
+                edge.endYProperty()
+                        .unbind();
+                edge.setEndX(mouseEvent.getX());
+                edge.setEndY(mouseEvent.getY());
+                this.setFill(DEFAULT_SECOND_COLOR);
             }
-        });
+        }
+    }
 
-        this.setOnMouseDragged(mouseEvent -> {
-            if (mouseEvent.isPrimaryButtonDown()) {
-                if (mouseEvent.isControlDown()) {
-                    setCenterX(mouseEvent.getX());
-                    setCenterY(mouseEvent.getY());
-                }
-                if (!edge.isNull()) {
-                    edge.endXProperty().unbind();
-                    edge.endYProperty().unbind();
-                    edge.setEndX(mouseEvent.getX());
-                    edge.setEndY(mouseEvent.getY());
-                    this.setFill(DEFAULT_SECOND_COLOR);
-                }
-            }
-        });
+    public void handleMouseEntered(MouseEvent mouseEvent) {
+        this.setFill(DEFAULT_SECOND_COLOR);
+        graphPaneController.getHelpInfo()
+                .setText(
+                        graphPaneController.graphIsOriented() ? HelpText.INFO_VERTEX_ARC : HelpText.INFO_VERTEX_EDGE
+                );
+    }
 
-        this.setOnMouseEntered(mouseEvent -> {
-            this.setFill(DEFAULT_SECOND_COLOR);
-            graphPaneController.getHelpInfo()
-                    .setText(
-                    graphPaneController.graphIsOriented() ? HelpText.INFO_VERTEX_ARC : HelpText.INFO_VERTEX_EDGE
-            );
-        });
+    public void handleMouseExited(MouseEvent mouseEvent) {
+        this.setFill(DEFAULT_COLOR);
+        graphPaneController.getHelpInfo().setText(HelpText.INFO_GRAPH);
+    }
 
-        this.setOnMouseExited(mouseEvent -> {
-            this.setFill(DEFAULT_COLOR);
-            graphPaneController.getHelpInfo()
-                    .setText(HelpText.INFO_GRAPH);
-        });
+    public void handleMouseDragEntered(MouseDragEvent mouseEvent) {
+        this.setFill(DEFAULT_SECOND_COLOR);
+    }
 
-        this.setOnMouseDragEntered(mouseEvent -> this.setFill(DEFAULT_SECOND_COLOR));
-
-        this.setOnMouseDragExited(mouseEvent -> this.setFill(DEFAULT_COLOR));
+    public void handleMouseDragExited(MouseDragEvent mouseEvent) {
+        this.setFill(DEFAULT_COLOR);
     }
 
     private boolean pointsTo(Vertex v) {
@@ -162,4 +178,25 @@ public class Vertex extends Circle {
         text.setMouseTransparent(true);
     }
 
+    public void setAllMouseEventsToNull() {
+        this.setOnMousePressed(null);
+        this.setOnMouseDragReleased(null);
+        this.setOnDragDetected(null);
+        this.setOnMouseDragged(null);
+        this.setOnMouseEntered(null);
+        this.setOnMouseExited(null);
+        this.setOnMouseDragEntered(null);
+        this.setOnMouseDragExited(null);
+    }
+
+    public void setAllMouseEventsToDefault() {
+        this.setOnMousePressed(this::handleMousePressed);
+        this.setOnMouseDragReleased(this::handleMouseDragReleased);
+        this.setOnDragDetected(this::handleDragDetected);
+        this.setOnMouseDragged(this::handleMouseDragged);
+        this.setOnMouseEntered(this::handleMouseEntered);
+        this.setOnMouseExited(this::handleMouseExited);
+        this.setOnMouseDragEntered(this::handleMouseDragEntered);
+        this.setOnMouseDragExited(this::handleMouseDragExited);
+    }
 }
