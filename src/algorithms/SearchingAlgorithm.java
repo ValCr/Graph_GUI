@@ -38,11 +38,12 @@ public abstract class SearchingAlgorithm {
     public void drawAnimation() {
         final IntegerProperty i = new SimpleIntegerProperty(0);
         showInfo(i);
+
+        // color the graph in the order of discovery
         Timeline timeline = new Timeline(
                 new KeyFrame(
                         Duration.seconds(0.5),
                         event -> {
-                            // color the graph in the order of discovery
                             orderOfDiscovery.get(i.get())
                                     .setFill(DEFAULT_COLOR_WHEN_VISITED);
                             Vertex u;
@@ -55,35 +56,34 @@ public abstract class SearchingAlgorithm {
                                     break;
                                 }
                             }
-
                             i.set(i.get() + 1);
-
-                            // set the original graph's colors
-                            if (i.get() == orderOfDiscovery.size()) {
-                                PauseTransition pause = new PauseTransition(Duration.seconds(1));
-                                pause.setOnFinished(e -> {
-                                    resetGraphColor();
-                                    mainController.getGraphPaneController()
-                                            .getInfoAlgo()
-                                            .textProperty()
-                                            .unbind();
-                                    GraphPaneController controller = mainController.getGraphPaneController();
-                                    controller.getGraphPane()
-                                            .setOnMousePressed(controller::addVertex);
-                                    mainController.getGraphPaneController().getHelpInfo().setVisible(true);
-                                    mainController.setAllVertexEventsToDefault();
-                                    mainController.setAllEdgesEventsToDefault();
-                                    mainController.getInfosBoxController()
-                                            .getInfoBox()
-                                            .setDisable(false);
-                                });
-                                pause.play();
-                            }
                         }
                 )
         );
         timeline.setCycleCount(orderOfDiscovery.size());
         timeline.play();
+
+        // set graph's behavior and color to default
+        timeline.setOnFinished(event -> {
+            PauseTransition pause = new PauseTransition(Duration.seconds(1));
+            pause.setOnFinished(e -> {
+                resetGraphColor();
+                mainController.getGraphPaneController()
+                        .getInfoAlgo()
+                        .textProperty()
+                        .unbind();
+                GraphPaneController controller = mainController.getGraphPaneController();
+                controller.getGraphPane()
+                        .setOnMousePressed(controller::addVertex);
+                mainController.getGraphPaneController().getHelpInfo().setVisible(true);
+                mainController.setAllVertexEventsToDefault();
+                mainController.setAllEdgesEventsToDefault();
+                mainController.getInfosBoxController()
+                        .getInfoBox()
+                        .setDisable(false);
+            });
+            pause.play();
+        });
     }
 
     private void showInfo(IntegerProperty i) {
