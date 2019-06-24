@@ -1,6 +1,7 @@
 package graph;
 
 import controllers.GraphPaneController;
+import factory.EdgeFactory;
 import info.HelpText;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
@@ -46,8 +47,9 @@ public class Vertex extends Circle {
         Vertex endVertex = (Vertex) mouseDragEvent.getTarget();
 
         if (startVertex != endVertex && !startVertex.pointsTo(endVertex)) {
-            Edge newEdge = graphPaneController.graphIsOriented() ? new Arc(startVertex,
-                    endVertex) : new Edge(startVertex,
+            EdgeFactory factory = new EdgeFactory();
+            Edge newEdge = factory.makeEdge(graphPaneController.graphIsOriented(),
+                    startVertex,
                     endVertex);
             graphPaneController.addEdge(newEdge);
         }
