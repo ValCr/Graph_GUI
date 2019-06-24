@@ -3,12 +3,18 @@ package controllers;
 import algorithms.BFS;
 import algorithms.DFS;
 import algorithms.SearchingAlgorithm;
+import graph.Arc;
+import graph.Edge;
 import graph.Graph;
+import graph.Vertex;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InfoBoxController {
     @FXML
@@ -116,5 +122,24 @@ public class InfoBoxController {
 
     public VBox getInfoBox() {
         return infoBox;
+    }
+
+    @FXML
+    private void complementGraph() {
+        List<Vertex> vertices = mainController.getGraph().getVertices();
+        List<Edge> oldEdges = new ArrayList<>(mainController.getGraph().getEdges());
+        vertices.forEach(v -> {
+            vertices.forEach(u -> {
+                if (v != u && !v.pointsTo(u)) {
+                    Edge e = mainController.getGraphPaneController().graphIsOriented() ? new Arc(v,
+                            u) : new Edge(v,
+                            u);
+                    mainController.getGraphPaneController().addEdge(e);
+                }
+            });
+        });
+
+        vertices.forEach(v -> oldEdges.stream().filter(e -> e.getStart() == v)
+                .forEach(e -> mainController.getGraphPaneController().removeEdge(e)));
     }
 }

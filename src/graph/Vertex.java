@@ -49,13 +49,6 @@ public class Vertex extends Circle {
             Edge newEdge = graphPaneController.graphIsOriented() ? new Arc(startVertex,
                     endVertex) : new Edge(startVertex,
                     endVertex);
-            startVertex.getEdges()
-                    .add(newEdge);
-            if (!graphPaneController.graphIsOriented()) {
-                endVertex.getEdges()
-                        .add(newEdge);
-            }
-            newEdge.injectGraphPaneController(graphPaneController);
             graphPaneController.addEdge(newEdge);
         }
         startVertex.getEdge()
@@ -118,7 +111,7 @@ public class Vertex extends Circle {
         this.setFill(DEFAULT_COLOR);
     }
 
-    private boolean pointsTo(Vertex v) {
+    public boolean pointsTo(Vertex v) {
         return edges.stream()
                 .anyMatch(e -> e.isIncidentTo(v));
     }

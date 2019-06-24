@@ -57,6 +57,14 @@ public class GraphPaneController {
     }
 
     public void addEdge(Edge newEdge) {
+        newEdge.getStart().getEdges()
+                .add(newEdge);
+        if (!graphIsOriented()) {
+            newEdge.getEnd().getEdges()
+                    .add(newEdge);
+        }
+        newEdge.injectGraphPaneController(this);
+
         graph.getEdges()
                 .add(newEdge);
         graphPane.getChildren()

@@ -541,12 +541,12 @@ Pane, AnchorPane, BorderPane, DialogPane, FlowPane, GridPane, HBox, StackPane, T
 
 .scroll-bar:vertical > .increment-button > .increment-arrow,
 .scroll-bar:vertical > .decrement-button > .decrement-arrow {
-    -fx-padding: 2.5px 4px 2.5px 4px; /* TODO: convert this to ems */
+    -fx-padding: 2.5px 4px 2.5px 4px;
 }
 
 .scroll-bar:horizontal > .increment-button > .increment-arrow,
 .scroll-bar:horizontal > .decrement-button > .decrement-arrow {
-    -fx-padding: 4px 2.5px 4px 2.5px; /* TODO: convert this to ems */
+    -fx-padding: 4px 2.5px 4px 2.5px;
     -fx-translate-y: -1; /* HACK:  Somehow the arrow is not centered so we add this to center it */
 }
 
@@ -647,7 +647,7 @@ Pane, AnchorPane, BorderPane, DialogPane, FlowPane, GridPane, HBox, StackPane, T
 .combo-box-popup > .list-view > .virtual-flow > .clipped-container > .sheet > .list-cell {
     -fx-font-family: "Segoe UI";
     -fx-font-size: 11pt;
-    -fx-padding: 4 0 4 5; /* TODO: convert to ems */
+    -fx-padding: 4 0 4 5;
 
     -fx-background-color: list_cell_color;
 }
@@ -677,7 +677,7 @@ Pane, AnchorPane, BorderPane, DialogPane, FlowPane, GridPane, HBox, StackPane, T
     -fx-border-color: transparent;
     -fx-shape: "M147.421,249.541l6.152,4.854l-2.393,7.355l6.521-4.361l6.549,4.361l-2.393-7.355l6.152-4.854h-7.738l-2.571-7.396l-2.543,7.396H147.421z";
     -fx-background-image: null;
-    -fx-padding: 16 16; /* TODO: convert to ems */
+    -fx-padding: 16 16;
     -fx-background-repeat: no-repeat;
 }
 
@@ -914,7 +914,6 @@ Pane, AnchorPane, BorderPane, DialogPane, FlowPane, GridPane, HBox, StackPane, T
     -fx-background-insets: 0, 1;
 }
 
-/* TODO: below not working */
 .text-area:disabled .content .text {
     -fx-fill: text_disabled_color;
 }
@@ -1203,9 +1202,6 @@ Pane, AnchorPane, BorderPane, DialogPane, FlowPane, GridPane, HBox, StackPane, T
     -fx-background-radius: 0;
 }
 
-/* TODO: Below doesn't work when spinner is in SPLIT_ARROWS_HORIZONTAL and is not focused
-   however it works if you are running with Scenic View attached. Should be a bug in JavaFX 8.
- */
 .spinner:focused > .text-field,
 .spinner:contains-focus > .text-field,
 .spinner > .text-field,
