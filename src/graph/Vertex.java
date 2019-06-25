@@ -23,11 +23,7 @@ public class Vertex extends Circle {
     public Vertex(double centerX, double centerY, double radius, Color color) {
         super(centerX, centerY, radius, color);
         edges = new LinkedList<>();
-        if (graphPaneController == null) {
-            edge = new Edge(this);
-        } else {
-            edge = graphPaneController.graphIsOriented() ? new Arc(this) : new Edge(this);
-        }
+        edge = new Edge(this);
 
         setAllMouseEventsToDefault();
     }

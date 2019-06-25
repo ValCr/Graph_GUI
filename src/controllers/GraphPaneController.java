@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -22,6 +23,8 @@ import java.util.stream.Collectors;
 
 public class GraphPaneController {
     private final static float VERTEX_RADIUS = 15.0f;
+    @FXML
+    private Slider animationSpeed;
     @FXML
     private Label infoAlgo;
     @FXML
@@ -186,5 +189,9 @@ public class GraphPaneController {
 
     public Pane getGraphPane() {
         return graphPane;
+    }
+
+    public Slider getAnimationSpeed() {
+        return animationSpeed;
     }
 }

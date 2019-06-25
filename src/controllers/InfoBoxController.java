@@ -54,14 +54,15 @@ public class InfoBoxController {
         if (mainController.getGraph().getVertices().isEmpty()) {
             return;
         }
-
-        mainController.getGraphPaneController().getHelpInfo().setVisible(false);
-        mainController.getGraphPaneController().getInfoAlgo().setText("Select a starting vertex");
+        GraphPaneController controller = mainController.getGraphPaneController();
+        controller.getAnimationSpeed().setVisible(true);
+        controller.getHelpInfo().setVisible(false);
+        controller.getInfoAlgo().setText("Select a starting vertex");
         infoBox.setDisable(true);
         algo.injectMainController(mainController);
         mainController.setAllVertexEventsToNull();
         mainController.setAllEdgesEventsToNull();
-        mainController.getGraphPaneController().getGraphPane().setOnMousePressed(null);
+        controller.getGraphPane().setOnMousePressed(null);
         mainController.getGraph()
                 .getVertices()
                 .forEach(v -> {

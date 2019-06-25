@@ -38,11 +38,12 @@ public abstract class SearchingAlgorithm {
     public void drawAnimation() {
         final IntegerProperty i = new SimpleIntegerProperty(0);
         showInfo(i);
-
+        double animationSpeed = mainController.getGraphPaneController().getAnimationSpeed()
+                .getValue() / orderOfDiscovery.size();
         // color the graph in the order of discovery
         Timeline timeline = new Timeline(
                 new KeyFrame(
-                        Duration.seconds(0.5),
+                        Duration.seconds(animationSpeed),
                         event -> {
                             orderOfDiscovery.get(i.get())
                                     .setFill(DEFAULT_COLOR_WHEN_VISITED);
@@ -75,6 +76,7 @@ public abstract class SearchingAlgorithm {
                 GraphPaneController controller = mainController.getGraphPaneController();
                 controller.getGraphPane()
                         .setOnMousePressed(controller::addVertex);
+                mainController.getGraphPaneController().getAnimationSpeed().setVisible(false);
                 mainController.getGraphPaneController().getHelpInfo().setVisible(true);
                 mainController.setAllVertexEventsToDefault();
                 mainController.setAllEdgesEventsToDefault();
