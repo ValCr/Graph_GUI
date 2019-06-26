@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.SplitPane?>
-
-<SplitPane fx:id="mainSplitPane" dividerPositions="0.75" prefHeight="649.0" prefWidth="997.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.MainController">
+<SplitPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainSplitPane" dividerPositions="0.7618090452261307"
+           prefHeight="649.0"
+           prefWidth="997.0" xmlns="http://javafx.com/javafx/11.0.1"
+           fx:controller="controllers.MainController">
    <items>
       <fx:include fx:id="graphPane" source="GraphPane.fxml" />
-      <fx:include fx:id="infosBox" source="InfoBox.fxml"/>
+       <fx:include fx:id="infosBox" source="InfoBox.fxml"/>
    </items>
 </SplitPane>

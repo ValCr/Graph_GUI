@@ -1,8 +1,9 @@
 package controllers;
 
+import algorithms.Algorithms;
 import algorithms.BFS;
+import algorithms.Bellman;
 import algorithms.DFS;
-import algorithms.SearchingAlgorithm;
 import graph.Arc;
 import graph.Edge;
 import graph.Graph;
@@ -41,39 +42,26 @@ public class InfoBoxController {
     }
 
     @FXML
+    private void bellman() {
+        applyAlgorithm(new Bellman(mainController.getGraph()));
+    }
+
+    @FXML
     private void depthFirstSearch() {
-        applySearchAlgorithm(new DFS(mainController.getGraph()));
+        applyAlgorithm(new DFS(mainController.getGraph()));
     }
 
     @FXML
     private void breadthFirstSearch() {
-        applySearchAlgorithm(new BFS(mainController.getGraph()));
+        applyAlgorithm(new BFS(mainController.getGraph()));
     }
 
-    private void applySearchAlgorithm(SearchingAlgorithm algo) {
+    private void applyAlgorithm(Algorithms algo) {
         if (mainController.getGraph().getVertices().isEmpty()) {
             return;
         }
-        GraphPaneController controller = mainController.getGraphPaneController();
-        controller.getAnimationSpeed().setVisible(true);
-        controller.getHelpInfo().setVisible(false);
-        controller.getInfoAlgo().setText("Select a starting vertex");
-        infoBox.setDisable(true);
         algo.injectMainController(mainController);
-        mainController.setAllVertexEventsToNull();
-        mainController.setAllEdgesEventsToNull();
-        controller.getGraphPane().setOnMousePressed(null);
-        mainController.getGraph()
-                .getVertices()
-                .forEach(v -> {
-                    v.setOnMouseEntered(v::handleMouseEntered);
-                    v.setOnMouseExited(v::handleMouseExited);
-                    v.setOnMousePressed(mouseEvent -> {
-                        mainController.setAllVertexEventsToNull();
-                        algo.apply(v);
-                        algo.drawAnimation();
-                    });
-                });
+        algo.setUpEvents();
     }
 
     public void bindInfoToGraph() {

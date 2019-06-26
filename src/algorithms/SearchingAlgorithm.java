@@ -1,7 +1,6 @@
 package algorithms;
 
 import controllers.GraphPaneController;
-import controllers.MainController;
 import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
@@ -19,27 +18,50 @@ import javafx.util.Duration;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public abstract class SearchingAlgorithm {
+public abstract class SearchingAlgorithm extends Algorithms {
     private static Color DEFAULT_COLOR_WHEN_VISITED = Color.web("#00CC14");
     protected boolean[] discovered;
-    protected Graph graph;
+    protected Vertex startVertex;
     protected SimpleListProperty<Vertex> orderOfDiscovery;
-    private MainController mainController;
 
     public SearchingAlgorithm(Graph graph) {
-        this.graph = graph;
+        super(graph);
         this.discovered = new boolean[graph.getVertices()
                 .size()];
         this.orderOfDiscovery = new SimpleListProperty<>(FXCollections.observableArrayList());
     }
 
-    public abstract void apply(Vertex vertex);
+    @Override
+    public void setUpEvents() {
+        super.setUpEvents();
+        GraphPaneController controller = mainController.getGraphPaneController();
+        controller.getAnimationSpeed().setVisible(true);
+        controller.getAnimationSpeed().toFront();
+        mainController.getGraph()
+                .getVertices()
+                .forEach(v -> {
+                    controller.getInfoAlgo().setText("Select a starting vertex");
+                    v.setOnMouseEntered(v::handleMouseEntered);
+                    v.setOnMouseExited(v::handleMouseExited);
+                    v.setOnMousePressed(mouseEvent -> {
+                        mainController.setAllVertexEventsToNull();
+                        setStartVertex(v);
+                        apply();
+                        drawAnimation();
+                    });
+                });
+    }
 
+    @Override
+    public abstract void apply();
+
+    @Override
     public void drawAnimation() {
         final IntegerProperty i = new SimpleIntegerProperty(0);
         showInfo(i);
         double animationSpeed = mainController.getGraphPaneController().getAnimationSpeed()
                 .getValue() / orderOfDiscovery.size();
+
         // color the graph in the order of discovery
         Timeline timeline = new Timeline(
                 new KeyFrame(
@@ -52,9 +74,11 @@ public abstract class SearchingAlgorithm {
                             for (int j = this instanceof BFS ? 0 : i.get() - 1; j < i.get() && j >= 0; j = this instanceof BFS ? ++j : --j) {
                                 u = orderOfDiscovery.get(j);
                                 if (u.isAdjacentTo(v)) {
-                                    u.getEdgeFromAdjacentVertex(v)
-                                            .setStroke(DEFAULT_COLOR_WHEN_VISITED);
-                                    break;
+                                    Edge e = u.getEdgeFromAdjacentVertex(v);
+                                    if (!mainController.getGraphPaneController().graphIsOriented() || e.getEnd() == v) {
+                                        e.setStroke(DEFAULT_COLOR_WHEN_VISITED);
+                                        break;
+                                    }
                                 }
                             }
                             i.set(i.get() + 1);
@@ -69,15 +93,14 @@ public abstract class SearchingAlgorithm {
             PauseTransition pause = new PauseTransition(Duration.seconds(1));
             pause.setOnFinished(e -> {
                 resetGraphColor();
-                mainController.getGraphPaneController()
-                        .getInfoAlgo()
+                GraphPaneController controller = mainController.getGraphPaneController();
+                controller.getInfoAlgo()
                         .textProperty()
                         .unbind();
-                GraphPaneController controller = mainController.getGraphPaneController();
                 controller.getGraphPane()
                         .setOnMousePressed(controller::addVertex);
-                mainController.getGraphPaneController().getAnimationSpeed().setVisible(false);
-                mainController.getGraphPaneController().getHelpInfo().setVisible(true);
+                controller.getAnimationSpeed().setVisible(false);
+                controller.getHelpInfo().setVisible(true);
                 mainController.setAllVertexEventsToDefault();
                 mainController.setAllEdgesEventsToDefault();
                 mainController.getInfosBoxController()
@@ -112,7 +135,8 @@ public abstract class SearchingAlgorithm {
                 .forEach(e -> e.setStroke(Edge.DEFAULT_COLOR));
     }
 
-    public void injectMainController(MainController mainController) {
-        this.mainController = mainController;
+    ///////////////////////////////////////////// Setters /////////////////////////////////////////////
+    public void setStartVertex(Vertex startVertex) {
+        this.startVertex = startVertex;
     }
 }

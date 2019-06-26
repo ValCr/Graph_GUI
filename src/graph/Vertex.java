@@ -19,12 +19,15 @@ public class Vertex extends Circle {
     private Edge edge;
     private GraphPaneController graphPaneController;
     private Text text;
+    private int startDate;
+    private int endDate;
 
     public Vertex(double centerX, double centerY, double radius, Color color) {
         super(centerX, centerY, radius, color);
         edges = new LinkedList<>();
         edge = new Edge(this);
-
+        startDate = 0;
+        endDate = 0;
         setAllMouseEventsToDefault();
     }
 
@@ -153,6 +156,22 @@ public class Vertex extends Circle {
                         .filter(e -> e.isIncidentTo(this))
                         .findFirst()
                         .orElse(null));
+    }
+
+    public int getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(int startDate) {
+        this.startDate = startDate;
+    }
+
+    public int getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(int endDate) {
+        this.endDate = endDate;
     }
 
     ///////////////////////////////////////////// Setters /////////////////////////////////////////////

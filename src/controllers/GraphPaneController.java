@@ -168,6 +168,7 @@ public class GraphPaneController {
     public void clearGraph() {
         graphPane.getChildren()
                 .clear();
+        graphPane.getChildren().add(animationSpeed);
         vertexId = 1;
         infoAlgo.setText("");
     }

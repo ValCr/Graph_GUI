@@ -13,26 +13,26 @@ public class BFS extends SearchingAlgorithm {
     }
 
     @Override
-    public void apply(Vertex v) {
+    public void apply() {
         Queue<Vertex> q = new ArrayDeque<>();
 
         discovered[graph.getVertices()
-                .indexOf(v)] = true;
-        orderOfDiscovery.add(v);
-        q.add(v);
+                .indexOf(startVertex)] = true;
+        orderOfDiscovery.add(startVertex);
+        q.add(startVertex);
 
         while (!q.isEmpty()) {
-            v = q.poll();
+            startVertex = q.poll();
 
             int uPos;
-            for (Edge e : v.getEdges()) {
-                Vertex u = e.getOtherEnd(v);
+            for (Edge e : startVertex.getEdges()) {
+                Vertex endVertex = e.getOtherEnd(startVertex);
                 uPos = graph.getVertices()
-                        .indexOf(u);
+                        .indexOf(endVertex);
                 if (!discovered[uPos]) {
                     discovered[uPos] = true;
-                    orderOfDiscovery.add(u);
-                    q.add(u);
+                    orderOfDiscovery.add(endVertex);
+                    q.add(endVertex);
                 }
             }
 
