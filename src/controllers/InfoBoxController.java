@@ -57,11 +57,10 @@ public class InfoBoxController {
     }
 
     private void applyAlgorithm(Algorithms algo) {
-        if (mainController.getGraph().getVertices().isEmpty()) {
-            return;
+        if (!mainController.getGraph().getVertices().isEmpty()) {
+            algo.injectMainController(mainController);
+            algo.setUpEvents();
         }
-        algo.injectMainController(mainController);
-        algo.setUpEvents();
     }
 
     public void bindInfoToGraph() {

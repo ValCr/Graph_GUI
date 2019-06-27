@@ -13,14 +13,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public abstract class SearchingAlgorithm extends Algorithms {
-    private static Color DEFAULT_COLOR_WHEN_VISITED = Color.web("#00CC14");
     protected boolean[] discovered;
     protected Vertex startVertex;
     protected SimpleListProperty<Vertex> orderOfDiscovery;

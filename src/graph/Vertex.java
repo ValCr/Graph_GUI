@@ -209,4 +209,5 @@ public class Vertex extends Circle {
         this.setOnMouseDragEntered(this::handleMouseDragEntered);
         this.setOnMouseDragExited(this::handleMouseDragExited);
     }
+
 }

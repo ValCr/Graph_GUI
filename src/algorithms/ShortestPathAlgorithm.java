@@ -2,6 +2,8 @@ package algorithms;
 
 import graph.Graph;
 import graph.Vertex;
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
 
 public abstract class ShortestPathAlgorithm extends Algorithms {
     protected Vertex startVertex;
@@ -16,7 +18,9 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
 
     @Override
     public void drawAnimation() {
-
+        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+        pause.setOnFinished(e -> resetDefaultGraphBehavior());
+        pause.play();
     }
 
     @Override

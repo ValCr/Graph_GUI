@@ -12,14 +12,17 @@ public class Edge extends Line {
     public final static Color DEFAULT_COLOR = Color.web("#1D2129");
     public final static Color DEFAULT_SECOND_COLOR = Color.web("#3F5E7F");
     public final static float DEFAULT_STROKE_WIDTH = 3.0f;
+    private static final int DEFAULT_COST = 1;
     protected Group shapes;
     private Vertex start;
     private Vertex end;
     private GraphPaneController graphPaneController;
+    private Integer cost;
 
     public Edge(Vertex start) {
         super();
         this.shapes = new Group(this);
+        this.cost = DEFAULT_COST;
         this.startXProperty()
                 .bind(start.centerXProperty());
         this.startYProperty()
@@ -40,6 +43,7 @@ public class Edge extends Line {
                 end.getCenterX(),
                 end.getCenterY());
         this.shapes = new Group(this);
+        this.cost = DEFAULT_COST;
         this.start = start;
         this.end = end;
         this.startYProperty()
@@ -125,6 +129,10 @@ public class Edge extends Line {
 
     public Vertex getOtherEnd(Vertex v) {
         return start == v ? end : start;
+    }
+
+    public Integer getCost() {
+        return cost;
     }
 
     ///////////////////////////////////////////// Setters /////////////////////////////////////////////

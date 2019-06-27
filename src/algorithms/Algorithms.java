@@ -5,8 +5,10 @@ import controllers.MainController;
 import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
+import javafx.scene.paint.Color;
 
 public abstract class Algorithms {
+    protected static Color DEFAULT_COLOR_WHEN_VISITED = Color.web("#00CC14");
     protected Graph graph;
     protected MainController mainController;
 
