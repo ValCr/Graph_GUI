@@ -12,6 +12,7 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
@@ -92,20 +93,8 @@ public abstract class SearchingAlgorithm extends Algorithms {
         timeline.setOnFinished(event -> {
             PauseTransition pause = new PauseTransition(Duration.seconds(1));
             pause.setOnFinished(e -> {
-                resetGraphColor();
-                GraphPaneController controller = mainController.getGraphPaneController();
-                controller.getInfoAlgo()
-                        .textProperty()
-                        .unbind();
-                controller.getGraphPane()
-                        .setOnMousePressed(controller::addVertex);
-                controller.getAnimationSpeed().setVisible(false);
-                controller.getHelpInfo().setVisible(true);
-                mainController.setAllVertexEventsToDefault();
-                mainController.setAllEdgesEventsToDefault();
-                mainController.getInfosBoxController()
-                        .getInfoBox()
-                        .setDisable(false);
+                resetDefaultGraphBehavior();
+                mainController.getGraphPaneController().getAnimationSpeed().setVisible(false);
             });
             pause.play();
         });
@@ -127,16 +116,13 @@ public abstract class SearchingAlgorithm extends Algorithms {
                 ));
     }
 
-
-    private void resetGraphColor() {
-        graph.getVertices()
-                .forEach(v -> v.setFill(Vertex.DEFAULT_COLOR));
-        graph.getEdges()
-                .forEach(e -> e.setStroke(Edge.DEFAULT_COLOR));
-    }
-
     ///////////////////////////////////////////// Setters /////////////////////////////////////////////
     public void setStartVertex(Vertex startVertex) {
         this.startVertex = startVertex;
+    }
+
+    ///////////////////////////////////////////// Getters /////////////////////////////////////////////
+    public ObservableList<Vertex> getOrderOfDiscovery() {
+        return orderOfDiscovery.get();
     }
 }

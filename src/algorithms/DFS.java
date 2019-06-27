@@ -14,6 +14,7 @@ public class DFS extends SearchingAlgorithm {
 
     @Override
     public void apply() {
+        assert startVertex != null;
         dfs(startVertex);
     }
 
