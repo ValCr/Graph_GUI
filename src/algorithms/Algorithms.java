@@ -28,6 +28,8 @@ public abstract class Algorithms {
         GraphPaneController controller = mainController.getGraphPaneController();
         controller.getHelpInfo().setVisible(false);
         controller.getGraphPane().setOnMousePressed(null);
+        controller.getAnimationSpeed().setVisible(true);
+        controller.getAnimationSpeed().toFront();
         mainController.getInfosBoxController().getInfoBox().setDisable(true);
         mainController.setAllVertexEventsToNull();
         mainController.setAllEdgesEventsToNull();
@@ -42,6 +44,7 @@ public abstract class Algorithms {
         controller.getGraphPane()
                 .setOnMousePressed(controller::addVertex);
         controller.getHelpInfo().setVisible(true);
+        controller.getAnimationSpeed().setVisible(false);
         mainController.setAllVertexEventsToDefault();
         mainController.setAllEdgesEventsToDefault();
         mainController.getInfosBoxController()

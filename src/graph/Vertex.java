@@ -15,6 +15,7 @@ import java.util.List;
 public class Vertex extends Circle {
     public final static Color DEFAULT_COLOR = Color.web("#FF2C16");
     public final static Color DEFAULT_SECOND_COLOR = Color.web("#EB8243");
+    public final static Color DEFAULT_COLOR_WHEN_SELECTED = Color.web("#0E0FA8");
     private List<Edge> edges;
     private Edge edge;
     private GraphPaneController graphPaneController;
@@ -209,5 +210,4 @@ public class Vertex extends Circle {
         this.setOnMouseDragEntered(this::handleMouseDragEntered);
         this.setOnMouseDragExited(this::handleMouseDragExited);
     }
-
 }

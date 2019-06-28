@@ -34,8 +34,6 @@ public abstract class SearchingAlgorithm extends Algorithms {
     public void setUpEvents() {
         super.setUpEvents();
         GraphPaneController controller = mainController.getGraphPaneController();
-        controller.getAnimationSpeed().setVisible(true);
-        controller.getAnimationSpeed().toFront();
         mainController.getGraph()
                 .getVertices()
                 .forEach(v -> {
@@ -44,6 +42,7 @@ public abstract class SearchingAlgorithm extends Algorithms {
                     v.setOnMouseExited(v::handleMouseExited);
                     v.setOnMousePressed(mouseEvent -> {
                         mainController.setAllVertexEventsToNull();
+                        v.setFill(Vertex.DEFAULT_COLOR_WHEN_SELECTED);
                         setStartVertex(v);
                         apply();
                         drawAnimation();
@@ -66,8 +65,9 @@ public abstract class SearchingAlgorithm extends Algorithms {
                 new KeyFrame(
                         Duration.seconds(animationSpeed),
                         event -> {
-                            orderOfDiscovery.get(i.get())
-                                    .setFill(DEFAULT_COLOR_WHEN_VISITED);
+                            if (orderOfDiscovery.get(i.get()) != startVertex) {
+                                orderOfDiscovery.get(i.get()).setFill(DEFAULT_COLOR_WHEN_VISITED);
+                            }
                             Vertex u;
                             Vertex v = orderOfDiscovery.get(i.get());
                             for (int j = this instanceof BFS ? 0 : i.get() - 1; j < i.get() && j >= 0; j = this instanceof BFS ? ++j : --j) {
@@ -90,10 +90,7 @@ public abstract class SearchingAlgorithm extends Algorithms {
         // set graph's behavior and color to default
         timeline.setOnFinished(event -> {
             PauseTransition pause = new PauseTransition(Duration.seconds(1));
-            pause.setOnFinished(e -> {
-                resetDefaultGraphBehavior();
-                mainController.getGraphPaneController().getAnimationSpeed().setVisible(false);
-            });
+            pause.setOnFinished(e -> resetDefaultGraphBehavior());
             pause.play();
         });
     }

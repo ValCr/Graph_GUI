@@ -6,8 +6,8 @@ import graph.Vertex;
 
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Bellman extends ShortestPathAlgorithm {
 
@@ -23,22 +23,20 @@ public class Bellman extends ShortestPathAlgorithm {
 
         List<Vertex> topologicalOrder = dfs.getOrderOfDiscovery();
         topologicalOrder.sort(Comparator.comparing(Vertex::getEndDate).reversed());
-        topologicalOrder = topologicalOrder.subList(topologicalOrder.indexOf(startVertex), topologicalOrder.size());
 
         if (topologicalOrder.isEmpty()) {
             return;
         }
 
-        Map<Vertex, Integer> distances = new HashMap<>(topologicalOrder.size());
-        Map<Vertex, Vertex> predecessors = new HashMap<>(topologicalOrder.size());
+
+        predecessors = new LinkedHashMap<>();
+        distances = new HashMap<>(topologicalOrder.size());
+
         topologicalOrder.forEach(v -> {
             distances.put(v, Integer.MAX_VALUE);
-            predecessors.put(v, startVertex);
+            predecessors.put(v, null);
         });
         distances.put(startVertex, 0);
-        predecessors.remove(startVertex);
-        System.out.println(predecessors);
-        System.out.println(distances);
 
         Vertex u;
         for (Vertex v : topologicalOrder) {
@@ -54,7 +52,6 @@ public class Bellman extends ShortestPathAlgorithm {
         //TODO
         // assert graph is oriented
         // assert graph is without circuit
-        // assert startvertex and endvertex != null
     }
 
 
