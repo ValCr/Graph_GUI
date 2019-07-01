@@ -83,9 +83,7 @@ public class GraphPaneController {
             stage.setTitle("Rename a Vertex");
             stage.initModality(Modality.WINDOW_MODAL);
             stage.initOwner(Main.getPrimaryStage());
-            stage.setScene(new Scene(root,
-                    200,
-                    100));
+            stage.setScene(new Scene(root));
             stage.setX(Main.getPrimaryStage()
                     .getX() + Main.getPrimaryStage()
                     .getWidth() / 2 - 100);
@@ -93,6 +91,7 @@ public class GraphPaneController {
                     .getY() + Main.getPrimaryStage()
                     .getHeight() / 2 - 50);
             stage.show();
+            RenameVertexController.setMainController(mainController);
             RenameVertexController.setVertexToRename(vertex);
         } catch (IOException e) {
             e.printStackTrace();

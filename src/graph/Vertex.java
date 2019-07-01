@@ -180,11 +180,9 @@ public class Vertex extends Circle {
         text = new Text();
         text.textProperty()
                 .bind(idProperty());
-        text.xProperty()
-                .bind(centerXProperty().add(-text.getLayoutBounds()
+        text.xProperty().bind(centerXProperty().add(-text.layoutBoundsProperty().getValue()
                         .getWidth() / 2));
-        text.yProperty()
-                .bind(centerYProperty().add(text.getLayoutBounds()
+        text.yProperty().bind(centerYProperty().add(text.layoutBoundsProperty().getValue()
                         .getHeight() / 4));
         text.setMouseTransparent(true);
     }

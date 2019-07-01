@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.SplitPane?>
-<SplitPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainSplitPane" dividerPositions="0.7618090452261307"
-           prefHeight="649.0"
-           prefWidth="997.0" xmlns="http://javafx.com/javafx/11.0.1"
+<SplitPane xmlns:fx="http://javafx.com/fxml/1" fx:id="mainSplitPane" dividerPositions="0.7054108216432866"
+           prefHeight="700.0"
+           prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1"
            fx:controller="controllers.MainController">
    <items>
       <fx:include fx:id="graphPane" source="GraphPane.fxml" />

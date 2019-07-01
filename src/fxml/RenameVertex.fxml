@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-
-<AnchorPane onKeyPressed="#keyPressed" prefHeight="100.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.RenameVertexController">
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" onKeyPressed="#keyPressed" prefHeight="91.0" prefWidth="263.0"
+            xmlns="http://javafx.com/javafx/11.0.1" fx:controller="controllers.RenameVertexController">
     <children>
-        <Button layoutX="121.0" layoutY="50.0" mnemonicParsing="false" onAction="#close" text="Submit"/>
-        <TextField fx:id="newName" layoutX="15.0" layoutY="14.0" promptText="Enter name"/>
+        <Button layoutX="184.0" layoutY="55.0" mnemonicParsing="false" onAction="#submit" text="Submit"/>
+        <TextField fx:id="newName" layoutX="12.0" layoutY="14.0" prefHeight="26.0" prefWidth="239.0"
+                   promptText="Enter name"/>
+        <Label fx:id="warnings" layoutX="12.0" layoutY="46.0" prefHeight="35.0" prefWidth="157.0" wrapText="true"/>
     </children>
 </AnchorPane>

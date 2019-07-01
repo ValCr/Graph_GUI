@@ -50,12 +50,7 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
         timeline1.play();
 
         // Show the shortest path between startvertex and endvertex on the graph
-        Vertex vertex = endVertex;
-        List<Vertex> shortestPath = new ArrayList<>();
-        while (vertex != null) {
-            shortestPath.add(vertex);
-            vertex = predecessors.get(vertex);
-        }
+        List<Vertex> shortestPath = getPathFromPredecessors();
         Iterator<Vertex> iter = shortestPath.iterator();
 
         Timeline timeline2 = new Timeline();
@@ -77,7 +72,6 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
 
         timeline1.setOnFinished(event -> timeline2.play());
 
-        // set graph's behavior and color to default
         timeline2.setOnFinished(event -> {
             // show the shortest path on the info label
             Collections.reverse(shortestPath);
@@ -90,10 +84,21 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
                                 .getId() + " : \n" + shortestPath.stream().map(Objects::toString)
                                 .collect(Collectors.joining("->")) + ", length : " + distances.get(endVertex));
             }
+            // set graph's behavior and color to default
             PauseTransition pause = new PauseTransition(Duration.seconds(1));
             pause.setOnFinished(e -> resetDefaultGraphBehavior());
             pause.play();
         });
+    }
+
+    private List<Vertex> getPathFromPredecessors() {
+        List<Vertex> shortestPath = new ArrayList<>();
+        Vertex v = endVertex;
+        while (v != null) {
+            shortestPath.add(v);
+            v = predecessors.get(v);
+        }
+        return shortestPath;
     }
 
     @Override

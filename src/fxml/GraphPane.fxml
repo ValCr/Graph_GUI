@@ -5,13 +5,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<SplitPane xmlns:fx="http://javafx.com/fxml/1" dividerPositions="0.7401433691756273" orientation="VERTICAL"
-           prefHeight="560.0"
-           prefWidth="848.0" xmlns="http://javafx.com/javafx/11.0.1"
-           fx:controller="controllers.GraphPaneController">
+<SplitPane xmlns:fx="http://javafx.com/fxml/1" dividerPositions="0.7401433691756273" minHeight="100.0" minWidth="100.0"
+           orientation="VERTICAL" prefHeight="560.0" prefWidth="848.0"
+           xmlns="http://javafx.com/javafx/11.0.1" fx:controller="controllers.GraphPaneController">
    <items>
       <Pane fx:id="graphPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
-            onMousePressed="#addVertex" prefHeight="409.0" prefWidth="846.0" style="-fx-background-color: #E5E2D1;">
+            minWidth="0.0" onMousePressed="#addVertex" prefHeight="409.0" prefWidth="846.0"
+            style="-fx-background-color: #E5E2D1;">
          <children>
             <Slider fx:id="animationSpeed" blockIncrement="1.0" layoutX="14.0" layoutY="14.0" max="10.0" min="0.1"
                     prefHeight="33.0" prefWidth="133.0" showTickLabels="true" value="2.0" visible="false"/>

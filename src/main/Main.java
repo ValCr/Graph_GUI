@@ -24,9 +24,7 @@ public class Main extends Application {
         root.getStylesheets()
                 .add("JMetroLightTheme.css");
         primaryStage.setTitle("Graph simulation");
-        primaryStage.setScene(new Scene(root,
-                1000,
-                700));
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 }
