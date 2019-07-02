@@ -1,9 +1,6 @@
 package controllers;
 
-import algorithms.Algorithms;
-import algorithms.BFS;
-import algorithms.Bellman;
-import algorithms.DFS;
+import algorithms.*;
 import graph.Arc;
 import graph.Edge;
 import graph.Graph;
@@ -44,6 +41,10 @@ public class InfoBoxController {
         mainController.clearGraph();
     }
 
+    @FXML
+    private void dijsktra() {
+        applyAlgorithm(new Dijsktra(mainController.getGraph()));
+    }
     @FXML
     private void bellman() {
         applyAlgorithm(new Bellman(mainController.getGraph()));

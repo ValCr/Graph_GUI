@@ -27,26 +27,28 @@ public class Bellman extends ShortestPathAlgorithm {
         predecessors = new LinkedHashMap<>();
         distances = new HashMap<>(topologicalOrder.size());
 
-        if (graph.containsCircuit()) {
-            return;
-        }
+        if (conditionsAreValid()) {
+            topologicalOrder.forEach(v -> {
+                distances.put(v, Double.POSITIVE_INFINITY);
+                predecessors.put(v, null);
+            });
+            distances.put(startVertex, 0.0);
 
-        topologicalOrder.forEach(v -> {
-            distances.put(v, Double.POSITIVE_INFINITY);
-            predecessors.put(v, null);
-        });
-        distances.put(startVertex, 0.0);
-
-        Vertex u;
-        for (Vertex v : topologicalOrder) {
-            for (Edge e : v.getEdges()) {
-                u = e.getOtherEnd(v);
-                if (distances.get(v) + e.getCost() < distances.get(u)) {
-                    distances.put(u, distances.get(v) + e.getCost());
-                    predecessors.put(u, v);
+            for (Vertex v : topologicalOrder) {
+                for (Edge e : v.getEdges()) {
+                    updateDistances(v, e);
                 }
             }
         }
     }
 
+    @Override
+    public boolean conditionsAreValid() {
+        return !graph.containsCircuit();
+    }
+
+    @Override
+    public void updateInfoAlgo() {
+        mainController.getGraphPaneController().getInfoAlgo().setText("Graph contains a circuit.");
+    }
 }

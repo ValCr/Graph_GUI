@@ -14,10 +14,10 @@
         <HBox maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="312.0" spacing="10.0"
               style="-fx-background-color: #0E0FA8;">
             <children>
-                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#complementGraph"
-                        prefHeight="26.0" prefWidth="145.0" text="Complement"/>
                 <Button fx:id="bellmanButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
                         onAction="#bellman" prefHeight="26.0" prefWidth="145.0" text="Bellman"/>
+                <Button layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                        onAction="#dijsktra" prefHeight="26.0" prefWidth="145.0" text="Dijsktra"/>
             </children>
         </HBox>
         <HBox maxWidth="1.7976931348623157E308" prefHeight="14.0" prefWidth="188.0" spacing="10.0"
@@ -29,6 +29,8 @@
                         text="BFS"/>
             </children>
         </HBox>
+        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#complementGraph" prefHeight="26.0"
+                prefWidth="145.0" text="Complement"/>
         <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#clearGraph"
                 prefHeight="26.0" prefWidth="249.0" text="Clear"/>
         <CheckBox fx:id="orientedGraph" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" mnemonicParsing="false"

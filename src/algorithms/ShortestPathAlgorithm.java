@@ -1,5 +1,6 @@
 package algorithms;
 
+import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
 import javafx.animation.KeyFrame;
@@ -23,8 +24,21 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
     @Override
     public abstract void apply();
 
+    public abstract boolean conditionsAreValid();
+
+    public abstract void updateInfoAlgo();
+
     @Override
     public void drawAnimation() {
+        // set graph's behavior and color to default if algorithm can't be applied
+        if (!conditionsAreValid()) {
+            updateInfoAlgo();
+            PauseTransition pause = new PauseTransition(Duration.seconds(1));
+            pause.setOnFinished(e -> resetDefaultGraphBehavior());
+            pause.play();
+            return;
+        }
+
         double animationSpeed = mainController.getGraphPaneController().getAnimationSpeed().getValue() / (predecessors
                 .size() + 1);
         Iterator<Map.Entry<Vertex, Vertex>> it = predecessors.entrySet().stream().filter(v -> v.getValue() != null)
@@ -75,9 +89,7 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
         timeline2.setOnFinished(event -> {
             // show the shortest path on the info label
             Collections.reverse(shortestPath);
-            if (graph.containsCircuit()) {
-                mainController.getGraphPaneController().getInfoAlgo().setText("Graph contains a circuit.");
-            } else if (shortestPath.size() == 1 && startVertex != endVertex) {
+            if (shortestPath.size() == 1 && startVertex != endVertex) {
                 mainController.getGraphPaneController().getInfoAlgo()
                         .setText("No path found between " + startVertex.getId() + " and " + endVertex.getId());
             } else {
@@ -132,5 +144,13 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
                         });
                     });
                 });
+    }
+
+    protected void updateDistances(Vertex v, Edge e) {
+        Vertex u = e.getOtherEnd(v);
+        if (distances.get(v) + e.getCost() < distances.get(u)) {
+            distances.put(u, distances.get(v) + e.getCost());
+            predecessors.put(u, v);
+        }
     }
 }
