@@ -5,6 +5,7 @@ import graph.Graph;
 import graph.Vertex;
 
 public class DFS extends SearchingAlgorithm {
+    private int[] state;
     private int time;
 
     public DFS(Graph graph) {
@@ -15,24 +16,27 @@ public class DFS extends SearchingAlgorithm {
     @Override
     public void apply() {
         assert startVertex != null;
+        state = new int[graph.getVertices().size()];
         dfs(startVertex);
     }
 
     private void dfs(Vertex v) {
-        time++;
-        v.setStartDate(time);
+        int UNVISITED = 0, CLOSED = 2, OPEN = 3;
 
-        discovered[graph.getVertices().indexOf(v)] = true;
+        v.setStartDate(++time);
+        state[graph.getVertices().indexOf(v)] = OPEN;
         orderOfDiscovery.add(v);
 
         for (Edge e : v.getEdges()) {
             Vertex u = e.getOtherEnd(v);
-            if (!discovered[graph.getVertices().indexOf(u)]) {
+            if (state[graph.getVertices().indexOf(u)] == UNVISITED) {
                 dfs(u);
+            } else if (state[graph.getVertices().indexOf(u)] == OPEN) {
+                graph.setContainsCircuit(true);
             }
         }
 
-        time++;
-        v.setEndDate(time);
+        state[graph.getVertices().indexOf(v)] = CLOSED;
+        v.setEndDate(++time);
     }
 }

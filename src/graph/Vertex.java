@@ -48,7 +48,7 @@ public class Vertex extends Circle {
 
         if (startVertex != endVertex && !startVertex.pointsTo(endVertex)) {
             EdgeFactory factory = new EdgeFactory();
-            Edge newEdge = factory.makeEdge(graphPaneController.graphIsOriented(),
+            Edge newEdge = factory.makeEdge(graphPaneController.getGraph().isOriented(),
                     startVertex,
                     endVertex);
             graphPaneController.addEdge(newEdge);
@@ -94,9 +94,8 @@ public class Vertex extends Circle {
 
     public void handleMouseEntered(MouseEvent mouseEvent) {
         this.setFill(DEFAULT_SECOND_COLOR);
-        graphPaneController.getHelpInfo()
-                .setText(
-                        graphPaneController.graphIsOriented() ? HelpText.INFO_VERTEX_ARC : HelpText.INFO_VERTEX_EDGE
+        graphPaneController.getHelpInfo().setText(
+                graphPaneController.getGraph().isOriented() ? HelpText.INFO_VERTEX_ARC : HelpText.INFO_VERTEX_EDGE
                 );
     }
 

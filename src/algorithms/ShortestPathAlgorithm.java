@@ -14,7 +14,7 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
     protected Vertex startVertex;
     protected Vertex endVertex;
     protected Map<Vertex, Vertex> predecessors;
-    protected Map<Vertex, Integer> distances;
+    protected Map<Vertex, Double> distances;
 
     public ShortestPathAlgorithm(Graph graph) {
         super(graph);
@@ -75,7 +75,9 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
         timeline2.setOnFinished(event -> {
             // show the shortest path on the info label
             Collections.reverse(shortestPath);
-            if (shortestPath.size() == 1 && startVertex != endVertex) {
+            if (graph.containsCircuit()) {
+                mainController.getGraphPaneController().getInfoAlgo().setText("Graph contains a circuit.");
+            } else if (shortestPath.size() == 1 && startVertex != endVertex) {
                 mainController.getGraphPaneController().getInfoAlgo()
                         .setText("No path found between " + startVertex.getId() + " and " + endVertex.getId());
             } else {

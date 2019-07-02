@@ -62,7 +62,7 @@ public class GraphPaneController {
     public void addEdge(Edge newEdge) {
         newEdge.getStart().getEdges()
                 .add(newEdge);
-        if (!graphIsOriented()) {
+        if (!graph.isOriented()) {
             newEdge.getEnd().getEdges()
                     .add(newEdge);
         }
@@ -172,12 +172,6 @@ public class GraphPaneController {
         infoAlgo.setText("");
     }
 
-    public boolean graphIsOriented() {
-        return mainController.getInfosBoxController()
-                .getOrientedGraphCheckBox()
-                .isSelected();
-    }
-
     ///////////////////////////////////////////// Getters /////////////////////////////////////////////
     public Label getHelpInfo() {
         return helpInfo;
@@ -193,5 +187,9 @@ public class GraphPaneController {
 
     public Slider getAnimationSpeed() {
         return animationSpeed;
+    }
+
+    public Graph getGraph() {
+        return graph;
     }
 }

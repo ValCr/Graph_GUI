@@ -19,14 +19,11 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public abstract class SearchingAlgorithm extends Algorithms {
-    protected boolean[] discovered;
     protected Vertex startVertex;
     protected SimpleListProperty<Vertex> orderOfDiscovery;
 
     public SearchingAlgorithm(Graph graph) {
         super(graph);
-        this.discovered = new boolean[graph.getVertices()
-                .size()];
         this.orderOfDiscovery = new SimpleListProperty<>(FXCollections.observableArrayList());
     }
 
@@ -74,7 +71,7 @@ public abstract class SearchingAlgorithm extends Algorithms {
                                 u = orderOfDiscovery.get(j);
                                 if (u.isAdjacentTo(v)) {
                                     Edge e = u.getEdgeFromAdjacentVertex(v);
-                                    if (!mainController.getGraphPaneController().graphIsOriented() || e.getEnd() == v) {
+                                    if (!mainController.getGraph().isOriented() || e.getEnd() == v) {
                                         e.setStroke(DEFAULT_COLOR_WHEN_VISITED);
                                         break;
                                     }

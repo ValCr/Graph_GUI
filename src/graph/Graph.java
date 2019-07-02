@@ -1,6 +1,7 @@
 package graph;
 
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
@@ -16,6 +17,8 @@ public class Graph {
     private SimpleIntegerProperty minDegree; // also outdegree when graph is oriented
     private SimpleIntegerProperty maxIndegree;
     private SimpleIntegerProperty minIndegree;
+    private SimpleBooleanProperty oriented;
+    private boolean containsCircuit;
 
     public Graph() {
         vertices = new SimpleListProperty<>(FXCollections.observableArrayList());
@@ -26,6 +29,8 @@ public class Graph {
         minDegree = new SimpleIntegerProperty(0);
         maxIndegree = new SimpleIntegerProperty(0);
         minIndegree = new SimpleIntegerProperty(0);
+        oriented = new SimpleBooleanProperty(false);
+        containsCircuit = false;
 
         order.bind(vertices.sizeProperty());
         size.bind(edges.sizeProperty());
@@ -68,6 +73,14 @@ public class Graph {
                 vertices.sizeProperty(),
                 edges.sizeProperty()
         ));
+    }
+
+    public boolean containsCircuit() {
+        return containsCircuit;
+    }
+
+    public void setContainsCircuit(boolean containsCycle) {
+        this.containsCircuit = containsCycle;
     }
 
     ///////////////////////////////////////////// Getters /////////////////////////////////////////////
@@ -125,5 +138,13 @@ public class Graph {
 
     public SimpleIntegerProperty minIndegreeProperty() {
         return minIndegree;
+    }
+
+    public boolean isOriented() {
+        return oriented.get();
+    }
+
+    public SimpleBooleanProperty orientedProperty() {
+        return oriented;
     }
 }

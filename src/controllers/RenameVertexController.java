@@ -31,10 +31,10 @@ public class RenameVertexController {
     @FXML
     private void submit(Event event) {
         if (newName.getText().matches("\\d+")) {
-            warnings.setText("Name cannot be a number");
+            warnings.setText("Name cannot be a number.");
         } else if (mainController.getGraph().getVertices().stream()
                 .anyMatch(v -> v.getId().matches(newName.getText()))) {
-            warnings.setText("Another vertex already has this name");
+            warnings.setText("Another vertex already has this name.");
         } else {
         vertexToRename.setId(newName.getText());
         Node source = (Node) event.getSource();

@@ -12,7 +12,7 @@ public class MainController {
     @FXML
     private GraphPaneController graphPaneController;
     @FXML
-    private InfoBoxController infosBoxController;
+    private InfoBoxController infoBoxController;
 
     private Graph graph;
 
@@ -23,9 +23,9 @@ public class MainController {
     @FXML
     private void initialize() {
         graph = new Graph();
-        infosBoxController.injectMainController(this);
+        infoBoxController.injectMainController(this);
         graphPaneController.injectMainController(this);
-        infosBoxController.bindInfoToGraph();
+        infoBoxController.bindInfoToGraph();
     }
 
     public void clearGraph() {
@@ -34,6 +34,7 @@ public class MainController {
         graph.getEdges()
                 .clear();
         graphPaneController.clearGraph();
+        graph.setContainsCircuit(false);
     }
 
     ///////////////////////////////////////////// Getters /////////////////////////////////////////////
@@ -41,12 +42,8 @@ public class MainController {
         return graphPaneController;
     }
 
-    public InfoBoxController getInfosBoxController() {
-        return infosBoxController;
-    }
-
-    public SplitPane getMainSplitPane() {
-        return mainSplitPane;
+    public InfoBoxController getInfoBoxController() {
+        return infoBoxController;
     }
 
     public void setAllVertexEventsToNull() {

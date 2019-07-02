@@ -10,6 +10,7 @@ import graph.Graph;
 import graph.Vertex;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -18,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InfoBoxController {
+    @FXML
+    private Button bellmanButton;
     @FXML
     private VBox infoBox;
     @FXML
@@ -97,15 +100,13 @@ public class InfoBoxController {
                         orientedGraph.selectedProperty(),
                         graph.minIndegreeProperty()
                 ));
-    }
+        bellmanButton.disableProperty().bind(orientedGraph.selectedProperty().not());
+        graph.orientedProperty().bind(orientedGraph.selectedProperty());
 
+    }
 
     public void injectMainController(MainController mainController) {
         this.mainController = mainController;
-    }
-
-    public CheckBox getOrientedGraphCheckBox() {
-        return orientedGraph;
     }
 
     public VBox getInfoBox() {
@@ -116,16 +117,12 @@ public class InfoBoxController {
     private void complementGraph() {
         List<Vertex> vertices = mainController.getGraph().getVertices();
         List<Edge> oldEdges = new ArrayList<>(mainController.getGraph().getEdges());
-        vertices.forEach(v -> {
-            vertices.forEach(u -> {
-                if (v != u && !v.pointsTo(u)) {
-                    Edge e = mainController.getGraphPaneController().graphIsOriented() ? new Arc(v,
-                            u) : new Edge(v,
-                            u);
-                    mainController.getGraphPaneController().addEdge(e);
-                }
-            });
-        });
+        vertices.forEach(v -> vertices.forEach(u -> {
+            if (v != u && !v.pointsTo(u)) {
+                Edge e = mainController.getGraph().isOriented() ? new Arc(v, u) : new Edge(v, u);
+                mainController.getGraphPaneController().addEdge(e);
+            }
+        }));
 
         vertices.forEach(v -> oldEdges.stream().filter(e -> e.getStart() == v)
                 .forEach(e -> mainController.getGraphPaneController().removeEdge(e)));

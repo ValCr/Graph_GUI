@@ -30,13 +30,14 @@ public abstract class Algorithms {
         controller.getGraphPane().setOnMousePressed(null);
         controller.getAnimationSpeed().setVisible(true);
         controller.getAnimationSpeed().toFront();
-        mainController.getInfosBoxController().getInfoBox().setDisable(true);
+        mainController.getInfoBoxController().getInfoBox().setDisable(true);
         mainController.setAllVertexEventsToNull();
         mainController.setAllEdgesEventsToNull();
     }
 
     protected void resetDefaultGraphBehavior() {
         resetGraphColor();
+        graph.setContainsCircuit(false);
         GraphPaneController controller = mainController.getGraphPaneController();
         controller.getInfoAlgo()
                 .textProperty()
@@ -47,7 +48,7 @@ public abstract class Algorithms {
         controller.getAnimationSpeed().setVisible(false);
         mainController.setAllVertexEventsToDefault();
         mainController.setAllEdgesEventsToDefault();
-        mainController.getInfosBoxController()
+        mainController.getInfoBoxController()
                 .getInfoBox()
                 .setDisable(false);
     }

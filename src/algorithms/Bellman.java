@@ -24,19 +24,18 @@ public class Bellman extends ShortestPathAlgorithm {
         List<Vertex> topologicalOrder = dfs.getOrderOfDiscovery();
         topologicalOrder.sort(Comparator.comparing(Vertex::getEndDate).reversed());
 
-        if (topologicalOrder.isEmpty()) {
-            return;
-        }
-
-
         predecessors = new LinkedHashMap<>();
         distances = new HashMap<>(topologicalOrder.size());
 
+        if (graph.containsCircuit()) {
+            return;
+        }
+
         topologicalOrder.forEach(v -> {
-            distances.put(v, Integer.MAX_VALUE);
+            distances.put(v, Double.POSITIVE_INFINITY);
             predecessors.put(v, null);
         });
-        distances.put(startVertex, 0);
+        distances.put(startVertex, 0.0);
 
         Vertex u;
         for (Vertex v : topologicalOrder) {
@@ -48,11 +47,6 @@ public class Bellman extends ShortestPathAlgorithm {
                 }
             }
         }
-
-        //TODO
-        // assert graph is oriented
-        // assert graph is without circuit
     }
-
 
 }

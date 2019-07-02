@@ -8,8 +8,11 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 public class BFS extends SearchingAlgorithm {
+    protected boolean[] discovered;
+
     public BFS(Graph graph) {
         super(graph);
+        discovered = new boolean[graph.getVertices().size()];
     }
 
     @Override

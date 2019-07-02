@@ -7,6 +7,6 @@
            fx:controller="controllers.MainController">
    <items>
       <fx:include fx:id="graphPane" source="GraphPane.fxml" />
-       <fx:include fx:id="infosBox" source="InfoBox.fxml"/>
+       <fx:include fx:id="infoBox" source="InfoBox.fxml"/>
    </items>
 </SplitPane>

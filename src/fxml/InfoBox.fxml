@@ -16,8 +16,8 @@
             <children>
                 <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#complementGraph"
                         prefHeight="26.0" prefWidth="145.0" text="Complement"/>
-                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#bellman" prefHeight="26.0"
-                        prefWidth="145.0" text="Bellman"/>
+                <Button fx:id="bellmanButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                        onAction="#bellman" prefHeight="26.0" prefWidth="145.0" text="Bellman"/>
             </children>
         </HBox>
         <HBox maxWidth="1.7976931348623157E308" prefHeight="14.0" prefWidth="188.0" spacing="10.0"

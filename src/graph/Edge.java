@@ -12,12 +12,12 @@ public class Edge extends Line {
     public final static Color DEFAULT_COLOR = Color.web("#1D2129");
     public final static Color DEFAULT_SECOND_COLOR = Color.web("#3F5E7F");
     public final static float DEFAULT_STROKE_WIDTH = 3.0f;
-    private static final int DEFAULT_COST = 1;
+    private static final Double DEFAULT_COST = 1.0;
     protected Group shapes;
     private Vertex start;
     private Vertex end;
     private GraphPaneController graphPaneController;
-    private Integer cost;
+    private Double cost;
 
     public Edge(Vertex start) {
         super();
@@ -77,8 +77,7 @@ public class Edge extends Line {
     private void handleMouseEntered(MouseEvent mouseEvent) {
         this.setStroke(DEFAULT_SECOND_COLOR);
         graphPaneController.getHelpInfo()
-                .setText(
-                        graphPaneController.graphIsOriented() ? HelpText.INFO_ARC : HelpText.INFO_EDGE
+                .setText(graphPaneController.getGraph().isOriented() ? HelpText.INFO_ARC : HelpText.INFO_EDGE
                 );
     }
 
@@ -131,7 +130,7 @@ public class Edge extends Line {
         return start == v ? end : start;
     }
 
-    public Integer getCost() {
+    public Double getCost() {
         return cost;
     }
 
