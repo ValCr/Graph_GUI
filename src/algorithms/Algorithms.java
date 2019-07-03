@@ -5,15 +5,21 @@ import controllers.MainController;
 import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Algorithms {
     protected static Color DEFAULT_COLOR_WHEN_VISITED = Color.web("#00CC14");
     protected Graph graph;
     protected MainController mainController;
+    protected List<Node> shapes;
 
     public Algorithms(Graph graph) {
         this.graph = graph;
+        shapes = new ArrayList<>();
     }
 
     public abstract void apply();
@@ -51,6 +57,7 @@ public abstract class Algorithms {
         mainController.getInfoBoxController()
                 .getInfoBox()
                 .setDisable(false);
+        mainController.getGraphPaneController().getGraphPane().getChildren().removeAll(shapes);
     }
 
     private void resetGraphColor() {

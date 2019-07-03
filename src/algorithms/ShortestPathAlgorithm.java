@@ -6,6 +6,10 @@ import graph.Vertex;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.util.*;
@@ -57,6 +61,9 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
                     v.setFill(DEFAULT_COLOR_WHEN_VISITED);
                 }
                 u.getEdgeFromAdjacentVertex(v).setStroke(DEFAULT_COLOR_WHEN_VISITED);
+
+                // show distance to vertex v
+                showDistance(v, distances.get(v));
             }
         }));
 
@@ -152,5 +159,16 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
             distances.put(u, distances.get(v) + e.getCost());
             predecessors.put(u, v);
         }
+    }
+
+
+    private void showDistance(Vertex v, Double distance) {
+        Text text = new Text(distance.toString());
+        text.setFill(Color.web("#0E0FA8"));
+        text.setFont(Font.font("System", FontWeight.BOLD, 16));
+        text.xProperty().bind(v.centerXProperty().subtract(text.layoutBoundsProperty().getValue().getWidth() / 2));
+        text.yProperty().bind(v.centerYProperty().subtract(v.getRadius() + 5));
+        shapes.add(text);
+        mainController.getGraphPaneController().getGraphPane().getChildren().add(text);
     }
 }

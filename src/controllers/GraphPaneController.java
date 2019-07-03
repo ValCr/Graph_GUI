@@ -46,14 +46,10 @@ public class GraphPaneController {
                 Color.RED);
         newVertex.injectGraphPaneController(this);
         newVertex.setId(String.valueOf(vertexId++));
-        newVertex.setText();
+        newVertex.setTextID();
         graph.getVertices()
                 .add(newVertex);
-        graphPane.getChildren()
-                .addAll(newVertex,
-                        newVertex.getEdge()
-                                .getShapes(),
-                        newVertex.getText());
+        graphPane.getChildren().addAll(newVertex, newVertex.getEdge().getShapes(), newVertex.getTextID());
         newVertex.getEdge()
                 .getShapes()
                 .toBack();
@@ -113,8 +109,7 @@ public class GraphPaneController {
         // remove vertex
         graph.getVertices()
                 .remove(vertex);
-        graphPane.getChildren()
-                .removeAll(vertex.getText(),
+        graphPane.getChildren().removeAll(vertex.getTextID(),
                         vertex.getEdge()
                                 .getShapes(),
                         vertex);

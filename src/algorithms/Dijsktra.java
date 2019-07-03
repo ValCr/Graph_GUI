@@ -21,20 +21,23 @@ public class Dijsktra extends ShortestPathAlgorithm {
         distances = new HashMap<>(graph.getVertices().size());
 
         if (conditionsAreValid()) {
-            graph.getVertices().forEach(v -> {
-                distances.put(v, Double.POSITIVE_INFINITY);
-                predecessors.put(v, null);
-            });
+            graph.getVertices().forEach(v -> distances.put(v, Double.POSITIVE_INFINITY));
             distances.put(startVertex, 0.0);
         }
-
         Map<Vertex, Double> distancesCopy = new HashMap<>(distances);
         Vertex v;
         while (!distancesCopy.isEmpty()) {
             v = Collections.min(distancesCopy.entrySet(), Map.Entry.comparingByValue()).getKey();
+            if (!predecessors.containsKey(v)) {
+                predecessors.put(v, null);
+            }
             distancesCopy.remove(v);
             for (Edge e : v.getEdges()) {
+                Vertex u = e.getOtherEnd(v);
                 updateDistances(v, e);
+                if (distancesCopy.containsKey(u)) {
+                    distancesCopy.put(u, distances.get(u));
+                }
             }
         }
     }

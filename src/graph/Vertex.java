@@ -19,7 +19,7 @@ public class Vertex extends Circle {
     private List<Edge> edges;
     private Edge edge;
     private GraphPaneController graphPaneController;
-    private Text text;
+    private Text textID;
     private int startDate;
     private int endDate;
 
@@ -143,8 +143,8 @@ public class Vertex extends Circle {
         return edges;
     }
 
-    public Text getText() {
-        return text;
+    public Text getTextID() {
+        return textID;
     }
 
     public Edge getEdgeFromAdjacentVertex(Vertex v) {
@@ -175,15 +175,15 @@ public class Vertex extends Circle {
     }
 
     ///////////////////////////////////////////// Setters /////////////////////////////////////////////
-    public void setText() {
-        text = new Text();
-        text.textProperty()
+    public void setTextID() {
+        textID = new Text();
+        textID.textProperty()
                 .bind(idProperty());
-        text.xProperty().bind(centerXProperty().add(-text.layoutBoundsProperty().getValue()
+        textID.xProperty().bind(centerXProperty().subtract(textID.layoutBoundsProperty().getValue()
                         .getWidth() / 2));
-        text.yProperty().bind(centerYProperty().add(text.layoutBoundsProperty().getValue()
+        textID.yProperty().bind(centerYProperty().add(textID.layoutBoundsProperty().getValue()
                         .getHeight() / 4));
-        text.setMouseTransparent(true);
+        textID.setMouseTransparent(true);
     }
 
     public void setAllMouseEventsToNull() {
