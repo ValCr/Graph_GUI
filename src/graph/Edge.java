@@ -12,7 +12,7 @@ public class Edge extends Line {
     public final static Color DEFAULT_COLOR = Color.web("#1D2129");
     public final static Color DEFAULT_SECOND_COLOR = Color.web("#3F5E7F");
     public final static float DEFAULT_STROKE_WIDTH = 3.0f;
-    private static final Double DEFAULT_COST = 1.0;
+    private static final Double DEFAULT_COST = -1.0;
     protected Group shapes;
     private Vertex start;
     private Vertex end;

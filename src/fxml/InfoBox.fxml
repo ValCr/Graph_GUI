@@ -11,6 +11,8 @@
       spacing="15.0" style="-fx-background-color: #0E0FA8;" xmlns="http://javafx.com/javafx/11.0.1"
       fx:controller="controllers.InfoBoxController">
     <children>
+        <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#bellmanFord"
+                prefHeight="26.0" prefWidth="619.0" text="Bellman-Ford"/>
         <HBox maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="312.0" spacing="10.0"
               style="-fx-background-color: #0E0FA8;">
             <children>
@@ -29,8 +31,8 @@
                         text="BFS"/>
             </children>
         </HBox>
-        <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#complementGraph" prefHeight="26.0"
-                prefWidth="145.0" text="Complement" textAlignment="CENTER"/>
+        <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#complementGraph"
+                prefHeight="26.0" prefWidth="145.0" text="Complement"/>
         <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#clearGraph"
                 prefHeight="26.0" prefWidth="249.0" text="Clear"/>
         <CheckBox fx:id="orientedGraph" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" mnemonicParsing="false"

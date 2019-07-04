@@ -1,0 +1,81 @@
+package algorithms;
+
+import graph.Edge;
+import graph.Graph;
+import graph.Vertex;
+
+import java.util.*;
+
+/**
+ *
+ */
+public class BellmanFord extends ShortestPathAlgorithm {
+    public BellmanFord(Graph graph) {
+        super(graph);
+    }
+
+    @Override
+    public void apply() {
+        predecessors = new LinkedHashMap<>();
+        distances = new HashMap<>(graph.getVertices().size());
+
+        // initialize distances from startvertex too all other vertices as infinite
+        graph.getVertices().forEach(v -> {
+            distances.put(v, Double.POSITIVE_INFINITY);
+            predecessors.put(v, null);
+        });
+        distances.put(startVertex, 0.0);
+
+
+        // update shortest for all vertices N - 1 where N is the number of vertices :
+        // a shortest path from startvertex to any other vertex can only have at most N - 1 edges
+        for (int i = 1; i < graph.getVertices().size(); i++) {
+            graph.getEdges().forEach(e -> {
+                Vertex u = e.getStart();
+                Vertex v = e.getEnd();
+                if (distances.get(u) + e.getCost() < distances.get(v)) {
+                    distances.put(v, distances.get(u) + e.getCost());
+                    predecessors.put(v, u);
+                }
+            });
+        }
+    }
+
+    // check for negative-cost circuits
+    @Override
+    public boolean conditionsAreValid() {
+        return graph.getEdges().stream()
+                .noneMatch(e -> distances.get(e.getStart()) + e.getCost() < distances.get(e.getEnd()));
+    }
+
+    // print the negative-cost circuit found
+    @Override
+    public void updateInfoAlgo() {
+        getNegativeCircuit().forEach(v -> {
+            v.setFill(DEFAULT_COLOR_WHEN_VISITED);
+            v.getEdgeFromAdjacentVertex(predecessors.get(v)).setStroke(DEFAULT_COLOR_WHEN_VISITED);
+        });
+        mainController.getGraphPaneController().getInfoAlgo().setText("Graph contains a circuit with negative cost.");
+    }
+
+    private List<Vertex> getNegativeCircuit() {
+        Edge e = graph.getEdges().stream()
+                .filter(edge -> distances.get(edge.getStart()) + edge.getCost() < distances.get(edge.getEnd()))
+                .findFirst().orElseThrow(() -> new NoSuchElementException("No circuit with negative cost found"));
+        List<Vertex> visited = new ArrayList<>(), negativeCircuit = new ArrayList<>();
+        Vertex u = e.getStart();
+
+        while (!visited.contains(u)) {
+            visited.add(u);
+            u = predecessors.get(u);
+        }
+
+        while (u != visited.get(visited.size() - 1)) {
+            negativeCircuit.add(u);
+            u = predecessors.get(u);
+        }
+        negativeCircuit.add(u);
+
+        return negativeCircuit;
+    }
+}

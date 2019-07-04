@@ -45,9 +45,15 @@ public class InfoBoxController {
     private void dijsktra() {
         applyAlgorithm(new Dijsktra(mainController.getGraph()));
     }
+
     @FXML
     private void bellman() {
         applyAlgorithm(new Bellman(mainController.getGraph()));
+    }
+
+    @FXML
+    private void bellmanFord() {
+        applyAlgorithm(new BellmanFord(mainController.getGraph()));
     }
 
     @FXML
