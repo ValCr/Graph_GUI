@@ -51,6 +51,9 @@ public class Vertex extends Circle {
             Edge newEdge = factory.makeEdge(graphPaneController.getGraph().isOriented(),
                     startVertex,
                     endVertex);
+            if (graphPaneController.getMainController().getInfoBoxController().getCostAreVisible().isSelected()) {
+                graphPaneController.changeCost(newEdge);
+            }
             graphPaneController.addEdge(newEdge);
         }
         startVertex.getEdge()
@@ -172,6 +175,10 @@ public class Vertex extends Circle {
 
     public void setEndDate(int endDate) {
         this.endDate = endDate;
+    }
+
+    public GraphPaneController getGraphPaneController() {
+        return graphPaneController;
     }
 
     ///////////////////////////////////////////// Setters /////////////////////////////////////////////

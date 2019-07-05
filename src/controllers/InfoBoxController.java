@@ -17,6 +17,8 @@ import java.util.List;
 
 public class InfoBoxController {
     @FXML
+    private CheckBox costAreVisible;
+    @FXML
     private Button bellmanButton;
     @FXML
     private VBox infoBox;
@@ -116,10 +118,6 @@ public class InfoBoxController {
         this.mainController = mainController;
     }
 
-    public VBox getInfoBox() {
-        return infoBox;
-    }
-
     @FXML
     private void complementGraph() {
         List<Vertex> vertices = mainController.getGraph().getVertices();
@@ -133,5 +131,13 @@ public class InfoBoxController {
 
         vertices.forEach(v -> oldEdges.stream().filter(e -> e.getStart() == v)
                 .forEach(e -> mainController.getGraphPaneController().removeEdge(e)));
+    }
+
+    public CheckBox getCostAreVisible() {
+        return costAreVisible;
+    }
+
+    public VBox getInfoBox() {
+        return infoBox;
     }
 }

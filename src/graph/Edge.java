@@ -1,8 +1,10 @@
 package graph;
 
 import controllers.GraphPaneController;
+import factory.CostFactory;
 import info.HelpText;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -12,17 +14,17 @@ public class Edge extends Line {
     public final static Color DEFAULT_COLOR = Color.web("#1D2129");
     public final static Color DEFAULT_SECOND_COLOR = Color.web("#3F5E7F");
     public final static float DEFAULT_STROKE_WIDTH = 3.0f;
-    private static final Double DEFAULT_COST = -1.0;
+    public static final Double DEFAULT_COST = 1.0;
     protected Group shapes;
     private Vertex start;
     private Vertex end;
     private GraphPaneController graphPaneController;
-    private Double cost;
+    private SimpleDoubleProperty cost;
 
     public Edge(Vertex start) {
         super();
         this.shapes = new Group(this);
-        this.cost = DEFAULT_COST;
+        this.cost = new SimpleDoubleProperty(DEFAULT_COST);
         this.startXProperty()
                 .bind(start.centerXProperty());
         this.startYProperty()
@@ -43,9 +45,12 @@ public class Edge extends Line {
                 end.getCenterX(),
                 end.getCenterY());
         this.shapes = new Group(this);
-        this.cost = DEFAULT_COST;
         this.start = start;
         this.end = end;
+        CostFactory factory = new CostFactory();
+        this.cost = factory
+                .makeCost(start.getGraphPaneController().getMainController().getInfoBoxController().getCostAreVisible(),
+                        start.getGraphPaneController().getGraph().isOriented(), this, shapes);
         this.startYProperty()
                 .bind(start.centerYProperty());
         this.startXProperty()
@@ -69,7 +74,11 @@ public class Edge extends Line {
     }
 
     private void handleMousePressed(MouseEvent mouseEvent) {
-        if (mouseEvent.isSecondaryButtonDown()) {
+        if (mouseEvent.isPrimaryButtonDown() && mouseEvent.isShiftDown() && graphPaneController.
+                getMainController().getInfoBoxController().getCostAreVisible().isSelected()) {
+            graphPaneController.changeCost(this);
+            mouseEvent.consume();
+        } else if (mouseEvent.isSecondaryButtonDown()) {
             graphPaneController.removeEdge(this);
         }
     }
@@ -79,6 +88,10 @@ public class Edge extends Line {
         graphPaneController.getHelpInfo()
                 .setText(graphPaneController.getGraph().isOriented() ? HelpText.INFO_ARC : HelpText.INFO_EDGE
                 );
+        if (graphPaneController.getMainController().getInfoBoxController().getCostAreVisible().isSelected()) {
+            graphPaneController.getHelpInfo()
+                    .setText(graphPaneController.getHelpInfo().getText() + "\n" + HelpText.INFO_CHANGE_COST);
+        }
     }
 
     private void handleMouseExited(MouseEvent mouseEvent) {
@@ -130,11 +143,15 @@ public class Edge extends Line {
         return start == v ? end : start;
     }
 
-    public Double getCost() {
-        return cost;
+    public double getCost() {
+        return cost.get();
     }
 
     ///////////////////////////////////////////// Setters /////////////////////////////////////////////
+    public void setCost(double cost) {
+        this.cost.set(cost);
+    }
+
     public void setAllMouseEventsToDefault() {
         this.setOnMousePressed(this::handleMousePressed);
         this.setOnMouseEntered(this::handleMouseEntered);
