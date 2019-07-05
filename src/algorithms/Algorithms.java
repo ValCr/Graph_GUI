@@ -10,6 +10,8 @@ import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public abstract class Algorithms {
     protected static Color DEFAULT_COLOR_WHEN_VISITED = Color.web("#00CC14");
@@ -65,5 +67,10 @@ public abstract class Algorithms {
                 .forEach(v -> v.setFill(Vertex.DEFAULT_COLOR));
         graph.getEdges()
                 .forEach(e -> e.setStroke(Edge.DEFAULT_COLOR));
+    }
+
+
+    protected String verticesToString(List<Vertex> vertices) {
+        return vertices.stream().map(Objects::toString).collect(Collectors.joining("->"));
     }
 }

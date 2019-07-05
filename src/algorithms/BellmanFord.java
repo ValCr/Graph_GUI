@@ -51,11 +51,13 @@ public class BellmanFord extends ShortestPathAlgorithm {
     // print the negative-cost circuit found
     @Override
     public void updateInfoAlgo() {
-        getNegativeCircuit().forEach(v -> {
+        List<Vertex> negativeCircuit = getNegativeCircuit();
+        negativeCircuit.forEach(v -> {
             v.setFill(DEFAULT_COLOR_WHEN_VISITED);
             v.getEdgeFromAdjacentVertex(predecessors.get(v)).setStroke(DEFAULT_COLOR_WHEN_VISITED);
         });
-        mainController.getGraphPaneController().getInfoAlgo().setText("Graph contains a circuit with negative cost.");
+        mainController.getGraphPaneController().getInfoAlgo().setText(
+                "Graph contains a circuit with negative cost :\n" + verticesToString(negativeCircuit));
     }
 
     private List<Vertex> getNegativeCircuit() {
@@ -75,6 +77,7 @@ public class BellmanFord extends ShortestPathAlgorithm {
             u = predecessors.get(u);
         }
         negativeCircuit.add(u);
+        negativeCircuit.add(negativeCircuit.get(0));
 
         return negativeCircuit;
     }

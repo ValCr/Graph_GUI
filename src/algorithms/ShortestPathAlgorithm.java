@@ -13,7 +13,6 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public abstract class ShortestPathAlgorithm extends Algorithms {
     protected Vertex startVertex;
@@ -102,8 +101,8 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
             } else {
                 mainController.getGraphPaneController().getInfoAlgo().setText(
                         "Shortest path between " + startVertex.getId() + " and " + endVertex
-                                .getId() + " : \n" + shortestPath.stream().map(Objects::toString)
-                                .collect(Collectors.joining("->")) + ", length : " + distances.get(endVertex));
+                                .getId() + " : \n" + verticesToString(shortestPath) + ", length : " + distances
+                                .get(endVertex));
             }
             // set graph's behavior and color to default
             PauseTransition pause = new PauseTransition(Duration.seconds(1));
