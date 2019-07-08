@@ -2,7 +2,7 @@ package graph;
 
 import controllers.GraphPaneController;
 import factory.EdgeFactory;
-import info.HelpText;
+import factory.InfoTextFactory;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -97,14 +97,13 @@ public class Vertex extends Circle {
 
     public void handleMouseEntered(MouseEvent mouseEvent) {
         this.setFill(DEFAULT_SECOND_COLOR);
-        graphPaneController.getHelpInfo().setText(
-                graphPaneController.getGraph().isOriented() ? HelpText.INFO_VERTEX_ARC : HelpText.INFO_VERTEX_EDGE
-                );
+        InfoTextFactory factory = new InfoTextFactory();
+        factory.setInfoText(graphPaneController.getHelpInfo(), graphPaneController.getGraph().isOriented());
     }
 
     public void handleMouseExited(MouseEvent mouseEvent) {
         this.setFill(DEFAULT_COLOR);
-        graphPaneController.getHelpInfo().setText(HelpText.INFO_GRAPH);
+        graphPaneController.getHelpInfo().setText(InfoTextFactory.INFO_GRAPH);
     }
 
     public void handleMouseDragEntered(MouseDragEvent mouseEvent) {

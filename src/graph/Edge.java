@@ -2,7 +2,7 @@ package graph;
 
 import controllers.GraphPaneController;
 import factory.CostFactory;
-import info.HelpText;
+import factory.InfoTextFactory;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
@@ -85,19 +85,14 @@ public class Edge extends Line {
 
     private void handleMouseEntered(MouseEvent mouseEvent) {
         this.setStroke(DEFAULT_SECOND_COLOR);
-        graphPaneController.getHelpInfo()
-                .setText(graphPaneController.getGraph().isOriented() ? HelpText.INFO_ARC : HelpText.INFO_EDGE
-                );
-        if (graphPaneController.getMainController().getInfoBoxController().getCostAreVisible().isSelected()) {
-            graphPaneController.getHelpInfo()
-                    .setText(graphPaneController.getHelpInfo().getText() + "\n" + HelpText.INFO_CHANGE_COST);
-        }
+        InfoTextFactory factory = new InfoTextFactory();
+        factory.setInfoText(graphPaneController.getHelpInfo(), graphPaneController.getGraph().isOriented(),
+                graphPaneController.getMainController().getInfoBoxController().getCostAreVisible().isSelected());
     }
 
     private void handleMouseExited(MouseEvent mouseEvent) {
         this.setStroke(DEFAULT_COLOR);
-        graphPaneController.getHelpInfo()
-                .setText(HelpText.INFO_GRAPH);
+        graphPaneController.getHelpInfo().setText(InfoTextFactory.INFO_GRAPH);
     }
 
     protected double length() {

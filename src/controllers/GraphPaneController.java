@@ -1,9 +1,9 @@
 package controllers;
 
+import factory.InfoTextFactory;
 import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
-import info.HelpText;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -121,8 +121,8 @@ public class GraphPaneController {
     @FXML
     private void initialize() {
         vertexId = 1;
-        graphPane.setOnMouseEntered(mouseEvent -> helpInfo.setText(HelpText.INFO_GRAPH));
-        graphPane.setOnMouseExited(mouseEvent -> helpInfo.setText(HelpText.NULL));
+        graphPane.setOnMouseEntered(mouseEvent -> helpInfo.setText(InfoTextFactory.INFO_GRAPH));
+        graphPane.setOnMouseExited(mouseEvent -> helpInfo.setText(InfoTextFactory.NULL));
         graphPane.setOnMouseDragReleased(mouseDragEvent -> {
             Vertex startVertex = (Vertex) mouseDragEvent.getGestureSource();
             startVertex.getEdge().resetEdge();
