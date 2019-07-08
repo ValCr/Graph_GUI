@@ -13,6 +13,8 @@ public class MainController {
     private GraphPaneController graphPaneController;
     @FXML
     private InfoBoxController infoBoxController;
+    @FXML
+    private MenuBarController menuBarController;
 
     private Graph graph;
 
@@ -25,6 +27,7 @@ public class MainController {
         graph = new Graph();
         infoBoxController.injectMainController(this);
         graphPaneController.injectMainController(this);
+        menuBarController.injectMainController(this);
         infoBoxController.bindInfoToGraph();
     }
 
@@ -44,6 +47,10 @@ public class MainController {
 
     public InfoBoxController getInfoBoxController() {
         return infoBoxController;
+    }
+
+    public MenuBarController getMenuBarController() {
+        return menuBarController;
     }
 
     public void setAllVertexEventsToNull() {

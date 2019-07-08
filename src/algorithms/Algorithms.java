@@ -52,7 +52,7 @@ public abstract class Algorithms {
                 .unbind();
         controller.getGraphPane()
                 .setOnMousePressed(controller::addVertex);
-        controller.getHelpInfo().setVisible(true);
+        controller.getHelpInfo().setVisible(mainController.getMenuBarController().getHelp().isSelected());
         controller.getAnimationSpeed().setVisible(false);
         mainController.setAllVertexEventsToDefault();
         mainController.setAllEdgesEventsToDefault();

@@ -21,8 +21,6 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Main.primaryStage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/Main.fxml"));
-        root.getStylesheets()
-                .add("JMetroLightTheme.css");
         primaryStage.setTitle("Graph simulation");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
