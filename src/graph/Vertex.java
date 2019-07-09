@@ -180,6 +180,10 @@ public class Vertex extends Circle {
         return graphPaneController;
     }
 
+    public String getStringData() {
+        return getId() + ";" + getCenterX() + ";" + getCenterY();
+    }
+
     ///////////////////////////////////////////// Setters /////////////////////////////////////////////
     public void setTextID() {
         textID = new Text();

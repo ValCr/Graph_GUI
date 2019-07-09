@@ -2,11 +2,12 @@
 
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.VBox?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1"
+<VBox xmlns:fx="http://javafx.com/fxml/1" stylesheets="@../caspian.css" xmlns="http://javafx.com/javafx/11.0.1"
       fx:controller="controllers.MainController">
     <children>
         <fx:include fx:id="menuBar" source="MenuBar.fxml"/>
-        <SplitPane fx:id="mainSplitPane" dividerPositions="0.7054108216432866" prefHeight="700.0" prefWidth="1000.0">
+        <SplitPane fx:id="mainSplitPane" dividerPositions="0.71" prefHeight="671.0" prefWidth="1000.0"
+                   stylesheets="@../caspian.css">
             <items>
                 <fx:include fx:id="graphPane" source="GraphPane.fxml"/>
                 <fx:include fx:id="infoBox" source="InfoBox.fxml"/>

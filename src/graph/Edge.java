@@ -147,6 +147,10 @@ public class Edge extends Line {
         this.cost.set(cost);
     }
 
+    public String getStringData() {
+        return start.getId() + ";" + end.getId() + ";" + getCost();
+    }
+
     public void setAllMouseEventsToDefault() {
         this.setOnMousePressed(this::handleMousePressed);
         this.setOnMouseEntered(this::handleMouseEntered);
@@ -158,4 +162,5 @@ public class Edge extends Line {
         this.setOnMouseEntered(null);
         this.setOnMouseExited(null);
     }
+
 }

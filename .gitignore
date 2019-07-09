@@ -27,4 +27,5 @@ hs_err_pid*
 /.idea/
 /Graph_interactor.iml
 /src/module-info.java
-/fxml/interactor.fxml
+# demo and test when usin Open function
+*.graph

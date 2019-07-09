@@ -140,4 +140,8 @@ public class InfoBoxController {
     public VBox getInfoBox() {
         return infoBox;
     }
+
+    public CheckBox getOrientedGraph() {
+        return orientedGraph;
+    }
 }

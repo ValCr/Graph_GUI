@@ -147,4 +147,8 @@ public class Graph {
     public SimpleBooleanProperty orientedProperty() {
         return oriented;
     }
+
+    public Vertex getVertexFromID(String id) {
+        return vertices.stream().filter(v -> v.getId().equals(id)).findFirst().orElseThrow();
+    }
 }

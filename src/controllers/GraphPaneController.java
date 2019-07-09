@@ -1,5 +1,6 @@
 package controllers;
 
+import factory.EdgeFactory;
 import factory.InfoTextFactory;
 import graph.Edge;
 import graph.Graph;
@@ -40,9 +41,14 @@ public class GraphPaneController {
         if (!event.isPrimaryButtonDown()) {
             return;
         }
-        Vertex newVertex = new Vertex(event.getX(), event.getY(), VERTEX_RADIUS, Color.RED);
+        addVertex(String.valueOf(vertexId), event.getX(), event.getY());
+    }
+
+    public void addVertex(String id, Double x, Double y) {
+        Vertex newVertex = new Vertex(x, y, VERTEX_RADIUS, Color.RED);
         newVertex.injectGraphPaneController(this);
-        newVertex.setId(String.valueOf(vertexId++));
+        newVertex.setId(id);
+        vertexId++;
         newVertex.setTextID();
         graph.getVertices().add(newVertex);
         graphPane.getChildren().addAll(newVertex, newVertex.getEdge().getShapes(), newVertex.getTextID());
@@ -59,6 +65,11 @@ public class GraphPaneController {
         graph.getEdges().add(newEdge);
         graphPane.getChildren().add(newEdge.getShapes());
         newEdge.getShapes().toBack();
+    }
+
+    public void addEdge(String startID, String endID, String cost) {
+        EdgeFactory factory = new EdgeFactory();
+        addEdge(factory.makeEdge(graph.isOriented(), graph.getVertexFromID(startID), graph.getVertexFromID(endID)));
     }
 
     public void changeCost(Edge edge) {
@@ -105,8 +116,8 @@ public class GraphPaneController {
         graphPane.getChildren().removeAll(vertex.getTextID(), vertex.getEdge().getShapes(), vertex);
 
         // update vertices ids
-        graph.getVertices().stream().filter(v -> vertex.getId().matches("\\d+") && v.getId().matches("\\d+") && Integer
-                .valueOf(v.getId()) > Integer.valueOf(vertex.getId()))
+        graph.getVertices().stream().filter(v -> vertex.getId().matches("\\d+") && v.getId().matches("\\d+") &&
+                Integer.valueOf(v.getId()) > Integer.valueOf(vertex.getId()))
                 .forEach(v -> v.setId(String.valueOf(Integer.valueOf(v.getId()) - 1)));
         vertexId--;
     }
