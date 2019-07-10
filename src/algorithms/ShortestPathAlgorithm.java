@@ -32,6 +32,35 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
     public abstract void updateInfoAlgo();
 
     @Override
+    public void setUpEvents() {
+        super.setUpEvents();
+        mainController.getGraphPaneController().getInfoAlgo().setText("Select a starting vertex");
+        mainController.getGraph().getVertices().forEach(v -> {
+            v.setOnMouseEntered(v::handleMouseEntered);
+            v.setOnMouseExited(v::handleMouseExited);
+            v.setOnMousePressed(mouseEvent -> {
+                mainController.setAllVertexEventsToNull();
+                v.setFill(Vertex.DEFAULT_COLOR_WHEN_SELECTED);
+                startVertex = v;
+                mainController.getGraphPaneController().getInfoAlgo().setText("Select an ending vertex");
+                mainController.getGraph().getVertices().forEach(u -> {
+                    if (u != v) {
+                        u.setOnMouseEntered(u::handleMouseEntered);
+                        u.setOnMouseExited(u::handleMouseExited);
+                    }
+                    u.setOnMousePressed(mouseEvent2 -> {
+                        mainController.setAllVertexEventsToNull();
+                        u.setFill(Vertex.DEFAULT_COLOR_WHEN_SELECTED);
+                        endVertex = u;
+                        apply();
+                        drawAnimation();
+                    });
+                });
+            });
+        });
+    }
+
+    @Override
     public void drawAnimation() {
         // set graph's behavior and color to default if algorithm can't be applied
         if (!conditionsAreValid()) {
@@ -47,7 +76,7 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
         Iterator<Map.Entry<Vertex, Vertex>> it = predecessors.entrySet().stream().filter(v -> v.getValue() != null)
                 .iterator();
 
-        // color the graph with Bellman's algorithm
+        // color the graph with the chosen algorithm
         Timeline timeline1 = new Timeline(new KeyFrame(Duration.seconds(animationSpeed), event -> {
             if (it.hasNext()) {
                 Map.Entry<Vertex, Vertex> entry = it.next();
@@ -121,37 +150,6 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
         return shortestPath;
     }
 
-    @Override
-    public void setUpEvents() {
-        super.setUpEvents();
-        mainController.getGraphPaneController().getInfoAlgo().setText("Select a starting vertex");
-        mainController.getGraph()
-                .getVertices()
-                .forEach(v -> {
-                    v.setOnMouseEntered(v::handleMouseEntered);
-                    v.setOnMouseExited(v::handleMouseExited);
-                    v.setOnMousePressed(mouseEvent -> {
-                        mainController.setAllVertexEventsToNull();
-                        v.setFill(Vertex.DEFAULT_COLOR_WHEN_SELECTED);
-                        startVertex = v;
-                        mainController.getGraphPaneController().getInfoAlgo().setText("Select an ending vertex");
-                        mainController.getGraph().getVertices().forEach(u -> {
-                            if (u != v) {
-                                u.setOnMouseEntered(u::handleMouseEntered);
-                                u.setOnMouseExited(u::handleMouseExited);
-                            }
-                            u.setOnMousePressed(mouseEvent2 -> {
-                                mainController.setAllVertexEventsToNull();
-                                u.setFill(Vertex.DEFAULT_COLOR_WHEN_SELECTED);
-                                endVertex = u;
-                                apply();
-                                drawAnimation();
-                            });
-                        });
-                    });
-                });
-    }
-
     protected void updateDistances(Vertex u, Edge e) {
         Vertex v = e.getOtherEnd(u);
         if (distances.get(u) + e.getCost() < distances.get(v)) {
@@ -159,7 +157,6 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
             predecessors.put(v, u);
         }
     }
-
 
     private void showDistance(Vertex v, Double distance) {
         Text text = new Text(distance.toString());
@@ -169,5 +166,19 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
         text.yProperty().bind(v.centerYProperty().subtract(v.getRadius() + 5));
         shapes.add(text);
         mainController.getGraphPaneController().getGraphPane().getChildren().add(text);
+    }
+
+    ///////////////////////////////////////////// Setters /////////////////////////////////////////////
+    public void setStartVertex(Vertex startVertex) {
+        this.startVertex = startVertex;
+    }
+
+    public void setEndVertex(Vertex endVertex) {
+        this.endVertex = endVertex;
+    }
+
+    ///////////////////////////////////////////// Getters /////////////////////////////////////////////
+    public Map<Vertex, Vertex> getPredecessors() {
+        return predecessors;
     }
 }

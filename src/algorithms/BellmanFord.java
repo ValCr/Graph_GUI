@@ -16,6 +16,9 @@ public class BellmanFord extends ShortestPathAlgorithm {
 
     @Override
     public void apply() {
+        assert startVertex != null;
+        assert endVertex != null;
+
         predecessors = new LinkedHashMap<>();
         distances = new HashMap<>(graph.getVertices().size());
 

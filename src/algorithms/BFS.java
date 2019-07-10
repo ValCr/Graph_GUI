@@ -18,7 +18,7 @@ public class BFS extends SearchingAlgorithm {
     @Override
     public void apply() {
         assert startVertex != null;
-        
+
         Queue<Vertex> q = new ArrayDeque<>();
 
         discovered[graph.getVertices()
@@ -26,12 +26,12 @@ public class BFS extends SearchingAlgorithm {
         orderOfDiscovery.add(startVertex);
         q.add(startVertex);
 
+        Vertex v;
+        int uPos;
         while (!q.isEmpty()) {
-            startVertex = q.poll();
-
-            int uPos;
-            for (Edge e : startVertex.getEdges()) {
-                Vertex endVertex = e.getOtherEnd(startVertex);
+            v = q.poll();
+            for (Edge e : v.getEdges()) {
+                Vertex endVertex = e.getOtherEnd(v);
                 uPos = graph.getVertices()
                         .indexOf(endVertex);
                 if (!discovered[uPos]) {
@@ -40,7 +40,7 @@ public class BFS extends SearchingAlgorithm {
                     q.add(endVertex);
                 }
             }
-
         }
+
     }
 }

@@ -17,6 +17,9 @@ public class Dijsktra extends ShortestPathAlgorithm {
 
     @Override
     public void apply() {
+        assert startVertex != null;
+        assert endVertex != null;
+
         predecessors = new LinkedHashMap<>();
         distances = new HashMap<>(graph.getVertices().size());
 
@@ -34,8 +37,8 @@ public class Dijsktra extends ShortestPathAlgorithm {
             distancesCopy.remove(v);
             for (Edge e : v.getEdges()) {
                 Vertex u = e.getOtherEnd(v);
-                updateDistances(v, e);
                 if (distancesCopy.containsKey(u)) {
+                    updateDistances(v, e);
                     distancesCopy.put(u, distances.get(u));
                 }
             }
@@ -44,7 +47,7 @@ public class Dijsktra extends ShortestPathAlgorithm {
 
     @Override
     public boolean conditionsAreValid() {
-        return graph.getEdges().stream().allMatch(e -> e.getCost() >= 0);
+        return graph.getEdges().stream().allMatch(e -> e.getCost() >= 0) && startVertex != null && endVertex != null;
     }
 
     @Override

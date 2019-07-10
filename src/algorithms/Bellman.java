@@ -17,6 +17,9 @@ public class Bellman extends ShortestPathAlgorithm {
 
     @Override
     public void apply() {
+        assert startVertex != null;
+        assert endVertex != null;
+
         SearchingAlgorithm dfs = new DFS(graph);
         dfs.setStartVertex(startVertex);
         dfs.apply();

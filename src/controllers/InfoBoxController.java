@@ -18,6 +18,8 @@ import java.util.List;
 
 public class InfoBoxController {
     @FXML
+    private Button primButton;
+    @FXML
     private CheckBox costAreVisible;
     @FXML
     private Button bellmanButton;
@@ -58,6 +60,14 @@ public class InfoBoxController {
     }
 
     @FXML
+    private void changeAllCost() {
+        if (!costAreVisible.isSelected()) {
+            // non oriented graph =  oriented graph + arcs in double direction + cost 1
+            mainController.getGraph().getEdges().forEach(e -> e.setCost(1));
+        }
+    }
+
+    @FXML
     private void dijsktra() {
         applyAlgorithm(new Dijsktra(mainController.getGraph()));
     }
@@ -80,6 +90,16 @@ public class InfoBoxController {
     @FXML
     private void breadthFirstSearch() {
         applyAlgorithm(new BFS(mainController.getGraph()));
+    }
+
+    @FXML
+    private void prim() {
+        applyAlgorithm(new Prim(mainController.getGraph()));
+    }
+
+    @FXML
+    private void kruskall() {
+        applyAlgorithm(new Kruskall(mainController.getGraph()));
     }
 
     private void applyAlgorithm(Algorithms algo) {
@@ -124,6 +144,7 @@ public class InfoBoxController {
                         graph.minIndegreeProperty()
                 ));
         bellmanButton.disableProperty().bind(orientedGraph.selectedProperty().not());
+        primButton.disableProperty().bind(orientedGraph.selectedProperty());
         graph.orientedProperty().bind(orientedGraph.selectedProperty());
 
     }
