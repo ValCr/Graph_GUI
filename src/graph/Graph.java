@@ -9,15 +9,15 @@ import javafx.collections.FXCollections;
 import java.util.List;
 
 public class Graph {
-    private SimpleListProperty<Vertex> vertices;
-    private SimpleListProperty<Edge> edges;
-    private SimpleIntegerProperty size;
-    private SimpleIntegerProperty order;
-    private SimpleIntegerProperty maxDegree; // also outdegree when graph is oriented
-    private SimpleIntegerProperty minDegree; // also outdegree when graph is oriented
-    private SimpleIntegerProperty maxIndegree;
-    private SimpleIntegerProperty minIndegree;
-    private SimpleBooleanProperty oriented;
+    private final SimpleIntegerProperty minDegree; // also outdegree when graph is oriented
+    private final SimpleListProperty<Vertex> vertices;
+    private final SimpleListProperty<Edge> edges;
+    private final SimpleIntegerProperty size;
+    private final SimpleIntegerProperty order;
+    private final SimpleIntegerProperty maxDegree; // also outdegree when graph is oriented
+    private final SimpleIntegerProperty maxIndegree;
+    private final SimpleIntegerProperty minIndegree;
+    private final SimpleBooleanProperty oriented;
     private boolean containsCircuit;
 
     public Graph() {
@@ -92,16 +92,8 @@ public class Graph {
         return edges;
     }
 
-    public int getOrder() {
-        return order.get();
-    }
-
     public SimpleIntegerProperty orderProperty() {
         return order;
-    }
-
-    public int getSize() {
-        return size.get();
     }
 
     public SimpleIntegerProperty sizeProperty() {

@@ -13,7 +13,7 @@ import java.util.List;
 public abstract class MinSpanningTreeAlgorithm extends Algorithms {
     protected List<Edge> tree;
 
-    public MinSpanningTreeAlgorithm(Graph graph) {
+    protected MinSpanningTreeAlgorithm(Graph graph) {
         super(graph);
     }
 
@@ -33,7 +33,6 @@ public abstract class MinSpanningTreeAlgorithm extends Algorithms {
         double animationSpeed =
                 mainController.getGraphPaneController().getAnimationSpeed().getValue() / (tree.size() + 1);
         Iterator<Edge> it = tree.iterator();
-
         // color the graph with with the spanning tree found
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(animationSpeed), event -> {
             if (it.hasNext()) {
@@ -43,7 +42,6 @@ public abstract class MinSpanningTreeAlgorithm extends Algorithms {
                 e.getStart().getEdgeFromAdjacentVertex(e.getEnd()).setStroke(DEFAULT_COLOR_WHEN_VISITED);
             }
         }));
-
         timeline.setCycleCount(tree.size());
         timeline.play();
 

@@ -46,7 +46,7 @@ public class Dijsktra extends ShortestPathAlgorithm {
     }
 
     @Override
-    public boolean conditionsAreValid() {
+    protected boolean conditionsAreValid() {
         return graph.getEdges().stream().allMatch(e -> e.getCost() >= 0) && startVertex != null && endVertex != null;
     }
 

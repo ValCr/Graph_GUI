@@ -12,14 +12,14 @@ import javafx.scene.shape.Line;
 
 public class Edge extends Line {
     public final static Color DEFAULT_COLOR = Color.web("#1D2129");
-    public final static Color DEFAULT_SECOND_COLOR = Color.web("#3F5E7F");
-    public final static float DEFAULT_STROKE_WIDTH = 3.0f;
     public static final Double DEFAULT_COST = 1.0;
-    protected Group shapes;
-    private Vertex start;
+    private final static Color DEFAULT_SECOND_COLOR = Color.web("#3F5E7F");
+    private final static float DEFAULT_STROKE_WIDTH = 3.0f;
+    protected final Group shapes;
+    private final Vertex start;
+    private final SimpleDoubleProperty cost;
     private Vertex end;
     private GraphPaneController graphPaneController;
-    private SimpleDoubleProperty cost;
 
     public Edge(Vertex start) {
         super();

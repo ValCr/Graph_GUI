@@ -14,12 +14,12 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public abstract class Algorithms {
-    protected static Color DEFAULT_COLOR_WHEN_VISITED = Color.web("#00CC14");
-    protected Graph graph;
+    protected static final Color DEFAULT_COLOR_WHEN_VISITED = Color.web("#00CC14");
+    protected final Graph graph;
+    protected final List<Node> shapes;
     protected MainController mainController;
-    protected List<Node> shapes;
 
-    public Algorithms(Graph graph) {
+    protected Algorithms(Graph graph) {
         this.graph = graph;
         shapes = new ArrayList<>();
     }

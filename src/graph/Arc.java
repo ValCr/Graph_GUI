@@ -8,12 +8,6 @@ public class Arc extends Edge {
     private final static float ARROW_LENGTH = 15.0f;
     private final static float ARROW_HALF_WIDTH = 10.0f;
 
-    public Arc(Vertex start) {
-        super(start);
-        shapes.getChildren()
-                .add(getArrow());
-    }
-
     public Arc(Vertex start, Vertex end) {
         super(start,
                 end);

@@ -19,10 +19,10 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public abstract class SearchingAlgorithm extends Algorithms {
+    protected final SimpleListProperty<Vertex> orderOfDiscovery;
     protected Vertex startVertex;
-    protected SimpleListProperty<Vertex> orderOfDiscovery;
 
-    public SearchingAlgorithm(Graph graph) {
+    protected SearchingAlgorithm(Graph graph) {
         super(graph);
         this.orderOfDiscovery = new SimpleListProperty<>(FXCollections.observableArrayList());
     }

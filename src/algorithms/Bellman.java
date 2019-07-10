@@ -46,7 +46,7 @@ public class Bellman extends ShortestPathAlgorithm {
     }
 
     @Override
-    public boolean conditionsAreValid() {
+    protected boolean conditionsAreValid() {
         return !graph.containsCircuit();
     }
 

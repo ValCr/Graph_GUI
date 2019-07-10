@@ -20,16 +20,16 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
     protected Map<Vertex, Vertex> predecessors;
     protected Map<Vertex, Double> distances;
 
-    public ShortestPathAlgorithm(Graph graph) {
+    protected ShortestPathAlgorithm(Graph graph) {
         super(graph);
     }
 
     @Override
     public abstract void apply();
 
-    public abstract boolean conditionsAreValid();
+    protected abstract boolean conditionsAreValid();
 
-    public abstract void updateInfoAlgo();
+    protected abstract void updateInfoAlgo();
 
     @Override
     public void setUpEvents() {

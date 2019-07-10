@@ -8,7 +8,7 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 public class BFS extends SearchingAlgorithm {
-    protected boolean[] discovered;
+    private final boolean[] discovered;
 
     public BFS(Graph graph) {
         super(graph);

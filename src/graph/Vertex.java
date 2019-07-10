@@ -14,10 +14,10 @@ import java.util.List;
 
 public class Vertex extends Circle {
     public final static Color DEFAULT_COLOR = Color.web("#FF2C16");
-    public final static Color DEFAULT_SECOND_COLOR = Color.web("#EB8243");
     public final static Color DEFAULT_COLOR_WHEN_SELECTED = Color.web("#0E0FA8");
-    private List<Edge> edges;
-    private Edge edge;
+    private final static Color DEFAULT_SECOND_COLOR = Color.web("#EB8243");
+    private final List<Edge> edges;
+    private final Edge edge;
     private GraphPaneController graphPaneController;
     private Text textID;
     private int startDate;
@@ -32,7 +32,7 @@ public class Vertex extends Circle {
         setAllMouseEventsToDefault();
     }
 
-    public void handleMousePressed(MouseEvent mouseEvent) {
+    private void handleMousePressed(MouseEvent mouseEvent) {
         if (mouseEvent.isPrimaryButtonDown() && mouseEvent.isShiftDown()) {
             graphPaneController.renameVertex(this);
         }
@@ -42,7 +42,7 @@ public class Vertex extends Circle {
         mouseEvent.consume();
     }
 
-    public void handleMouseDragReleased(MouseDragEvent mouseDragEvent) {
+    private void handleMouseDragReleased(MouseDragEvent mouseDragEvent) {
         Vertex startVertex = (Vertex) mouseDragEvent.getGestureSource();
         Vertex endVertex = (Vertex) mouseDragEvent.getTarget();
 
@@ -61,7 +61,7 @@ public class Vertex extends Circle {
         startVertex.setFill(DEFAULT_COLOR);
     }
 
-    public void handleDragDetected(MouseEvent mouseEvent) {
+    private void handleDragDetected(MouseEvent mouseEvent) {
         if (mouseEvent.isPrimaryButtonDown()) {
             if (!mouseEvent.isControlDown() && edge.isNull()) {
                 edge.endXProperty()
@@ -77,7 +77,7 @@ public class Vertex extends Circle {
         }
     }
 
-    public void handleMouseDragged(MouseEvent mouseEvent) {
+    private void handleMouseDragged(MouseEvent mouseEvent) {
         if (mouseEvent.isPrimaryButtonDown()) {
             if (mouseEvent.isControlDown()) {
                 setCenterX(mouseEvent.getX());
@@ -106,11 +106,11 @@ public class Vertex extends Circle {
         graphPaneController.getHelpInfo().setText(InfoTextFactory.INFO_GRAPH);
     }
 
-    public void handleMouseDragEntered(MouseDragEvent mouseEvent) {
+    private void handleMouseDragEntered(MouseDragEvent mouseEvent) {
         this.setFill(DEFAULT_SECOND_COLOR);
     }
 
-    public void handleMouseDragExited(MouseDragEvent mouseEvent) {
+    private void handleMouseDragExited(MouseDragEvent mouseEvent) {
         this.setFill(DEFAULT_COLOR);
     }
 
@@ -158,10 +158,6 @@ public class Vertex extends Circle {
                         .filter(e -> e.isIncidentTo(this))
                         .findFirst()
                         .orElse(null));
-    }
-
-    public int getStartDate() {
-        return startDate;
     }
 
     public void setStartDate(int startDate) {

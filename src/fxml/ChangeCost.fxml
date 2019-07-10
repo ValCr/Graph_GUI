@@ -6,10 +6,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" onKeyPressed="#keyPressed" prefHeight="91.0" prefWidth="263.0"
             xmlns="http://javafx.com/javafx/11.0.1" fx:controller="controllers.ChangeCostController">
-    <children>
-        <Button layoutX="184.0" layoutY="55.0" mnemonicParsing="false" onAction="#submit" text="Submit"/>
-        <TextField fx:id="text" layoutX="12.0" layoutY="14.0" prefHeight="26.0" prefWidth="239.0"
-                   promptText="Enter cost"/>
-        <Label fx:id="warnings" layoutX="12.0" layoutY="46.0" prefHeight="35.0" prefWidth="157.0" wrapText="true"/>
-    </children>
+    <Button layoutX="184.0" layoutY="55.0" mnemonicParsing="false" onAction="#submit" text="Submit"/>
+    <TextField fx:id="text" layoutX="12.0" layoutY="14.0" prefHeight="26.0" prefWidth="239.0"
+               promptText="Enter cost"/>
+    <Label fx:id="warnings" layoutX="12.0" layoutY="46.0" prefHeight="35.0" prefWidth="157.0" wrapText="true"/>
 </AnchorPane>

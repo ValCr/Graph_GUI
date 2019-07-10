@@ -10,86 +10,76 @@
       prefWidth="290.0"
       spacing="15.0" style="-fx-background-color: #0E0FA8;" xmlns="http://javafx.com/javafx/11.0.1"
       fx:controller="controllers.InfoBoxController">
-    <children>
-        <HBox maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="312.0" spacing="10.0"
-              style="-fx-background-color: #0E0FA8;">
-            <children>
-                <Button fx:id="primButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#prim"
-                        prefHeight="26.0" prefWidth="145.0" text="Prim"/>
-                <Button layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                        onAction="#kruskall" prefHeight="26.0" prefWidth="145.0" text="Kruskall"/>
-            </children>
-        </HBox>
-        <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#bellmanFord"
-                prefHeight="26.0" prefWidth="619.0" text="Bellman-Ford"/>
-        <HBox maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="312.0" spacing="10.0"
-              style="-fx-background-color: #0E0FA8;">
-            <children>
-                <Button fx:id="bellmanButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                        onAction="#bellman" prefHeight="26.0" prefWidth="145.0" text="Bellman"/>
-                <Button layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                        onAction="#dijsktra" prefHeight="26.0" prefWidth="145.0" text="Dijsktra"/>
-            </children>
-        </HBox>
-        <HBox maxWidth="1.7976931348623157E308" prefHeight="14.0" prefWidth="188.0" spacing="10.0"
-              style="-fx-background-color: #0E0FA8;">
-            <children>
-                <Button mnemonicParsing="false" onAction="#depthFirstSearch" prefHeight="26.0" prefWidth="145.0"
-                        text="DFS"/>
-                <Button mnemonicParsing="false" onAction="#breadthFirstSearch" prefHeight="26.0" prefWidth="145.0"
-                        text="BFS"/>
-            </children>
-        </HBox>
-        <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#complementGraph"
-                prefHeight="26.0" prefWidth="145.0" text="Complement"/>
-        <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#clearGraph"
-                prefHeight="26.0" prefWidth="249.0" text="Clear"/>
-        <CheckBox fx:id="orientedGraph" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                  onAction="#changeOrientation" prefHeight="38.0" prefWidth="422.0"
-                  style="-fx-background-color: #E5E2D1;" text="Make graph oriented" VBox.vgrow="ALWAYS">
-            <padding>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-            </padding>
-        </CheckBox>
-        <CheckBox fx:id="costAreVisible" layoutX="20.0" layoutY="225.0" maxHeight="-Infinity"
-                  maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#changeAllCost" prefHeight="38.0"
-                  prefWidth="422.0" style="-fx-background-color: #E5E2D1;" text="Set cost">
-            <padding>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
-            </padding>
-        </CheckBox>
-      <VBox prefHeight="166.0" prefWidth="125.0" spacing="10.0" style="-fx-background-color: #E5E2D1;">
-         <children>
-            <Label style="-fx-font-weight: bold;" text="Graph's properties" underline="true" />
-                <Text fx:id="graphOrder" strokeType="OUTSIDE" strokeWidth="0.0" text="Order : 0" wrappingWidth="115.0" />
-                <Text fx:id="graphSize" strokeType="OUTSIDE" strokeWidth="0.0" text="Size : 0" wrappingWidth="115.0" />
-                <Text fx:id="maxDegree" strokeType="OUTSIDE" strokeWidth="0.0" text="Max degree : 0" wrappingWidth="115.0" />
-                <Text fx:id="minDegree" strokeType="OUTSIDE" strokeWidth="0.0" text="Min degree : 0" wrappingWidth="115.0">
-               <stroke>
-                  <LinearGradient endX="1.0" endY="1.0">
-                     <stops>
-                        <Stop color="BLACK" />
-                        <Stop color="WHITE" offset="1.0" />
-                     </stops>
-                  </LinearGradient>
-               </stroke>
-            </Text>
-            <Text fx:id="maxIndegree" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="115.0" />
-            <Text fx:id="minIndegree" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="115.0">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Text>
-         </children>
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
-      </VBox>
-    </children>
     <padding>
-        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
     </padding>
+    <HBox maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="312.0" spacing="10.0"
+          style="-fx-background-color: #0E0FA8;">
+        <Button fx:id="primButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#prim"
+                prefHeight="26.0" prefWidth="145.0" text="Prim"/>
+        <Button layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                onAction="#kruskall" prefHeight="26.0" prefWidth="145.0" text="Kruskall"/>
+    </HBox>
+    <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#bellmanFord"
+            prefHeight="26.0" prefWidth="619.0" text="Bellman-Ford"/>
+    <HBox maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="312.0" spacing="10.0"
+          style="-fx-background-color: #0E0FA8;">
+        <Button fx:id="bellmanButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#bellman"
+                prefHeight="26.0" prefWidth="145.0" text="Bellman"/>
+        <Button layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                onAction="#dijsktra" prefHeight="26.0" prefWidth="145.0" text="Dijsktra"/>
+    </HBox>
+    <HBox maxWidth="1.7976931348623157E308" prefHeight="14.0" prefWidth="188.0" spacing="10.0"
+          style="-fx-background-color: #0E0FA8;">
+        <Button mnemonicParsing="false" onAction="#depthFirstSearch" prefHeight="26.0" prefWidth="145.0"
+                text="DFS"/>
+        <Button mnemonicParsing="false" onAction="#breadthFirstSearch" prefHeight="26.0" prefWidth="145.0"
+                text="BFS"/>
+    </HBox>
+    <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#complementGraph"
+            prefHeight="26.0" prefWidth="145.0" text="Complement"/>
+    <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#clearGraph"
+            prefHeight="26.0" prefWidth="249.0" text="Clear"/>
+    <CheckBox fx:id="orientedGraph" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+              onAction="#changeOrientation" prefHeight="38.0" prefWidth="422.0" style="-fx-background-color: #E5E2D1;"
+              text="Make graph oriented" VBox.vgrow="ALWAYS">
+        <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+        </padding>
+    </CheckBox>
+    <CheckBox fx:id="costAreVisible" layoutX="20.0" layoutY="225.0" maxHeight="-Infinity"
+              maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#changeAllCost" prefHeight="38.0"
+              prefWidth="422.0" style="-fx-background-color: #E5E2D1;" text="Set cost">
+        <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+        </padding>
+    </CheckBox>
+    <VBox prefHeight="166.0" prefWidth="125.0" spacing="10.0" style="-fx-background-color: #E5E2D1;">
+        <VBox.margin>
+            <Insets/>
+        </VBox.margin>
+        <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+        </padding>
+        <Label style="-fx-font-weight: bold;" text="Graph's properties" underline="true"/>
+        <Text fx:id="graphOrder" strokeType="OUTSIDE" strokeWidth="0.0" text="Order : 0" wrappingWidth="115.0"/>
+        <Text fx:id="graphSize" strokeType="OUTSIDE" strokeWidth="0.0" text="Size : 0" wrappingWidth="115.0"/>
+        <Text fx:id="maxDegree" strokeType="OUTSIDE" strokeWidth="0.0" text="Max degree : 0" wrappingWidth="115.0"/>
+        <Text fx:id="minDegree" strokeType="OUTSIDE" strokeWidth="0.0" text="Min degree : 0" wrappingWidth="115.0">
+            <stroke>
+                <LinearGradient>
+                    <stops>
+                        <Stop color="BLACK"/>
+                        <Stop color="WHITE" offset="1.0"/>
+                    </stops>
+                </LinearGradient>
+            </stroke>
+        </Text>
+        <Text fx:id="maxIndegree" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="115.0"/>
+        <Text fx:id="minIndegree" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="115.0">
+            <VBox.margin>
+                <Insets/>
+            </VBox.margin>
+        </Text>
+    </VBox>
 </VBox>
