@@ -20,6 +20,7 @@ import main.Main;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class GraphPaneController {
@@ -130,6 +131,11 @@ public class GraphPaneController {
         edge.getEnd().getEdges().remove(edge);
         graph.getEdges().remove(edge);
         graphPane.getChildren().remove(edge.getShapes());
+    }
+
+    public void removeAllEdges() {
+        List<Edge> edges = new ArrayList<>(graph.getEdges());
+        edges.forEach(this::removeEdge);
     }
 
     @FXML

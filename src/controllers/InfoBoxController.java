@@ -1,6 +1,7 @@
 package controllers;
 
 import algorithms.*;
+import factory.EdgeFactory;
 import graph.Arc;
 import graph.Edge;
 import graph.Graph;
@@ -41,6 +42,19 @@ public class InfoBoxController {
     @FXML
     private void clearGraph() {
         mainController.clearGraph();
+    }
+
+    @FXML
+    private void changeOrientation() {
+        List<Edge> edges = new ArrayList<>();
+        EdgeFactory factory = new EdgeFactory();
+        mainController.getGraph().getEdges().forEach(e -> {
+            Edge newEdge = factory.makeEdge(mainController.getGraph().isOriented(), e.getStart(), e.getEnd());
+            newEdge.setCost(e.getCost());
+            edges.add(newEdge);
+        });
+        mainController.getGraphPaneController().removeAllEdges();
+        edges.forEach(e -> mainController.getGraphPaneController().addEdge(e));
     }
 
     @FXML
@@ -144,4 +158,5 @@ public class InfoBoxController {
     public CheckBox getOrientedGraph() {
         return orientedGraph;
     }
+
 }

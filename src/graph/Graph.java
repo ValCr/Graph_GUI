@@ -79,8 +79,8 @@ public class Graph {
         return containsCircuit;
     }
 
-    public void setContainsCircuit(boolean containsCycle) {
-        this.containsCircuit = containsCycle;
+    public void setContainsCircuit(boolean containsCircuit) {
+        this.containsCircuit = containsCircuit;
     }
 
     ///////////////////////////////////////////// Getters /////////////////////////////////////////////

@@ -133,5 +133,4 @@ public class MainController {
     public void setAllEdgesEventsToDefault() {
         graph.getEdges().forEach(Edge::setAllMouseEventsToDefault);
     }
-
 }
