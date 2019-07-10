@@ -75,14 +75,14 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
 
         Timeline timeline2 = new Timeline();
         timeline2.getKeyFrames().add(new KeyFrame(Duration.seconds(animationSpeed), event -> {
-            Vertex u = iter.next();
-            Vertex v = predecessors.get(u);
-            if (u != startVertex && u != endVertex) {
-                u.setFill(Vertex.DEFAULT_COLOR);
+            Vertex v = iter.next();
+            Vertex u = predecessors.get(v);
+            if (v != startVertex && v != endVertex) {
+                v.setFill(Vertex.DEFAULT_COLOR);
             }
-            if (v != null) {
-                if (v != startVertex && v != endVertex) {
-                    v.setFill(Vertex.DEFAULT_COLOR);
+            if (u != null) {
+                if (u != startVertex && u != endVertex) {
+                    u.setFill(Vertex.DEFAULT_COLOR);
                 }
                 u.getEdgeFromAdjacentVertex(v).setStroke(Vertex.DEFAULT_COLOR);
             }
@@ -152,11 +152,11 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
                 });
     }
 
-    protected void updateDistances(Vertex v, Edge e) {
-        Vertex u = e.getOtherEnd(v);
-        if (distances.get(v) + e.getCost() < distances.get(u)) {
-            distances.put(u, distances.get(v) + e.getCost());
-            predecessors.put(u, v);
+    protected void updateDistances(Vertex u, Edge e) {
+        Vertex v = e.getOtherEnd(u);
+        if (distances.get(u) + e.getCost() < distances.get(v)) {
+            distances.put(v, distances.get(u) + e.getCost());
+            predecessors.put(v, u);
         }
     }
 

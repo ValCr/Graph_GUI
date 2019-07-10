@@ -30,14 +30,10 @@ public class BellmanFord extends ShortestPathAlgorithm {
         // update shortest for all vertices N - 1 where N is the number of vertices :
         // a shortest path from startvertex to any other vertex can only have at most N - 1 edges
         for (int i = 1; i < graph.getVertices().size(); i++) {
-            graph.getEdges().forEach(e -> {
-                Vertex u = e.getStart();
-                Vertex v = e.getEnd();
-                if (distances.get(u) + e.getCost() < distances.get(v)) {
-                    distances.put(v, distances.get(u) + e.getCost());
-                    predecessors.put(v, u);
-                }
-            });
+            graph.getEdges().forEach(e -> updateDistances(e.getStart(), e));
+            if (!graph.isOriented()) {
+                graph.getEdges().forEach(e -> updateDistances(e.getEnd(), e));
+            }
         }
     }
 

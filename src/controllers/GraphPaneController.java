@@ -69,7 +69,10 @@ public class GraphPaneController {
 
     public void addEdge(String startID, String endID, String cost) {
         EdgeFactory factory = new EdgeFactory();
-        addEdge(factory.makeEdge(graph.isOriented(), graph.getVertexFromID(startID), graph.getVertexFromID(endID)));
+        Edge newEdge = factory
+                .makeEdge(graph.isOriented(), graph.getVertexFromID(startID), graph.getVertexFromID(endID));
+        newEdge.setCost(Double.valueOf(cost));
+        addEdge(newEdge);
     }
 
     public void changeCost(Edge edge) {
