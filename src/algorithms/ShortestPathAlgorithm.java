@@ -73,8 +73,7 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
 
         double animationSpeed = mainController.getGraphPaneController().getAnimationSpeed().getValue() / (predecessors
                 .size() + 1);
-        Iterator<Map.Entry<Vertex, Vertex>> it = predecessors.entrySet().stream().filter(v -> v.getValue() != null)
-                .iterator();
+        Iterator<Map.Entry<Vertex, Vertex>> it = predecessors.entrySet().iterator();
 
         // color the graph with the chosen algorithm
         Timeline timeline1 = new Timeline(new KeyFrame(Duration.seconds(animationSpeed), event -> {

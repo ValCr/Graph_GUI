@@ -31,10 +31,7 @@ public class Bellman extends ShortestPathAlgorithm {
         distances = new HashMap<>(topologicalOrder.size());
 
         if (conditionsAreValid()) {
-            topologicalOrder.forEach(v -> {
-                distances.put(v, Double.POSITIVE_INFINITY);
-                predecessors.put(v, null);
-            });
+            topologicalOrder.forEach(v -> distances.put(v, Double.POSITIVE_INFINITY));
             distances.put(startVertex, 0.0);
 
             for (Vertex v : topologicalOrder) {

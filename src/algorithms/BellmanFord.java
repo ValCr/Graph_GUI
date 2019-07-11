@@ -23,10 +23,7 @@ public class BellmanFord extends ShortestPathAlgorithm {
         distances = new HashMap<>(graph.getVertices().size());
 
         // initialize distances from startvertex too all other vertices as infinite
-        graph.getVertices().forEach(v -> {
-            distances.put(v, Double.POSITIVE_INFINITY);
-            predecessors.put(v, null);
-        });
+        graph.getVertices().forEach(v -> distances.put(v, Double.POSITIVE_INFINITY));
         distances.put(startVertex, 0.0);
 
 

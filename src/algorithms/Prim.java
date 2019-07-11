@@ -22,8 +22,9 @@ public class Prim extends MinSpanningTreeAlgorithm {
         dijsktra.setStartVertex(vertices.get(0));
         dijsktra.setEndVertex(vertices.get(0));
         dijsktra.apply();
-        tree = dijsktra.getPredecessors().entrySet().stream().filter(entry -> entry.getValue() != null)
+        tree = dijsktra.getPredecessors().entrySet().stream()
                 .map(entry -> entry.getKey().getEdgeFromAdjacentVertex(entry.getValue())).collect(Collectors.toList());
+        tree.sort(Comparator.comparing(Edge::getCost));
         if (minCost < 0) {
             graph.getEdges().forEach(e -> e.setCost(e.getCost() + minCost));
         }
