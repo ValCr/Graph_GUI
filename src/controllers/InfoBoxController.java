@@ -99,7 +99,7 @@ public class InfoBoxController {
 
     @FXML
     private void kruskall() {
-        applyAlgorithm(new Kruskall(mainController.getGraph()));
+        applyAlgorithm(new Kruskal(mainController.getGraph()));
     }
 
     private void applyAlgorithm(Algorithms algo) {

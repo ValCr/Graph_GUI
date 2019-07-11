@@ -2,6 +2,7 @@ package algorithms;
 
 import graph.Edge;
 import graph.Graph;
+import graph.Vertex;
 import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
@@ -12,6 +13,7 @@ import java.util.List;
 
 public abstract class MinSpanningTreeAlgorithm extends Algorithms {
     protected List<Edge> tree;
+    protected List<Vertex> vertices;
 
     protected MinSpanningTreeAlgorithm(Graph graph) {
         super(graph);
@@ -23,9 +25,27 @@ public abstract class MinSpanningTreeAlgorithm extends Algorithms {
     @Override
     public void setUpEvents() {
         super.setUpEvents();
-        mainController.getGraphPaneController().getInfoAlgo().setText("Computation of a minimum spanning tree");
-        apply();
-        drawAnimation();
+        if (graph.isConnected()) {
+            vertices = graph.getVertices();
+            mainController.getGraphPaneController().getInfoAlgo().setText("Computation of a minimum spanning tree");
+            apply();
+            drawAnimation();
+        } else {
+            mainController.getGraphPaneController().getInfoAlgo().setText("Select a connected component of the graph");
+            mainController.getGraph().getVertices().forEach(v -> {
+                v.setOnMouseEntered(v::handleMouseEntered);
+                v.setOnMouseExited(v::handleMouseExited);
+                v.setOnMousePressed(mouseEvent -> {
+                    mainController.setAllVertexEventsToNull();
+                    DFS dfs = new DFS(graph);
+                    dfs.setStartVertex(v);
+                    dfs.apply();
+                    vertices = dfs.getOrderOfDiscovery();
+                    apply();
+                    drawAnimation();
+                });
+            });
+        }
     }
 
     @Override

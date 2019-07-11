@@ -1,5 +1,7 @@
 package graph;
 
+import algorithms.DFS;
+import algorithms.SearchingAlgorithm;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -73,6 +75,12 @@ public class Graph {
                 vertices.sizeProperty(),
                 edges.sizeProperty()
         ));
+    }
+
+    public boolean isConnected() {
+        SearchingAlgorithm dfs = new DFS(this);
+        dfs.apply();
+        return dfs.getOrderOfDiscovery().size() == vertices.size();
     }
 
     public boolean containsCircuit() {

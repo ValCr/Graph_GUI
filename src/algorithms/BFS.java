@@ -17,8 +17,9 @@ public class BFS extends SearchingAlgorithm {
 
     @Override
     public void apply() {
-        assert startVertex != null;
-
+        if (startVertex == null) {
+            startVertex = graph.getVertices().get(0);
+        }
         Queue<Vertex> q = new ArrayDeque<>();
 
         discovered[graph.getVertices()

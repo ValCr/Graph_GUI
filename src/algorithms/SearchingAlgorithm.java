@@ -1,6 +1,5 @@
 package algorithms;
 
-import controllers.GraphPaneController;
 import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
@@ -30,11 +29,10 @@ public abstract class SearchingAlgorithm extends Algorithms {
     @Override
     public void setUpEvents() {
         super.setUpEvents();
-        GraphPaneController controller = mainController.getGraphPaneController();
+        mainController.getGraphPaneController().getInfoAlgo().setText("Select a starting vertex");
         mainController.getGraph()
                 .getVertices()
                 .forEach(v -> {
-                    controller.getInfoAlgo().setText("Select a starting vertex");
                     v.setOnMouseEntered(v::handleMouseEntered);
                     v.setOnMouseExited(v::handleMouseExited);
                     v.setOnMousePressed(mouseEvent -> {

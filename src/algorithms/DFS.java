@@ -15,7 +15,9 @@ public class DFS extends SearchingAlgorithm {
 
     @Override
     public void apply() {
-        assert startVertex != null;
+        if (startVertex == null) {
+            startVertex = graph.getVertices().get(0);
+        }
         state = new int[graph.getVertices().size()];
         dfs(startVertex);
     }
