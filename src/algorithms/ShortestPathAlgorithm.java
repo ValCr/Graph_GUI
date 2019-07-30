@@ -132,10 +132,7 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
                                 .getId() + " : \n" + verticesToString(shortestPath) + ", length : " + distances
                                 .get(endVertex));
             }
-            // set graph's behavior and color to default
-            PauseTransition pause = new PauseTransition(Duration.seconds(1));
-            pause.setOnFinished(e -> resetDefaultGraphBehavior());
-            pause.play();
+            waitForUserInputToEndAlgorithm();
         });
     }
 

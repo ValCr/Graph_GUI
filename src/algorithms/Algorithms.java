@@ -54,6 +54,8 @@ public abstract class Algorithms {
                 .setOnMousePressed(controller::addVertex);
         controller.getHelpInfo().setVisible(mainController.getMenuBarController().getHelp().isSelected());
         controller.getAnimationSpeed().setVisible(false);
+        controller.getGraphPane()
+                .setOnKeyPressed(null);
         mainController.setAllVertexEventsToDefault();
         mainController.setAllEdgesEventsToDefault();
         mainController.getInfoBoxController()
@@ -69,8 +71,17 @@ public abstract class Algorithms {
                 .forEach(e -> e.setStroke(Edge.DEFAULT_COLOR));
     }
 
-
     protected String verticesToString(List<Vertex> vertices) {
         return vertices.stream().map(Objects::toString).collect(Collectors.joining("->"));
+    }
+
+    protected void waitForUserInputToEndAlgorithm() {
+        // set graph's behavior and color to default
+        mainController.getGraphPaneController()
+                .getGraphPane()
+                .setOnMousePressed(e -> resetDefaultGraphBehavior());
+        mainController.getGraphPaneController()
+                .getGraphPane()
+                .setOnKeyPressed(e -> resetDefaultGraphBehavior());
     }
 }

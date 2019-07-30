@@ -4,7 +4,6 @@ import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
 import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
@@ -82,12 +81,7 @@ public abstract class SearchingAlgorithm extends Algorithms {
         timeline.setCycleCount(orderOfDiscovery.size());
         timeline.play();
 
-        // set graph's behavior and color to default
-        timeline.setOnFinished(event -> {
-            PauseTransition pause = new PauseTransition(Duration.seconds(1));
-            pause.setOnFinished(e -> resetDefaultGraphBehavior());
-            pause.play();
-        });
+        waitForUserInputToEndAlgorithm();
     }
 
     private void showInfo(IntegerProperty i) {

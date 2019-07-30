@@ -3,7 +3,6 @@ package algorithms;
 import graph.Graph;
 import graph.Vertex;
 import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
@@ -40,9 +39,7 @@ public abstract class ColorationAlgorithm extends Algorithms {
                 .getInfoAlgo()
                 .setText(String.format("Graph is%s bipartite", isBipartite ? "" : " not"));
         if (!isBipartite) {
-            PauseTransition pause = new PauseTransition(Duration.seconds(1));
-            pause.setOnFinished(e -> resetDefaultGraphBehavior());
-            pause.play();
+            waitForUserInputToEndAlgorithm();
             return;
         }
         double animationSpeed = mainController.getGraphPaneController()
@@ -61,10 +58,7 @@ public abstract class ColorationAlgorithm extends Algorithms {
         timeline.play();
 
         timeline.setOnFinished(event -> {
-            // set graph's behavior and color to default
-            PauseTransition pause = new PauseTransition(Duration.seconds(1));
-            pause.setOnFinished(v -> resetDefaultGraphBehavior());
-            pause.play();
+            waitForUserInputToEndAlgorithm();
         });
     }
 }

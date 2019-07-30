@@ -4,7 +4,6 @@ import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
 import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
@@ -66,14 +65,10 @@ public abstract class MinSpanningTreeAlgorithm extends Algorithms {
         timeline.play();
 
         timeline.setOnFinished(event -> {
-            // set graph's behavior and color to default
-            PauseTransition pause = new PauseTransition(Duration.seconds(1));
-            pause.setOnFinished(e -> {
-                resetDefaultGraphBehavior();
-                mainController.getGraphPaneController().getInfoAlgo()
+            waitForUserInputToEndAlgorithm();
+            mainController.getGraphPaneController()
+                    .getInfoAlgo()
                         .setText("Minimum spanning tree weight : " + getTreeWeight());
-            });
-            pause.play();
         });
     }
 
