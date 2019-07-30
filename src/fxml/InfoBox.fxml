@@ -15,6 +15,13 @@
     </padding>
     <HBox maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="312.0" spacing="10.0"
           style="-fx-background-color: #0E0FA8;">
+        <children>
+            <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#checkBipartition"
+                    prefHeight="26.0" prefWidth="432.0" text="Bipartition"/>
+        </children>
+    </HBox>
+    <HBox maxWidth="1.7976931348623157E308" prefHeight="26.0" prefWidth="312.0" spacing="10.0"
+          style="-fx-background-color: #0E0FA8;">
         <Button fx:id="primButton" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#prim"
                 prefHeight="26.0" prefWidth="145.0" text="Prim"/>
         <Button layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
@@ -31,10 +38,8 @@
     </HBox>
     <HBox maxWidth="1.7976931348623157E308" prefHeight="14.0" prefWidth="188.0" spacing="10.0"
           style="-fx-background-color: #0E0FA8;">
-        <Button mnemonicParsing="false" onAction="#depthFirstSearch" prefHeight="26.0" prefWidth="145.0"
-                text="DFS"/>
-        <Button mnemonicParsing="false" onAction="#breadthFirstSearch" prefHeight="26.0" prefWidth="145.0"
-                text="BFS"/>
+        <Button mnemonicParsing="false" onAction="#depthFirstSearch" prefHeight="26.0" prefWidth="145.0" text="DFS"/>
+        <Button mnemonicParsing="false" onAction="#breadthFirstSearch" prefHeight="26.0" prefWidth="145.0" text="BFS"/>
     </HBox>
     <Button alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#complementGraph"
             prefHeight="26.0" prefWidth="145.0" text="Complement"/>

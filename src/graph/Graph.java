@@ -104,6 +104,10 @@ public class Graph {
         return order;
     }
 
+    public int getOrder() {
+        return order.get();
+    }
+
     public SimpleIntegerProperty sizeProperty() {
         return size;
     }

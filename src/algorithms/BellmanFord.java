@@ -6,9 +6,6 @@ import graph.Vertex;
 
 import java.util.*;
 
-/**
- *
- */
 public class BellmanFord extends ShortestPathAlgorithm {
     public BellmanFord(Graph graph) {
         super(graph);

@@ -68,6 +68,11 @@ public class InfoBoxController {
     }
 
     @FXML
+    private void checkBipartition() {
+        applyAlgorithm(new Bipartition(mainController.getGraph()));
+    }
+
+    @FXML
     private void dijsktra() {
         applyAlgorithm(new Dijsktra(mainController.getGraph()));
     }
@@ -179,5 +184,4 @@ public class InfoBoxController {
     public CheckBox getOrientedGraph() {
         return orientedGraph;
     }
-
 }
