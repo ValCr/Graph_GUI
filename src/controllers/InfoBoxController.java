@@ -18,6 +18,8 @@ import java.util.List;
 
 public class InfoBoxController {
     @FXML
+    private CheckBox flowNetwork;
+    @FXML
     private Button primButton;
     @FXML
     private CheckBox costAreVisible;
@@ -47,11 +49,16 @@ public class InfoBoxController {
     }
 
     @FXML
+    private void changeToFlow() {
+    }
+
+    @FXML
     private void changeOrientation() {
         List<Edge> edges = new ArrayList<>();
         EdgeFactory factory = new EdgeFactory();
         mainController.getGraph().getEdges().forEach(e -> {
-            Edge newEdge = factory.makeEdge(mainController.getGraph().isOriented(), e.getStart(), e.getEnd());
+            Edge newEdge = factory.makeEdge(orientedGraph.isSelected(), flowNetwork.isSelected(), e.getStart(),
+                    e.getEnd());
             newEdge.setCost(e.getCost());
             edges.add(newEdge);
         });
@@ -151,6 +158,11 @@ public class InfoBoxController {
         bellmanButton.disableProperty().bind(orientedGraph.selectedProperty().not());
         primButton.disableProperty().bind(orientedGraph.selectedProperty());
         graph.orientedProperty().bind(orientedGraph.selectedProperty());
+        flowNetwork.disableProperty()
+                .bind(orientedGraph.selectedProperty()
+                        .not());
+        graph.flowNetworkProperty()
+                .bind(flowNetwork.selectedProperty());
 
     }
 
@@ -184,4 +196,5 @@ public class InfoBoxController {
     public CheckBox getOrientedGraph() {
         return orientedGraph;
     }
+
 }

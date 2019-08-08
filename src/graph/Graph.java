@@ -20,6 +20,7 @@ public class Graph {
     private final SimpleIntegerProperty maxIndegree;
     private final SimpleIntegerProperty minIndegree;
     private final SimpleBooleanProperty oriented;
+    private SimpleBooleanProperty flowNetwork;
     private boolean containsCircuit;
 
     public Graph() {
@@ -32,6 +33,7 @@ public class Graph {
         maxIndegree = new SimpleIntegerProperty(0);
         minIndegree = new SimpleIntegerProperty(0);
         oriented = new SimpleBooleanProperty(false);
+        flowNetwork = new SimpleBooleanProperty(false);
         containsCircuit = false;
 
         order.bind(vertices.sizeProperty());
@@ -150,6 +152,18 @@ public class Graph {
 
     public SimpleBooleanProperty orientedProperty() {
         return oriented;
+    }
+
+    public boolean isFlowNetwork() {
+        return flowNetwork.get();
+    }
+
+    public void setFlowNetwork(boolean flowNetwork) {
+        this.flowNetwork.set(flowNetwork);
+    }
+
+    public SimpleBooleanProperty flowNetworkProperty() {
+        return flowNetwork;
     }
 
     public Vertex getVertexFromID(String id) {

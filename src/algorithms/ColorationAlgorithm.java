@@ -57,9 +57,7 @@ public abstract class ColorationAlgorithm extends Algorithms {
         timeline.setCycleCount(colors.size());
         timeline.play();
 
-        timeline.setOnFinished(event -> {
-            waitForUserInputToEndAlgorithm();
-        });
+        timeline.setOnFinished(event -> waitForUserInputToEndAlgorithm());
     }
 }
 

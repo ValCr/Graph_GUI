@@ -48,7 +48,9 @@ public class Vertex extends Circle {
 
         if (startVertex != endVertex && !startVertex.pointsTo(endVertex)) {
             EdgeFactory factory = new EdgeFactory();
-            Edge newEdge = factory.makeEdge(graphPaneController.getGraph().isOriented(),
+            Edge newEdge = factory.makeEdge(graphPaneController.getGraph()
+                            .isOriented(), graphPaneController.getGraph()
+                            .isFlowNetwork(),
                     startVertex,
                     endVertex);
             if (graphPaneController.getMainController().getInfoBoxController().getCostAreVisible().isSelected()) {
