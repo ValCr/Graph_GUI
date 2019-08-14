@@ -1,7 +1,7 @@
 package graph;
 
 import controllers.GraphPaneController;
-import factory.CostFactory;
+import factory.EdgePropertiesFactory;
 import factory.InfoTextFactory;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -18,8 +18,8 @@ public class Edge extends Line {
     protected final Group shapes;
     private final Vertex start;
     private final SimpleDoubleProperty cost;
+    protected GraphPaneController graphPaneController;
     private Vertex end;
-    private GraphPaneController graphPaneController;
 
     public Edge(Vertex start) {
         super();
@@ -47,10 +47,14 @@ public class Edge extends Line {
         this.shapes = new Group(this);
         this.start = start;
         this.end = end;
-        CostFactory factory = new CostFactory();
-        this.cost = factory
-                .makeCost(start.getGraphPaneController().getMainController().getInfoBoxController().getCostAreVisible(),
-                        start.getGraphPaneController().getGraph().isOriented(), this, shapes);
+        EdgePropertiesFactory factory = new EdgePropertiesFactory();
+        this.cost = factory.makeCost(
+                start.getGraphPaneController() //graphPaneController isn't initialized, we must get one from the starting vertex
+                        .getMainController()
+                        .getInfoBoxController()
+                        .getCostAreVisible(), start.getGraphPaneController()
+                        .getGraph()
+                        .isOriented(), this, shapes);
         this.startYProperty()
                 .bind(start.centerYProperty());
         this.startXProperty()
@@ -77,17 +81,20 @@ public class Edge extends Line {
         if (mouseEvent.isPrimaryButtonDown() && mouseEvent.isShiftDown() && graphPaneController.
                 getMainController().getInfoBoxController().getCostAreVisible().isSelected()) {
             graphPaneController.changeCost(this);
-            mouseEvent.consume();
         } else if (mouseEvent.isSecondaryButtonDown()) {
             graphPaneController.removeEdge(this);
         }
+        mouseEvent.consume();
     }
 
     private void handleMouseEntered(MouseEvent mouseEvent) {
         this.setStroke(DEFAULT_SECOND_COLOR);
         InfoTextFactory factory = new InfoTextFactory();
         factory.setInfoText(graphPaneController.getHelpInfo(), graphPaneController.getGraph().isOriented(),
-                graphPaneController.getMainController().getInfoBoxController().getCostAreVisible().isSelected());
+                graphPaneController.getMainController()
+                        .getInfoBoxController()
+                        .getCostAreVisible()
+                        .isSelected());
     }
 
     private void handleMouseExited(MouseEvent mouseEvent) {
@@ -136,6 +143,10 @@ public class Edge extends Line {
 
     public Vertex getOtherEnd(Vertex v) {
         return start == v ? end : start;
+    }
+
+    public SimpleDoubleProperty costProperty() {
+        return cost;
     }
 
     public double getCost() {

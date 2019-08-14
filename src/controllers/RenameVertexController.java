@@ -3,8 +3,6 @@ package controllers;
 import graph.Vertex;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.stage.Stage;
 
 public class RenameVertexController extends BasePopup {
 
@@ -28,9 +26,7 @@ public class RenameVertexController extends BasePopup {
             warnings.setText("Another vertex already has this name.");
         } else {
             vertexToRename.setId(text.getText());
-            Node source = (Node) event.getSource();
-            Stage stage = (Stage) source.getScene().getWindow();
-            stage.close();
+            closePopup(event);
         }
     }
 

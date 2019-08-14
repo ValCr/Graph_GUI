@@ -100,7 +100,8 @@ public class Vertex extends Circle {
     public void handleMouseEntered(MouseEvent mouseEvent) {
         this.setFill(DEFAULT_SECOND_COLOR);
         InfoTextFactory factory = new InfoTextFactory();
-        factory.setInfoText(graphPaneController.getHelpInfo(), graphPaneController.getGraph().isOriented());
+        factory.setInfoText(graphPaneController.getHelpInfo(), graphPaneController.getGraph()
+                .isOriented());
     }
 
     public void handleMouseExited(MouseEvent mouseEvent) {

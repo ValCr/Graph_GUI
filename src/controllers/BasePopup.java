@@ -3,10 +3,12 @@ package controllers;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
 public abstract class BasePopup {
     @FXML
@@ -27,5 +29,12 @@ public abstract class BasePopup {
     @FXML
     protected void initialize() {
         Platform.runLater(() -> text.requestFocus());
+    }
+
+    protected void closePopup(Event event) {
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene()
+                .getWindow();
+        stage.close();
     }
 }

@@ -161,6 +161,15 @@ public class InfoBoxController {
         flowNetwork.disableProperty()
                 .bind(orientedGraph.selectedProperty()
                         .not());
+        flowNetwork.selectedProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    if (newValue) {
+                        costAreVisible.setSelected(true);
+                    }
+                });
+
+        costAreVisible.disableProperty()
+                .bind(flowNetwork.selectedProperty());
         graph.flowNetworkProperty()
                 .bind(flowNetwork.selectedProperty());
 
@@ -197,4 +206,7 @@ public class InfoBoxController {
         return orientedGraph;
     }
 
+    public CheckBox getFlowNetwork() {
+        return flowNetwork;
+    }
 }

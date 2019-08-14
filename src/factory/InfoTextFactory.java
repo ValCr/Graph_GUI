@@ -16,8 +16,9 @@ public class InfoTextFactory {
                     "SHIFT + Left Click to rename";
 
     public void setInfoText(Label helpInfo, boolean oriented, boolean costAreVisible) {
-        helpInfo.setText(oriented ? InfoTextFactory.INFO_ARC :
-                InfoTextFactory.INFO_EDGE + (costAreVisible ? "\n" + InfoTextFactory.INFO_CHANGE_COST : ""));
+        helpInfo.setText(oriented ? InfoTextFactory.INFO_ARC : InfoTextFactory.INFO_EDGE);
+        helpInfo.setText(
+                costAreVisible ? helpInfo.getText() + "\n" + InfoTextFactory.INFO_CHANGE_COST : helpInfo.getText());
     }
 
     public void setInfoText(Label helpInfo, boolean oriented) {
