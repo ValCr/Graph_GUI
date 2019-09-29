@@ -10,7 +10,7 @@
            xmlns="http://javafx.com/javafx/11.0.1" fx:controller="controllers.GraphPaneController">
    <Pane fx:id="graphPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
          minWidth="0.0" onMousePressed="#addVertex" prefHeight="409.0" prefWidth="846.0"
-         style="-fx-background-color: #E5E2D1;">
+         style="-fx-background-color: #FFF5ED;">
       <Slider fx:id="animationSpeed" blockIncrement="1.0" layoutX="14.0" layoutY="14.0" max="10.0" min="0.1"
               prefHeight="33.0" prefWidth="133.0" showTickLabels="true" value="2.0" visible="false"/>
    </Pane>
@@ -18,7 +18,7 @@
       <padding>
          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
       </padding>
-      <VBox spacing="10.0" style="-fx-background-color: #E5E2D1;">
+      <VBox spacing="10.0" style="-fx-background-color: #FFF5ED;">
          <opaqueInsets>
             <Insets/>
          </opaqueInsets>
@@ -27,18 +27,18 @@
          </padding>
          <Label fx:id="infoAlgo" alignment="TOP_LEFT" maxHeight="1.7976931348623157E308"
                 maxWidth="1.7976931348623157E308" prefHeight="121.0" prefWidth="1019.0"
-                style="-fx-background-color: #E5E2D1;"/>
+                style="-fx-background-color: #FFF5ED;"/>
       </VBox>
-      <VBox spacing="10.0" style="-fx-background-color: #E5E2D1;">
+      <VBox spacing="10.0" style="-fx-background-color: #FFF5ED;">
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
          </padding>
          <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="16.0"
-                prefWidth="300.0" style="-fx-background-color: #E5E2D1; -fx-font-weight: bold;" text="Help"
+                prefWidth="300.0" style="-fx-background-color: #FFF5ED; -fx-font-weight: bold;" text="Help"
                 underline="true"/>
          <Label fx:id="helpInfo" alignment="TOP_LEFT" maxHeight="1.7976931348623157E308"
                 maxWidth="1.7976931348623157E308" prefHeight="220.0" prefWidth="846.0"
-                style="-fx-background-color: #E5E2D1;"/>
+                style="-fx-background-color: #FFF5ED;"/>
       </VBox>
    </HBox>
 </SplitPane>
