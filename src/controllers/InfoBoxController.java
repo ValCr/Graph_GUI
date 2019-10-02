@@ -49,11 +49,7 @@ public class InfoBoxController {
     }
 
     @FXML
-    private void changeToFlow() {
-    }
-
-    @FXML
-    private void changeOrientation() {
+    private void changeGraphType() {
         List<Edge> edges = new ArrayList<>();
         EdgeFactory factory = new EdgeFactory();
         mainController.getGraph().getEdges().forEach(e -> {
