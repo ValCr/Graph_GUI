@@ -89,8 +89,8 @@ public class Edge extends Line {
 
     private void handleMouseEntered(MouseEvent mouseEvent) {
         this.setStroke(DEFAULT_SECOND_COLOR);
-        InfoTextFactory factory = new InfoTextFactory();
-        factory.setInfoText(graphPaneController.getHelpInfo(), graphPaneController.getGraph().isOriented(),
+        InfoTextFactory factory = new InfoTextFactory(graphPaneController.getGraph());
+        factory.setInfoText(graphPaneController.getHelpInfo(),
                 graphPaneController.getMainController()
                         .getInfoBoxController()
                         .getCostAreVisible()

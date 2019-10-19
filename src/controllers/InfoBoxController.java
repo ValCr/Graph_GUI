@@ -53,10 +53,9 @@ public class InfoBoxController {
     @FXML
     private void changeGraphType() {
         List<Edge> edges = new ArrayList<>();
-        EdgeFactory factory = new EdgeFactory();
+        EdgeFactory factory = new EdgeFactory(mainController.getGraph());
         mainController.getGraph().getEdges().forEach(e -> {
-            Edge newEdge = factory.makeEdge(orientedGraph.isSelected(), flowNetwork.isSelected(), e.getStart(),
-                    e.getEnd());
+            Edge newEdge = factory.makeEdge(e.getStart(), e.getEnd());
             newEdge.setCost(e.getCost());
             edges.add(newEdge);
         });
