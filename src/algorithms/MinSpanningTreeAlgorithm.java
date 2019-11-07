@@ -42,7 +42,6 @@ public abstract class MinSpanningTreeAlgorithm extends Algorithms {
                     vertices = dfs.getOrderOfDiscovery();
                     apply();
                     drawAnimation();
-                    System.out.println("some modification");
                 });
             });
         }
