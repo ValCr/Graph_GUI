@@ -15,7 +15,7 @@ import java.util.List;
 public class Vertex extends Circle {
     public final static Color DEFAULT_COLOR = Color.web("#FF2C16");
     public final static Color DEFAULT_COLOR_WHEN_SELECTED = Color.web("#0E0FA8");
-    private final static Color DEFAULT_SECOND_COLOR = Color.web("#EB8243");
+    public final static Color DEFAULT_SECOND_COLOR = Color.web("#EB8243");
     private final List<Edge> edges;
     private final Edge edge;
     private GraphPaneController graphPaneController;
@@ -45,14 +45,9 @@ public class Vertex extends Circle {
     private void handleMouseDragReleased(MouseDragEvent mouseDragEvent) {
         Vertex startVertex = (Vertex) mouseDragEvent.getGestureSource();
         Vertex endVertex = (Vertex) mouseDragEvent.getTarget();
-
         if (startVertex != endVertex && !startVertex.pointsTo(endVertex)) {
-            EdgeFactory factory = new EdgeFactory();
-            Edge newEdge = factory.makeEdge(graphPaneController.getGraph()
-                            .isOriented(), graphPaneController.getGraph()
-                            .isFlowNetwork(),
-                    startVertex,
-                    endVertex);
+            EdgeFactory factory = new EdgeFactory(graphPaneController.getGraph());
+            Edge newEdge = factory.makeEdge(startVertex, endVertex);
             if (graphPaneController.getMainController().getInfoBoxController().getCostAreVisible().isSelected()) {
                 graphPaneController.changeCost(newEdge);
             }
@@ -99,9 +94,8 @@ public class Vertex extends Circle {
 
     public void handleMouseEntered(MouseEvent mouseEvent) {
         this.setFill(DEFAULT_SECOND_COLOR);
-        InfoTextFactory factory = new InfoTextFactory();
-        factory.setInfoText(graphPaneController.getHelpInfo(), graphPaneController.getGraph()
-                .isOriented());
+        InfoTextFactory factory = new InfoTextFactory(graphPaneController.getGraph());
+        factory.setInfoText(graphPaneController.getHelpInfo());
     }
 
     public void handleMouseExited(MouseEvent mouseEvent) {

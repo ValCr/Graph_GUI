@@ -18,6 +18,8 @@ import java.util.List;
 
 public class InfoBoxController {
     @FXML
+    private Button zombieButton;
+    @FXML
     private CheckBox flowNetwork;
     @FXML
     private Button primButton;
@@ -49,16 +51,11 @@ public class InfoBoxController {
     }
 
     @FXML
-    private void changeToFlow() {
-    }
-
-    @FXML
-    private void changeOrientation() {
+    private void changeGraphType() {
         List<Edge> edges = new ArrayList<>();
-        EdgeFactory factory = new EdgeFactory();
+        EdgeFactory factory = new EdgeFactory(mainController.getGraph());
         mainController.getGraph().getEdges().forEach(e -> {
-            Edge newEdge = factory.makeEdge(orientedGraph.isSelected(), flowNetwork.isSelected(), e.getStart(),
-                    e.getEnd());
+            Edge newEdge = factory.makeEdge(e.getStart(), e.getEnd());
             newEdge.setCost(e.getCost());
             edges.add(newEdge);
         });
@@ -114,6 +111,11 @@ public class InfoBoxController {
         applyAlgorithm(new Kruskal(mainController.getGraph()));
     }
 
+    @FXML
+    private void zombieEpidemic() {
+        applyAlgorithm(new ZombieEpidemic(mainController.getGraph()));
+    }
+
     private void applyAlgorithm(Algorithms algo) {
         if (!mainController.getGraph().getVertices().isEmpty()) {
             algo.injectMainController(mainController);
@@ -167,7 +169,8 @@ public class InfoBoxController {
                         costAreVisible.setSelected(true);
                     }
                 });
-
+        zombieButton.disableProperty()
+                    .bind(flowNetwork.selectedProperty());
         costAreVisible.disableProperty()
                 .bind(flowNetwork.selectedProperty());
         graph.flowNetworkProperty()

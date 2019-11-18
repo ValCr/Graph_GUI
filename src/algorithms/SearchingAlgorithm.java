@@ -81,7 +81,7 @@ public abstract class SearchingAlgorithm extends Algorithms {
         timeline.setCycleCount(orderOfDiscovery.size());
         timeline.play();
 
-        waitForUserInputToEndAlgorithm();
+        timeline.setOnFinished(event -> waitForUserInputToEndAlgorithm());
     }
 
     private void showInfo(IntegerProperty i) {

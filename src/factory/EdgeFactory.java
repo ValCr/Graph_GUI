@@ -1,14 +1,20 @@
 package factory;
 
-import graph.Arc;
-import graph.Edge;
-import graph.FlowEdge;
-import graph.Vertex;
+import graph.*;
+import javafx.beans.property.SimpleBooleanProperty;
 
 public class EdgeFactory {
-    public Edge makeEdge(boolean graphIsOriented, boolean graphIsFlowNetwork, Vertex startVertex, Vertex endVertex) {
-        return graphIsOriented ?
-                graphIsFlowNetwork ? new FlowEdge(startVertex, endVertex) : new Arc(startVertex, endVertex) :
+    private final SimpleBooleanProperty graphIsFlowNetWork;
+    private final SimpleBooleanProperty graphIsOriented;
+
+    public EdgeFactory(Graph graph) {
+        this.graphIsOriented = graph.orientedProperty();
+        this.graphIsFlowNetWork = graph.flowNetworkProperty();
+    }
+
+    public Edge makeEdge(Vertex startVertex, Vertex endVertex) {
+        return graphIsOriented.get() ?
+                graphIsFlowNetWork.get() ? new FlowEdge(startVertex, endVertex) : new Arc(startVertex, endVertex) :
                 new Edge(startVertex, endVertex);
     }
 }
