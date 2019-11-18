@@ -1,5 +1,6 @@
 package algorithms;
 
+import graph.Constants;
 import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
@@ -40,8 +41,8 @@ public class Bipartition extends ColorationAlgorithm {
             v = e.getOtherEnd(u);
             if (!visited.get(v)) {
                 visited.put(v, true);
-                colors.put(v, colors.get(u) == DEFAULT_COLOR_WHEN_VISITED ? Vertex.DEFAULT_COLOR :
-                        DEFAULT_COLOR_WHEN_VISITED);
+                colors.put(v, colors.get(u) == Constants.VERTEX_COLOR_WHEN_VISITED ? Constants.VERTEX_DEFAULT_COLOR :
+                        Constants.VERTEX_COLOR_WHEN_VISITED);
                 if (!isBipartite(v)) {
                     return false;
                 }

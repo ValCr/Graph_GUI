@@ -1,5 +1,6 @@
 package factory;
 
+import graph.Constants;
 import graph.Edge;
 import graph.FlowEdge;
 import javafx.beans.binding.Bindings;
@@ -15,7 +16,7 @@ public class EdgePropertiesFactory {
 
     public SimpleDoubleProperty makeCost(
             CheckBox costIsVisible, boolean graphIsOriented, Edge edge, Group shapes) {
-        SimpleDoubleProperty cost = new SimpleDoubleProperty(Edge.DEFAULT_COST);
+        SimpleDoubleProperty cost = new SimpleDoubleProperty(Constants.EDGE_DEFAULT_COST);
         double MULTIPLIER_WHEN_NOT_ORIENTED = 0.5;
         Text textCost = new Text();
         textCost.setFill(Color.RED);
@@ -44,7 +45,7 @@ public class EdgePropertiesFactory {
 
     public SimpleIntegerProperty makeCapacity(
             CheckBox flowNetwork, FlowEdge flowEdge, Group shapes) {
-        SimpleIntegerProperty capacity = new SimpleIntegerProperty(FlowEdge.DEFAULT_CAPACITY);
+        SimpleIntegerProperty capacity = new SimpleIntegerProperty(Constants.FLOW_EDGE_DEFAULT_CAPACITY);
         Text textCapacity = new Text();
         textCapacity.setFill(Color.BLUE);
         shapes.getChildren()

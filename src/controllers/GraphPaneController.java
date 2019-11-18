@@ -2,6 +2,7 @@ package controllers;
 
 import factory.EdgeFactory;
 import factory.InfoTextFactory;
+import graph.Constants;
 import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
@@ -145,7 +146,7 @@ public class GraphPaneController {
         graphPane.setOnMouseDragReleased(mouseDragEvent -> {
             Vertex startVertex = (Vertex) mouseDragEvent.getGestureSource();
             startVertex.getEdge().resetEdge();
-            startVertex.setFill(Vertex.DEFAULT_COLOR);
+            startVertex.setFill(Constants.VERTEX_DEFAULT_COLOR);
         });
     }
 

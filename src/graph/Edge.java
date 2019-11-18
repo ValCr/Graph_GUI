@@ -7,14 +7,9 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 
 public class Edge extends Line {
-    public final static Color DEFAULT_COLOR = Color.web("#1D2129");
-    public static final Double DEFAULT_COST = 1.0;
-    private final static Color DEFAULT_SECOND_COLOR = Color.web("#3F5E7F");
-    private final static float DEFAULT_STROKE_WIDTH = 3.0f;
     protected final Group shapes;
     private final Vertex start;
     private final SimpleDoubleProperty cost;
@@ -24,7 +19,7 @@ public class Edge extends Line {
     public Edge(Vertex start) {
         super();
         this.shapes = new Group(this);
-        this.cost = new SimpleDoubleProperty(DEFAULT_COST);
+        this.cost = new SimpleDoubleProperty(Constants.EDGE_DEFAULT_COST);
         this.startXProperty()
                 .bind(start.centerXProperty());
         this.startYProperty()
@@ -35,8 +30,8 @@ public class Edge extends Line {
                 .bind(start.centerYProperty());
         this.start = start;
         this.end = start;
-        this.setStrokeWidth(DEFAULT_STROKE_WIDTH);
-        this.setStroke(DEFAULT_COLOR);
+        this.setStrokeWidth(Constants.EDGE_DEFAULT_STROKE_WIDTH);
+        this.setStroke(Constants.EDGE_DEFAULT_COLOR);
     }
 
     public Edge(Vertex start, Vertex end) {
@@ -71,8 +66,8 @@ public class Edge extends Line {
                         end.centerYProperty(),
                         start.centerYProperty()
                 ));
-        this.setStrokeWidth(DEFAULT_STROKE_WIDTH);
-        this.setStroke(DEFAULT_COLOR);
+        this.setStrokeWidth(Constants.EDGE_DEFAULT_STROKE_WIDTH);
+        this.setStroke(Constants.EDGE_DEFAULT_COLOR);
 
         setAllMouseEventsToDefault();
     }
@@ -88,7 +83,7 @@ public class Edge extends Line {
     }
 
     private void handleMouseEntered(MouseEvent mouseEvent) {
-        this.setStroke(DEFAULT_SECOND_COLOR);
+        this.setStroke(Constants.EDGE_SECOND_COLOR);
         InfoTextFactory factory = new InfoTextFactory(graphPaneController.getGraph());
         factory.setInfoText(graphPaneController.getHelpInfo(),
                 graphPaneController.getMainController()
@@ -98,7 +93,7 @@ public class Edge extends Line {
     }
 
     private void handleMouseExited(MouseEvent mouseEvent) {
-        this.setStroke(DEFAULT_COLOR);
+        this.setStroke(Constants.EDGE_DEFAULT_COLOR);
         graphPaneController.getHelpInfo().setText(InfoTextFactory.INFO_GRAPH);
     }
 

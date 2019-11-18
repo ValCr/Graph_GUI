@@ -1,5 +1,6 @@
 package algorithms;
 
+import graph.Constants;
 import graph.Graph;
 import graph.Vertex;
 import javafx.animation.KeyFrame;
@@ -19,7 +20,7 @@ public abstract class ColorationAlgorithm extends Algorithms {
         super(graph);
         colors = new HashMap<>(graph.getOrder());
         graph.getVertices()
-                .forEach(v -> colors.put(v, Vertex.DEFAULT_COLOR));
+                .forEach(v -> colors.put(v, Constants.VERTEX_DEFAULT_COLOR));
         isBipartite = false;
     }
 

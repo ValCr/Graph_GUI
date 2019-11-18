@@ -5,8 +5,6 @@ import javafx.scene.Group;
 import javafx.scene.shape.Line;
 
 public class Arc extends Edge {
-    private final static float ARROW_LENGTH = 15.0f;
-    private final static float ARROW_HALF_WIDTH = 10.0f;
 
     public Arc(Vertex start, Vertex end) {
         super(start,
@@ -36,8 +34,8 @@ public class Arc extends Edge {
                 .bind(endYProperty());
         line1.endXProperty()
                 .bind(Bindings.createDoubleBinding(
-                        () -> line1.getStartX() - ARROW_LENGTH * getUnitVectorX()
-                                + ARROW_HALF_WIDTH * -getUnitVectorY(),
+                        () -> line1.getStartX() - Constants.ARC_ARROW_LENGTH * getUnitVectorX()
+                                + Constants.ARC_ARROW_HALF_WIDTH * -getUnitVectorY(),
                         startXProperty(),
                         endXProperty(),
                         startYProperty(),
@@ -45,8 +43,8 @@ public class Arc extends Edge {
                 ));
         line1.endYProperty()
                 .bind(Bindings.createDoubleBinding(
-                        () -> line1.getStartY() - ARROW_LENGTH * getUnitVectorY()
-                                + ARROW_HALF_WIDTH * getUnitVectorX(),
+                        () -> line1.getStartY() - Constants.ARC_ARROW_LENGTH * getUnitVectorY()
+                                + Constants.ARC_ARROW_HALF_WIDTH * getUnitVectorX(),
                         startXProperty(),
                         endXProperty(),
                         startYProperty(),
@@ -59,8 +57,8 @@ public class Arc extends Edge {
                 .bind(endYProperty());
         line2.endXProperty()
                 .bind(Bindings.createDoubleBinding(
-                        () -> line2.getStartX() - ARROW_LENGTH * getUnitVectorX()
-                                - ARROW_HALF_WIDTH * -getUnitVectorY(),
+                        () -> line2.getStartX() - Constants.ARC_ARROW_LENGTH * getUnitVectorX()
+                                - Constants.ARC_ARROW_HALF_WIDTH * -getUnitVectorY(),
                         startXProperty(),
                         endXProperty(),
                         startYProperty(),
@@ -68,8 +66,8 @@ public class Arc extends Edge {
                 ));
         line2.endYProperty()
                 .bind(Bindings.createDoubleBinding(
-                        () -> line2.getStartY() - ARROW_LENGTH * getUnitVectorY()
-                                - ARROW_HALF_WIDTH * getUnitVectorX(),
+                        () -> line2.getStartY() - Constants.ARC_ARROW_LENGTH * getUnitVectorY()
+                                - Constants.ARC_ARROW_HALF_WIDTH * getUnitVectorX(),
                         startXProperty(),
                         endXProperty(),
                         startYProperty(),

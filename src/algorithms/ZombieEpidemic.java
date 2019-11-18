@@ -1,5 +1,6 @@
 package algorithms;
 
+import graph.Constants;
 import graph.Graph;
 import graph.Vertex;
 import javafx.scene.paint.Color;
@@ -10,9 +11,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ZombieEpidemic extends Algorithms {
-    private static Color HEALTHY = Vertex.DEFAULT_COLOR;
-    private static Color CONTAMINATED = DEFAULT_COLOR_WHEN_VISITED;
-    private static Color BLOCKED = Vertex.DEFAULT_COLOR_WHEN_SELECTED;
+    private static Color HEALTHY = Constants.VERTEX_DEFAULT_COLOR;
+    private static Color CONTAMINATED = Constants.VERTEX_COLOR_WHEN_VISITED;
+    private static Color BLOCKED = Constants.VERTEX_COLOR_WHEN_SELECTED;
     private Map<Vertex, Color> colors;
 
     public ZombieEpidemic(Graph graph) {

@@ -1,5 +1,6 @@
 package algorithms;
 
+import graph.Constants;
 import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
@@ -56,9 +57,9 @@ public abstract class MinSpanningTreeAlgorithm extends Algorithms {
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(animationSpeed), event -> {
             if (it.hasNext()) {
                 Edge e = it.next();
-                e.getStart().setFill(DEFAULT_COLOR_WHEN_VISITED);
-                e.getEnd().setFill(DEFAULT_COLOR_WHEN_VISITED);
-                e.getStart().getEdgeFromAdjacentVertex(e.getEnd()).setStroke(DEFAULT_COLOR_WHEN_VISITED);
+                e.getStart().setFill(Constants.VERTEX_COLOR_WHEN_VISITED);
+                e.getEnd().setFill(Constants.VERTEX_COLOR_WHEN_VISITED);
+                e.getStart().getEdgeFromAdjacentVertex(e.getEnd()).setStroke(Constants.VERTEX_COLOR_WHEN_VISITED);
             }
         }));
         timeline.setCycleCount(tree.size());

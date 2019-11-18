@@ -2,11 +2,10 @@ package algorithms;
 
 import controllers.GraphPaneController;
 import controllers.MainController;
-import graph.Edge;
+import graph.Constants;
 import graph.Graph;
 import graph.Vertex;
 import javafx.scene.Node;
-import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public abstract class Algorithms {
-    protected static final Color DEFAULT_COLOR_WHEN_VISITED = Color.web("#00CC14");
     protected final Graph graph;
     protected final List<Node> shapes;
     protected MainController mainController;
@@ -66,9 +64,9 @@ public abstract class Algorithms {
 
     private void resetGraphColor() {
         graph.getVertices()
-                .forEach(v -> v.setFill(Vertex.DEFAULT_COLOR));
+                .forEach(v -> v.setFill(Constants.VERTEX_DEFAULT_COLOR));
         graph.getEdges()
-                .forEach(e -> e.setStroke(Edge.DEFAULT_COLOR));
+                .forEach(e -> e.setStroke(Constants.EDGE_DEFAULT_COLOR));
     }
 
     protected String verticesToString(List<Vertex> vertices) {

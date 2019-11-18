@@ -1,5 +1,6 @@
 package algorithms;
 
+import graph.Constants;
 import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
@@ -46,8 +47,8 @@ public class BellmanFord extends ShortestPathAlgorithm {
     public void updateInfoAlgo() {
         List<Vertex> negativeCircuit = getNegativeCircuit();
         negativeCircuit.forEach(v -> {
-            v.setFill(DEFAULT_COLOR_WHEN_VISITED);
-            v.getEdgeFromAdjacentVertex(predecessors.get(v)).setStroke(DEFAULT_COLOR_WHEN_VISITED);
+            v.setFill(Constants.VERTEX_COLOR_WHEN_VISITED);
+            v.getEdgeFromAdjacentVertex(predecessors.get(v)).setStroke(Constants.VERTEX_COLOR_WHEN_VISITED);
         });
         mainController.getGraphPaneController().getInfoAlgo().setText(
                 "Graph contains a circuit with negative cost :\n" + verticesToString(negativeCircuit));

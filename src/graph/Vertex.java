@@ -13,9 +13,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Vertex extends Circle {
-    public final static Color DEFAULT_COLOR = Color.web("#FF2C16");
-    public final static Color DEFAULT_COLOR_WHEN_SELECTED = Color.web("#0E0FA8");
-    public final static Color DEFAULT_SECOND_COLOR = Color.web("#EB8243");
     private final List<Edge> edges;
     private final Edge edge;
     private GraphPaneController graphPaneController;
@@ -55,7 +52,7 @@ public class Vertex extends Circle {
         }
         startVertex.getEdge()
                 .resetEdge();
-        startVertex.setFill(DEFAULT_COLOR);
+        startVertex.setFill(Constants.VERTEX_DEFAULT_COLOR);
     }
 
     private void handleDragDetected(MouseEvent mouseEvent) {
@@ -87,28 +84,28 @@ public class Vertex extends Circle {
                         .unbind();
                 edge.setEndX(mouseEvent.getX());
                 edge.setEndY(mouseEvent.getY());
-                this.setFill(DEFAULT_SECOND_COLOR);
+                this.setFill(Constants.VERTEX_SECOND_COLOR);
             }
         }
     }
 
     public void handleMouseEntered(MouseEvent mouseEvent) {
-        this.setFill(DEFAULT_SECOND_COLOR);
+        this.setFill(Constants.VERTEX_SECOND_COLOR);
         InfoTextFactory factory = new InfoTextFactory(graphPaneController.getGraph());
         factory.setInfoText(graphPaneController.getHelpInfo());
     }
 
     public void handleMouseExited(MouseEvent mouseEvent) {
-        this.setFill(DEFAULT_COLOR);
+        this.setFill(Constants.VERTEX_DEFAULT_COLOR);
         graphPaneController.getHelpInfo().setText(InfoTextFactory.INFO_GRAPH);
     }
 
     private void handleMouseDragEntered(MouseDragEvent mouseEvent) {
-        this.setFill(DEFAULT_SECOND_COLOR);
+        this.setFill(Constants.VERTEX_SECOND_COLOR);
     }
 
     private void handleMouseDragExited(MouseDragEvent mouseEvent) {
-        this.setFill(DEFAULT_COLOR);
+        this.setFill(Constants.VERTEX_DEFAULT_COLOR);
     }
 
     public boolean pointsTo(Vertex v) {

@@ -1,5 +1,6 @@
 package algorithms;
 
+import graph.Constants;
 import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
@@ -40,7 +41,7 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
             v.setOnMouseExited(v::handleMouseExited);
             v.setOnMousePressed(mouseEvent -> {
                 mainController.setAllVertexEventsToNull();
-                v.setFill(Vertex.DEFAULT_COLOR_WHEN_SELECTED);
+                v.setFill(Constants.VERTEX_COLOR_WHEN_SELECTED);
                 startVertex = v;
                 mainController.getGraphPaneController().getInfoAlgo().setText("Select an ending vertex");
                 mainController.getGraph().getVertices().forEach(u -> {
@@ -50,7 +51,7 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
                     }
                     u.setOnMousePressed(mouseEvent2 -> {
                         mainController.setAllVertexEventsToNull();
-                        u.setFill(Vertex.DEFAULT_COLOR_WHEN_SELECTED);
+                        u.setFill(Constants.VERTEX_COLOR_WHEN_SELECTED);
                         endVertex = u;
                         apply();
                         drawAnimation();
@@ -82,12 +83,12 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
                 Vertex u = entry.getValue();
                 Vertex v = entry.getKey();
                 if (u != startVertex && u != endVertex) {
-                    u.setFill(DEFAULT_COLOR_WHEN_VISITED);
+                    u.setFill(Constants.VERTEX_COLOR_WHEN_VISITED);
                 }
                 if (v != startVertex && v != endVertex) {
-                    v.setFill(DEFAULT_COLOR_WHEN_VISITED);
+                    v.setFill(Constants.VERTEX_COLOR_WHEN_VISITED);
                 }
-                u.getEdgeFromAdjacentVertex(v).setStroke(DEFAULT_COLOR_WHEN_VISITED);
+                u.getEdgeFromAdjacentVertex(v).setStroke(Constants.VERTEX_COLOR_WHEN_VISITED);
 
                 // show distance to vertex v
                 showDistance(v, distances.get(v));
@@ -106,13 +107,13 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
             Vertex v = iter.next();
             Vertex u = predecessors.get(v);
             if (v != startVertex && v != endVertex) {
-                v.setFill(Vertex.DEFAULT_COLOR);
+                v.setFill(Constants.VERTEX_DEFAULT_COLOR);
             }
             if (u != null) {
                 if (u != startVertex && u != endVertex) {
-                    u.setFill(Vertex.DEFAULT_COLOR);
+                    u.setFill(Constants.VERTEX_DEFAULT_COLOR);
                 }
-                u.getEdgeFromAdjacentVertex(v).setStroke(Vertex.DEFAULT_COLOR);
+                u.getEdgeFromAdjacentVertex(v).setStroke(Constants.VERTEX_DEFAULT_COLOR);
             }
         }));
 

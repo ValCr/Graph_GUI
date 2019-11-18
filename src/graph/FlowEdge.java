@@ -4,7 +4,6 @@ import factory.EdgePropertiesFactory;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class FlowEdge extends Arc {
-    public static final Integer DEFAULT_CAPACITY = 1;
     private final SimpleIntegerProperty capacity;
 
     public FlowEdge(Vertex start, Vertex end) {

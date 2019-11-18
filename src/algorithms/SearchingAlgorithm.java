@@ -1,5 +1,6 @@
 package algorithms;
 
+import graph.Constants;
 import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
@@ -36,7 +37,7 @@ public abstract class SearchingAlgorithm extends Algorithms {
                     v.setOnMouseExited(v::handleMouseExited);
                     v.setOnMousePressed(mouseEvent -> {
                         mainController.setAllVertexEventsToNull();
-                        v.setFill(Vertex.DEFAULT_COLOR_WHEN_SELECTED);
+                        v.setFill(Constants.VERTEX_COLOR_WHEN_SELECTED);
                         setStartVertex(v);
                         apply();
                         drawAnimation();
@@ -60,7 +61,7 @@ public abstract class SearchingAlgorithm extends Algorithms {
                         Duration.seconds(animationSpeed),
                         event -> {
                             if (orderOfDiscovery.get(i.get()) != startVertex) {
-                                orderOfDiscovery.get(i.get()).setFill(DEFAULT_COLOR_WHEN_VISITED);
+                                orderOfDiscovery.get(i.get()).setFill(Constants.VERTEX_COLOR_WHEN_VISITED);
                             }
                             Vertex u;
                             Vertex v = orderOfDiscovery.get(i.get());
@@ -69,7 +70,7 @@ public abstract class SearchingAlgorithm extends Algorithms {
                                 if (u.isAdjacentTo(v)) {
                                     Edge e = u.getEdgeFromAdjacentVertex(v);
                                     if (!mainController.getGraph().isOriented() || e.getEnd() == v) {
-                                        e.setStroke(DEFAULT_COLOR_WHEN_VISITED);
+                                        e.setStroke(Constants.VERTEX_COLOR_WHEN_VISITED);
                                         break;
                                     }
                                 }
