@@ -40,10 +40,9 @@ public class GraphPaneController {
 
     @FXML
     public void addVertex(MouseEvent event) {
-        if (!event.isPrimaryButtonDown()) {
-            return;
+        if (event.isPrimaryButtonDown()) {
+            addVertex(String.valueOf(vertexId), event.getX(), event.getY());
         }
-        addVertex(String.valueOf(vertexId), event.getX(), event.getY());
     }
 
     public void addVertex(String id, Double x, Double y) {

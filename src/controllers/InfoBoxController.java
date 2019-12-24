@@ -2,7 +2,6 @@ package controllers;
 
 import algorithms.*;
 import factory.EdgeFactory;
-import graph.Arc;
 import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
@@ -186,15 +185,15 @@ public class InfoBoxController {
     private void complementGraph() {
         List<Vertex> vertices = mainController.getGraph().getVertices();
         List<Edge> oldEdges = new ArrayList<>(mainController.getGraph().getEdges());
+        EdgeFactory factory = new EdgeFactory(mainController.getGraph());
         vertices.forEach(v -> vertices.forEach(u -> {
             if (v != u && !v.pointsTo(u)) {
-                Edge e = mainController.getGraph().isOriented() ? new Arc(v, u) : new Edge(v, u);
-                mainController.getGraphPaneController().addEdge(e);
+                mainController.getGraphPaneController()
+                              .addEdge(factory.makeEdge(v, u));
             }
         }));
-
-        vertices.forEach(v -> oldEdges.stream().filter(e -> e.getStart() == v)
-                .forEach(e -> mainController.getGraphPaneController().removeEdge(e)));
+        oldEdges.forEach(e -> mainController.getGraphPaneController()
+                                            .removeEdge(e));
     }
 
     public CheckBox getCostAreVisible() {
