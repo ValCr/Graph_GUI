@@ -18,12 +18,10 @@ public class ChangeCostController extends BasePopup {
     @Override
     protected void submit(Event event) {
         if (!capacity.isDisable()) {
-            if (capacity.getText()
-                    .matches("\\d+") && text.getText()
-                    .matches("\\d+(\\.\\d+)?") &&
-                    Double.valueOf(text.getText()) <= Integer.valueOf(capacity.getText())) {
-                ((FlowEdge) edgeToChangeCost).setCapacity(Integer.valueOf(capacity.getText()));
-                edgeToChangeCost.setCost(Double.valueOf(text.getText()));
+            if (capacity.getText().matches("\\d+") && text.getText().matches("\\d+(\\.\\d+)?") &&
+                    Double.parseDouble(text.getText()) <= Integer.parseInt(capacity.getText())) {
+                ((FlowEdge) edgeToChangeCost).setCapacity(Integer.parseInt(capacity.getText()));
+                edgeToChangeCost.setCost(Double.parseDouble(text.getText()));
                 closePopup(event);
             } else {
                 warnings.setText("Capacity must be a positive integer.\n" +
@@ -31,7 +29,7 @@ public class ChangeCostController extends BasePopup {
             }
         } else if (text.getText()
                 .matches(("-?\\d+(\\.\\d+)?"))) {
-            edgeToChangeCost.setCost(Double.valueOf(text.getText()));
+            edgeToChangeCost.setCost(Double.parseDouble(text.getText()));
             closePopup(event);
         } else {
             warnings.setText("Cost must be a number.");

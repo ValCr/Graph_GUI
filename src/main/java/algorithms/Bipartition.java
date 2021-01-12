@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Bipartition extends ColorationAlgorithm {
-    private Map<Vertex, Boolean> visited;
+    private final Map<Vertex, Boolean> visited;
 
     public Bipartition(Graph graph) {
         super(graph);

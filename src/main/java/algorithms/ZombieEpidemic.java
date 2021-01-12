@@ -11,16 +11,15 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ZombieEpidemic extends Algorithms {
-    private static Color HEALTHY = Constants.VERTEX_DEFAULT_COLOR;
-    private static Color CONTAMINATED = Constants.VERTEX_COLOR_WHEN_VISITED;
-    private static Color BLOCKED = Constants.VERTEX_COLOR_WHEN_SELECTED;
-    private Map<Vertex, Color> colors;
+    private static final Color HEALTHY = Constants.VERTEX_DEFAULT_COLOR;
+    private static final Color CONTAMINATED = Constants.VERTEX_COLOR_WHEN_VISITED;
+    private static final Color BLOCKED = Constants.VERTEX_COLOR_WHEN_SELECTED;
+    private final Map<Vertex, Color> colors;
 
     public ZombieEpidemic(Graph graph) {
         super(graph);
         colors = new HashMap<>(graph.getOrder());
-        graph.getVertices()
-             .forEach(v -> colors.put(v, HEALTHY));
+        graph.getVertices().forEach(v -> colors.put(v, HEALTHY));
     }
 
     @Override

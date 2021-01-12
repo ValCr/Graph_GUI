@@ -20,7 +20,7 @@ public class Graph {
     private final SimpleIntegerProperty maxIndegree;
     private final SimpleIntegerProperty minIndegree;
     private final SimpleBooleanProperty oriented;
-    private SimpleBooleanProperty flowNetwork;
+    private final SimpleBooleanProperty flowNetwork;
     private boolean containsCircuit;
 
     public Graph() {

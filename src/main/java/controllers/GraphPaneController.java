@@ -71,7 +71,7 @@ public class GraphPaneController {
     public void addEdge(String startID, String endID, String cost) {
         EdgeFactory factory = new EdgeFactory(graph);
         Edge newEdge = factory.makeEdge(graph.getVertexFromID(startID), graph.getVertexFromID(endID));
-        newEdge.setCost(Double.valueOf(cost));
+        newEdge.setCost(Double.parseDouble(cost));
         addEdge(newEdge);
     }
 
@@ -119,9 +119,11 @@ public class GraphPaneController {
         graphPane.getChildren().removeAll(vertex.getTextID(), vertex.getEdge().getShapes(), vertex);
 
         // update vertices ids
-        graph.getVertices().stream().filter(v -> vertex.getId().matches("\\d+") && v.getId().matches("\\d+") &&
-                Integer.valueOf(v.getId()) > Integer.valueOf(vertex.getId()))
-                .forEach(v -> v.setId(String.valueOf(Integer.valueOf(v.getId()) - 1)));
+        graph.getVertices()
+                .stream()
+                .filter(v -> vertex.getId().matches("\\d+") && v.getId().matches("\\d+") &&
+                        Integer.parseInt(v.getId()) > Integer.parseInt(vertex.getId()))
+                .forEach(v -> v.setId(String.valueOf(Integer.parseInt(v.getId()) - 1)));
         vertexId--;
     }
 

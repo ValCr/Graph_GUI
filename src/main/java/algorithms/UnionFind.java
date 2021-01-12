@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public class UnionFind {
-    private Map<Vertex, Subset> subsets;
+    private final Map<Vertex, Subset> subsets;
 
     public UnionFind(List<Vertex> vertices) {
         subsets = new HashMap<>(vertices.size());

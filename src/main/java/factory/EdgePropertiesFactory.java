@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 public class EdgePropertiesFactory {
-    private double MULTIPLIER_WHEN_ORIENTED = 0.7;
+    private final double MULTIPLIER_WHEN_ORIENTED = 0.7;
 
     public SimpleDoubleProperty makeCost(
             CheckBox costIsVisible, boolean graphIsOriented, Edge edge, Group shapes) {
