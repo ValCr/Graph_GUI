@@ -12,6 +12,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * Defines the variables used by coloration algorithms.
+ *
+ * @see Bipartition
+ */
 public abstract class ColorationAlgorithm extends Algorithms {
     protected Map<Vertex, Color> colors;
     protected boolean isBipartite;
@@ -19,8 +24,7 @@ public abstract class ColorationAlgorithm extends Algorithms {
     protected ColorationAlgorithm(Graph graph) {
         super(graph);
         colors = new HashMap<>(graph.getOrder());
-        graph.getVertices()
-                .forEach(v -> colors.put(v, Constants.VERTEX_DEFAULT_COLOR));
+        graph.getVertices().forEach(v -> colors.put(v, Constants.VERTEX_DEFAULT_COLOR));
         isBipartite = false;
     }
 
@@ -43,11 +47,9 @@ public abstract class ColorationAlgorithm extends Algorithms {
             waitForUserInputToEndAlgorithm();
             return;
         }
-        double animationSpeed = mainController.getGraphPaneController()
-                .getAnimationSpeed()
-                .getValue() / (colors.size() + 1);
-        Iterator<Vertex> it = graph.getVertices()
-                .iterator();
+        double animationSpeed =
+                mainController.getGraphPaneController().getAnimationSpeed().getValue() / (colors.size() + 1);
+        Iterator<Vertex> it = graph.getVertices().iterator();
         // color the graph with with the spanning tree found
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(animationSpeed), event -> {
             if (it.hasNext()) {

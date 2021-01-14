@@ -15,6 +15,13 @@ import javafx.util.Duration;
 
 import java.util.*;
 
+/**
+ * Defines the methods and variables used by searching algorithms.
+ *
+ * @see Bellman
+ * @see BellmanFord
+ * @see Dijsktra
+ */
 public abstract class ShortestPathAlgorithm extends Algorithms {
     protected Vertex startVertex;
     protected Vertex endVertex;
@@ -72,8 +79,8 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
             return;
         }
 
-        double animationSpeed = mainController.getGraphPaneController().getAnimationSpeed().getValue() / (predecessors
-                .size() + 1);
+        double animationSpeed =
+                mainController.getGraphPaneController().getAnimationSpeed().getValue() / (predecessors.size() + 1);
         Iterator<Map.Entry<Vertex, Vertex>> it = predecessors.entrySet().iterator();
 
         // color the graph with the chosen algorithm
@@ -125,13 +132,15 @@ public abstract class ShortestPathAlgorithm extends Algorithms {
             // show the shortest path on the info label
             Collections.reverse(shortestPath);
             if (shortestPath.size() == 1 && startVertex != endVertex) {
-                mainController.getGraphPaneController().getInfoAlgo()
+                mainController.getGraphPaneController()
+                        .getInfoAlgo()
                         .setText("No path found between " + startVertex.getId() + " and " + endVertex.getId());
             } else {
-                mainController.getGraphPaneController().getInfoAlgo().setText(
-                        "Shortest path between " + startVertex.getId() + " and " + endVertex
-                                .getId() + " : \n" + verticesToString(shortestPath) + ", length : " + distances
-                                .get(endVertex));
+                mainController.getGraphPaneController()
+                        .getInfoAlgo()
+                        .setText(
+                                "Shortest path between " + startVertex.getId() + " and " + endVertex.getId() + " : \n" +
+                                        verticesToString(shortestPath) + ", length : " + distances.get(endVertex));
             }
             waitForUserInputToEndAlgorithm();
         });

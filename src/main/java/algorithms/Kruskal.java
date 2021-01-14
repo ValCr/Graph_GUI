@@ -7,6 +7,13 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * Bellman-Ford's algorithm.
+ * <p>
+ * INPUT: A graph.
+ * <p>
+ * OUTPUT: A minimum spanning forest. If the graph is connected, it finds a minimum spanning tree.
+ */
 public class Kruskal extends MinSpanningTreeAlgorithm {
     public Kruskal(Graph graph) {
         super(graph);

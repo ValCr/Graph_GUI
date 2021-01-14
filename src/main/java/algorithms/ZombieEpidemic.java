@@ -10,6 +10,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Zombie Epidemic puzzle.
+ * <p>
+ * INPUT: A graph and a source vertex for the epidemic.
+ * <p>
+ * At each iteration, a blockade can be placed on one of the non-infected vertex to prevent the epidemic from expending
+ * to this vertex. Then all the infected vertices spread the epidemic to their neighbors.
+ * <p>
+ * GOAL: Place blockades to minimize the number of vertices infected at the end.
+ */
 public class ZombieEpidemic extends Algorithms {
     private static final Color HEALTHY = Constants.VERTEX_DEFAULT_COLOR;
     private static final Color CONTAMINATED = Constants.VERTEX_COLOR_WHEN_VISITED;
@@ -24,7 +34,7 @@ public class ZombieEpidemic extends Algorithms {
 
     @Override
     public void apply() {
-        //nothing to do, we run the algorithm at the same time that we draw it because we need user input at every turn
+        //nothing to do, the algorithm runs and is drawn at the same time because user input is needed at every turn
     }
 
     @Override
@@ -46,15 +56,13 @@ public class ZombieEpidemic extends Algorithms {
 
     private void waitUserToSelectVertex() {
         mainController.getGraphPaneController()
-                      .getInfoAlgo()
-                      .setText("Select a vertex to be protected from the epidemic");
-        mainController.getGraph()
-                      .getVertices()
-                      .forEach(v -> v.setOnMousePressed(mouseEvent -> {
-                          mainController.setAllVertexEventsToNull();
-                          mouseEvent.consume();
-                          playTurn(v);
-                      }));
+                .getInfoAlgo()
+                .setText("Select a vertex to be protected from the epidemic");
+        mainController.getGraph().getVertices().forEach(v -> v.setOnMousePressed(mouseEvent -> {
+            mainController.setAllVertexEventsToNull();
+            mouseEvent.consume();
+            playTurn(v);
+        }));
     }
 
     private void playTurn(Vertex selectedVertex) {
@@ -62,8 +70,7 @@ public class ZombieEpidemic extends Algorithms {
             colors.put(selectedVertex, BLOCKED);
             selectedVertex.setFill(BLOCKED);
         }
-        colors.keySet()
-              .removeAll(verticesWhichCantPropagateEpidemic());
+        colors.keySet().removeAll(verticesWhichCantPropagateEpidemic());
         verticesWhichCanPropagateEpidemic().forEach(v -> getHealthyNeighbors(v).forEach(ve -> {
             colors.put(ve, CONTAMINATED);
             ve.setFill(CONTAMINATED);
@@ -71,78 +78,58 @@ public class ZombieEpidemic extends Algorithms {
         if (zombiesEpidemicCanPropagate()) {
             waitUserToSelectVertex();
         } else {
-
             gameOver();
         }
     }
 
     private void gameOver() {
         long verticesContaminated = graph.getVertices()
-                                         .stream()
-                                         .filter(v -> v.fillProperty()
-                                                       .get() == CONTAMINATED)
-                                         .count();
+                .stream()
+                .filter(v -> v.fillProperty().get() == CONTAMINATED)
+                .count();
 
-        int numberOfVertices = graph.getVertices()
-                                    .size();
+        int numberOfVertices = graph.getVertices().size();
         mainController.getGraphPaneController()
-                      .getInfoAlgo()
-                      .setText(String.format("Game over\n\n%d / %d  (%.0f %%) cities were contaminated",
-                              verticesContaminated, numberOfVertices,
-                              (float) verticesContaminated / numberOfVertices * 100));
+                .getInfoAlgo()
+                .setText(String.format("Game over\n\n%d / %d  (%.0f %%) cities were contaminated", verticesContaminated,
+                        numberOfVertices, (float) verticesContaminated / numberOfVertices * 100));
         waitForUserInputToEndAlgorithm();
     }
 
     private List<Vertex> verticesWhichCantPropagateEpidemic() {
-        return getContaminatedVertices().stream()
-                                        .filter(v -> !hasHealthyNeighbor(v))
-                                        .collect(Collectors.toList());
+        return getContaminatedVertices().stream().filter(v -> !hasHealthyNeighbor(v)).collect(Collectors.toList());
     }
 
     private List<Vertex> verticesWhichCanPropagateEpidemic() {
-        return getContaminatedVertices().stream()
-                                        .filter(this::hasHealthyNeighbor)
-                                        .collect(Collectors.toList());
+        return getContaminatedVertices().stream().filter(this::hasHealthyNeighbor).collect(Collectors.toList());
     }
 
     private boolean zombiesEpidemicCanPropagate() {
-        return getContaminatedVertices().stream()
-                                        .anyMatch(this::hasHealthyNeighbor);
+        return getContaminatedVertices().stream().anyMatch(this::hasHealthyNeighbor);
     }
 
     private List<Vertex> getContaminatedVertices() {
-        return colors.keySet()
-                     .stream()
-                     .filter(v -> colors.get(v) == CONTAMINATED)
-                     .collect(Collectors.toList());
+        return colors.keySet().stream().filter(v -> colors.get(v) == CONTAMINATED).collect(Collectors.toList());
     }
 
     private boolean hasHealthyNeighbor(Vertex v) {
-        return v.getEdges()
-                .stream()
-                .anyMatch(e -> colors.get(e.getOtherEnd(v)) == HEALTHY);
+        return v.getEdges().stream().anyMatch(e -> colors.get(e.getOtherEnd(v)) == HEALTHY);
     }
 
     @Override
     public void setUpEvents() {
         super.setUpEvents();
-        mainController.getGraphPaneController()
-                      .getAnimationSpeed()
-                      .setVisible(false);
-        mainController.getGraphPaneController()
-                      .getInfoAlgo()
-                      .setText("Select a vertex to start the epidemic");
-        mainController.getGraph()
-                      .getVertices()
-                      .forEach(v -> {
-                          v.setOnMouseEntered(v::handleMouseEntered);
-                          v.setOnMouseExited(v::handleMouseExited);
-                          v.setOnMousePressed(mouseEvent -> {
-                              mainController.setAllVertexEventsToNull();
-                              v.setFill(CONTAMINATED);
-                              colors.put(v, CONTAMINATED);
-                              drawAnimation();
-                          });
-                      });
+        mainController.getGraphPaneController().getAnimationSpeed().setVisible(false);
+        mainController.getGraphPaneController().getInfoAlgo().setText("Select a vertex to start the epidemic");
+        mainController.getGraph().getVertices().forEach(v -> {
+            v.setOnMouseEntered(v::handleMouseEntered);
+            v.setOnMouseExited(v::handleMouseExited);
+            v.setOnMousePressed(mouseEvent -> {
+                mainController.setAllVertexEventsToNull();
+                v.setFill(CONTAMINATED);
+                colors.put(v, CONTAMINATED);
+                drawAnimation();
+            });
+        });
     }
 }

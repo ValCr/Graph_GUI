@@ -9,6 +9,13 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/**
+ * Dijsktra's algorithm.
+ * <p>
+ * INPUT: A graph with no negative cost and a source vertex <b>s</b>.
+ * <p>
+ * OUTPUT: The shortest paths from <b>s</b> to all the other vertices.
+ */
 public class Dijsktra extends ShortestPathAlgorithm {
 
     public Dijsktra(Graph graph) {
@@ -49,7 +56,8 @@ public class Dijsktra extends ShortestPathAlgorithm {
 
     @Override
     public void updateInfoAlgo() {
-        mainController.getGraphPaneController().getInfoAlgo()
+        mainController.getGraphPaneController()
+                .getInfoAlgo()
                 .setText("Graph contains an " + (graph.isOriented() ? "arc" : "edge") + " with negative cost.");
     }
 }

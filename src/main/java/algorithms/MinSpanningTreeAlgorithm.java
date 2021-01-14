@@ -11,6 +11,12 @@ import javafx.util.Duration;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Defines the methods and variables used by the minimum spanning tree algorithms.
+ *
+ * @see Kruskal
+ * @see Prim
+ */
 public abstract class MinSpanningTreeAlgorithm extends Algorithms {
     protected List<Edge> tree;
     protected List<Vertex> vertices;
@@ -69,12 +75,11 @@ public abstract class MinSpanningTreeAlgorithm extends Algorithms {
             waitForUserInputToEndAlgorithm();
             mainController.getGraphPaneController()
                     .getInfoAlgo()
-                        .setText("Minimum spanning tree weight : " + getTreeWeight());
+                    .setText("Minimum spanning tree weight : " + getTreeWeight());
         });
     }
 
     private double getTreeWeight() {
         return tree.stream().mapToDouble(Edge::getCost).sum();
     }
-
 }

@@ -9,6 +9,13 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+/**
+ * Bellman's algorithm.
+ * <p>
+ * INPUT: An oriented graph with no circuit, a source vertex <b>s</b>.
+ * <p>
+ * OUTPUT: The shortest paths from <b>s</b> to all the other vertices.
+ */
 public class Bellman extends ShortestPathAlgorithm {
 
     public Bellman(Graph graph) {

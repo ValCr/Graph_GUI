@@ -17,6 +17,12 @@ import javafx.util.Duration;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * Defines the methods and variables used by searching algorithms.
+ *
+ * @see BFS
+ * @see DFS
+ */
 public abstract class SearchingAlgorithm extends Algorithms {
     protected final SimpleListProperty<Vertex> orderOfDiscovery;
     protected Vertex startVertex;
@@ -30,19 +36,17 @@ public abstract class SearchingAlgorithm extends Algorithms {
     public void setUpEvents() {
         super.setUpEvents();
         mainController.getGraphPaneController().getInfoAlgo().setText("Select a starting vertex");
-        mainController.getGraph()
-                .getVertices()
-                .forEach(v -> {
-                    v.setOnMouseEntered(v::handleMouseEntered);
-                    v.setOnMouseExited(v::handleMouseExited);
-                    v.setOnMousePressed(mouseEvent -> {
-                        mainController.setAllVertexEventsToNull();
-                        v.setFill(Constants.VERTEX_COLOR_WHEN_SELECTED);
-                        setStartVertex(v);
-                        apply();
-                        drawAnimation();
-                    });
-                });
+        mainController.getGraph().getVertices().forEach(v -> {
+            v.setOnMouseEntered(v::handleMouseEntered);
+            v.setOnMouseExited(v::handleMouseExited);
+            v.setOnMousePressed(mouseEvent -> {
+                mainController.setAllVertexEventsToNull();
+                v.setFill(Constants.VERTEX_COLOR_WHEN_SELECTED);
+                setStartVertex(v);
+                apply();
+                drawAnimation();
+            });
+        });
     }
 
     @Override
@@ -52,33 +56,29 @@ public abstract class SearchingAlgorithm extends Algorithms {
     public void drawAnimation() {
         final IntegerProperty i = new SimpleIntegerProperty(0);
         showInfo(i);
-        double animationSpeed = mainController.getGraphPaneController().getAnimationSpeed()
-                .getValue() / orderOfDiscovery.size();
+        double animationSpeed =
+                mainController.getGraphPaneController().getAnimationSpeed().getValue() / orderOfDiscovery.size();
 
         // color the graph in the order of discovery
-        Timeline timeline = new Timeline(
-                new KeyFrame(
-                        Duration.seconds(animationSpeed),
-                        event -> {
-                            if (orderOfDiscovery.get(i.get()) != startVertex) {
-                                orderOfDiscovery.get(i.get()).setFill(Constants.VERTEX_COLOR_WHEN_VISITED);
-                            }
-                            Vertex u;
-                            Vertex v = orderOfDiscovery.get(i.get());
-                            for (int j = this instanceof BFS ? 0 : i.get() - 1; j < i.get() && j >= 0; j = this instanceof BFS ? ++j : --j) {
-                                u = orderOfDiscovery.get(j);
-                                if (u.isAdjacentTo(v)) {
-                                    Edge e = u.getEdgeFromAdjacentVertex(v);
-                                    if (!mainController.getGraph().isOriented() || e.getEnd() == v) {
-                                        e.setStroke(Constants.VERTEX_COLOR_WHEN_VISITED);
-                                        break;
-                                    }
-                                }
-                            }
-                            i.set(i.get() + 1);
-                        }
-                )
-        );
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(animationSpeed), event -> {
+            if (orderOfDiscovery.get(i.get()) != startVertex) {
+                orderOfDiscovery.get(i.get()).setFill(Constants.VERTEX_COLOR_WHEN_VISITED);
+            }
+            Vertex u;
+            Vertex v = orderOfDiscovery.get(i.get());
+            for (int j = this instanceof BFS ? 0 : i.get() - 1;
+                 j < i.get() && j >= 0; j = this instanceof BFS ? ++j : --j) {
+                u = orderOfDiscovery.get(j);
+                if (u.isAdjacentTo(v)) {
+                    Edge e = u.getEdgeFromAdjacentVertex(v);
+                    if (!mainController.getGraph().isOriented() || e.getEnd() == v) {
+                        e.setStroke(Constants.VERTEX_COLOR_WHEN_VISITED);
+                        break;
+                    }
+                }
+            }
+            i.set(i.get() + 1);
+        }));
         timeline.setCycleCount(orderOfDiscovery.size());
         timeline.play();
 
@@ -89,16 +89,11 @@ public abstract class SearchingAlgorithm extends Algorithms {
         mainController.getGraphPaneController()
                 .getInfoAlgo()
                 .textProperty()
-                .bind(Bindings.createStringBinding(
-                        () -> this.getClass()
-                                .getSimpleName() + " : " + orderOfDiscovery.subList(0,
-                                Math.min(orderOfDiscovery.size(),
-                                        i.get() + 1))
+                .bind(Bindings.createStringBinding(() -> this.getClass().getSimpleName() + " : " +
+                        orderOfDiscovery.subList(0, Math.min(orderOfDiscovery.size(), i.get() + 1))
                                 .stream()
                                 .map(Objects::toString)
-                                .collect(Collectors.joining("->")),
-                        i
-                ));
+                                .collect(Collectors.joining("->")), i));
     }
 
     ///////////////////////////////////////////// Setters /////////////////////////////////////////////

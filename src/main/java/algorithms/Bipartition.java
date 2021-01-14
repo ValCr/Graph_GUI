@@ -8,22 +8,26 @@ import graph.Vertex;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Bipartition check algorithm.
+ * <p>
+ * INPUT: A graph.
+ * <p>
+ * OUTPUT: A boolean that tells if the graph si bipartite or not.
+ */
 public class Bipartition extends ColorationAlgorithm {
     private final Map<Vertex, Boolean> visited;
 
     public Bipartition(Graph graph) {
         super(graph);
         visited = new HashMap<>(graph.getOrder());
-        graph.getVertices()
-                .forEach(v -> visited.put(v, false));
+        graph.getVertices().forEach(v -> visited.put(v, false));
     }
 
     @Override
     public void apply() {
         isBipartite = true;
-        while (visited.values()
-                .stream()
-                .anyMatch(v -> !v)) {
+        while (visited.values().stream().anyMatch(v -> !v)) {
             Vertex v = visited.entrySet()
                     .stream()
                     .filter(entry -> !entry.getValue())
@@ -46,8 +50,7 @@ public class Bipartition extends ColorationAlgorithm {
                 if (!isBipartite(v)) {
                     return false;
                 }
-            } else if (colors.get(v)
-                    .equals(colors.get(u))) {
+            } else if (colors.get(v).equals(colors.get(u))) {
                 return false;
             }
         }

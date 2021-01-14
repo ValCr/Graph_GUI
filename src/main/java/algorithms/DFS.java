@@ -4,6 +4,15 @@ import graph.Edge;
 import graph.Graph;
 import graph.Vertex;
 
+/**
+ * Depth-first-search algorithm.
+ * <p>
+ * INPUT: A graph and a source vertex <b>s</b>.
+ * <p>
+ * OUTPUT: The shortest paths from <b>s</b> to all the other vertices if the graph is not weighted.
+ * <p>
+ * DFS can be used to check if the graph is connected.
+ */
 public class DFS extends SearchingAlgorithm {
     private int[] state;
     private int time;

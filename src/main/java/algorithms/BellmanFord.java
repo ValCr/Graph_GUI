@@ -7,6 +7,14 @@ import graph.Vertex;
 
 import java.util.*;
 
+/**
+ * Bellman-Ford's algorithm.
+ * <p>
+ * INPUT: A graph and a source vertex <b>s</b>.
+ * <p>
+ * OUTPUT: The shortest paths from <b>s</b> to all the other vertices. If there is a negative weight cycle, it is
+ * reported and the shortest paths are not calculated.
+ */
 public class BellmanFord extends ShortestPathAlgorithm {
     public BellmanFord(Graph graph) {
         super(graph);
@@ -20,13 +28,12 @@ public class BellmanFord extends ShortestPathAlgorithm {
         predecessors = new LinkedHashMap<>();
         distances = new HashMap<>(graph.getVertices().size());
 
-        // initialize distances from startvertex too all other vertices as infinite
+        // initialize distances from startVertex too all other vertices as infinite
         graph.getVertices().forEach(v -> distances.put(v, Double.POSITIVE_INFINITY));
         distances.put(startVertex, 0.0);
 
-
         // update shortest for all vertices N - 1 where N is the number of vertices :
-        // a shortest path from startvertex to any other vertex can only have at most N - 1 edges
+        // a shortest path from startVertex to any other vertex can only have at most N - 1 edges
         for (int i = 1; i < graph.getVertices().size(); i++) {
             graph.getEdges().forEach(e -> updateDistances(e.getStart(), e));
             if (!graph.isOriented()) {
@@ -38,7 +45,8 @@ public class BellmanFord extends ShortestPathAlgorithm {
     // check for negative-cost circuits
     @Override
     public boolean conditionsAreValid() {
-        return graph.getEdges().stream()
+        return graph.getEdges()
+                .stream()
                 .noneMatch(e -> distances.get(e.getStart()) + e.getCost() < distances.get(e.getEnd()));
     }
 
@@ -50,14 +58,17 @@ public class BellmanFord extends ShortestPathAlgorithm {
             v.setFill(Constants.VERTEX_COLOR_WHEN_VISITED);
             v.getEdgeFromAdjacentVertex(predecessors.get(v)).setStroke(Constants.VERTEX_COLOR_WHEN_VISITED);
         });
-        mainController.getGraphPaneController().getInfoAlgo().setText(
-                "Graph contains a circuit with negative cost :\n" + verticesToString(negativeCircuit));
+        mainController.getGraphPaneController()
+                .getInfoAlgo()
+                .setText("Graph contains a circuit with negative cost :\n" + verticesToString(negativeCircuit));
     }
 
     private List<Vertex> getNegativeCircuit() {
-        Edge e = graph.getEdges().stream()
+        Edge e = graph.getEdges()
+                .stream()
                 .filter(edge -> distances.get(edge.getStart()) + edge.getCost() < distances.get(edge.getEnd()))
-                .findFirst().orElseThrow(() -> new NoSuchElementException("No circuit with negative cost found"));
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("No circuit with negative cost found"));
         List<Vertex> visited = new ArrayList<>(), negativeCircuit = new ArrayList<>();
         Vertex u = e.getStart();
 

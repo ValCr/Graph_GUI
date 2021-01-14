@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Union-find custom data structure.
+ */
 public class UnionFind {
     private final Map<Vertex, Subset> subsets;
 
