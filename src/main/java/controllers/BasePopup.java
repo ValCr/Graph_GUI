@@ -10,6 +10,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
+/**
+ * Define the base code for popup window that appear the user changes values in the graph.
+ *
+ * @see ChangeCostController
+ * @see RenameVertexController
+ */
 public abstract class BasePopup {
     @FXML
     protected Label warnings;
@@ -33,8 +39,7 @@ public abstract class BasePopup {
 
     protected void closePopup(Event event) {
         Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene()
-                .getWindow();
+        Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
     }
 }

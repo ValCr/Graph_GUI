@@ -24,6 +24,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Controller for the graph.
+ *
+ * @see <a href="https://github.com/ValCr/Graph_GUI/blob/master/src/main/resources/fxml/GraphPane.fxml">GraphPane.fxml</a>
+ */
 public class GraphPaneController {
     private final static float VERTEX_RADIUS = 15.0f;
     @FXML
@@ -109,8 +114,11 @@ public class GraphPaneController {
 
     public void removeVertex(Vertex vertex) {
         // remove adjacent edges
-        graph.getVertices().forEach(
-                v -> v.getEdges().stream().filter(e -> e.getEnd() == vertex).collect(Collectors.toList())
+        graph.getVertices()
+                .forEach(v -> v.getEdges()
+                        .stream()
+                        .filter(e -> e.getEnd() == vertex)
+                        .collect(Collectors.toList())
                         .forEach(this::removeEdge));
         new ArrayList<>(vertex.getEdges()).forEach(this::removeEdge);
 

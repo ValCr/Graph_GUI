@@ -9,6 +9,12 @@ import main.Main;
 
 import java.io.File;
 
+/**
+ * Controller for the menu bar of the application that contains the loading/saving of graphs, the help menu and the
+ * close button.
+ *
+ * @see <a href="https://github.com/ValCr/Graph_GUI/blob/master/src/main/resources/fxml/MenuBar.fxml">MenuBar.fxml</a>
+ */
 public class MenuBarController {
 
     @FXML

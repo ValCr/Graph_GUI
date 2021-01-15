@@ -15,6 +15,11 @@ import javafx.scene.text.Text;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller for the info box where all the algorithms are called.
+ *
+ * @see <a href="https://github.com/ValCr/Graph_GUI/blob/master/src/main/resources/fxml/InfoBox.fxml">InfoBox.fxml</a>
+ */
 public class InfoBoxController {
     @FXML
     private Button zombieButton;
@@ -124,56 +129,36 @@ public class InfoBoxController {
 
     public void bindInfoToGraph() {
         Graph graph = mainController.getGraph();
-        graphOrder.textProperty()
-                .bind(Bindings.concat("Order : ",
-                        graph.orderProperty()
-                                .asString()));
-        graphSize.textProperty()
-                .bind(Bindings.concat("Size : ",
-                        graph.sizeProperty()
-                                .asString()));
+        graphOrder.textProperty().bind(Bindings.concat("Order : ", graph.orderProperty().asString()));
+        graphSize.textProperty().bind(Bindings.concat("Size : ", graph.sizeProperty().asString()));
         maxDegree.textProperty()
                 .bind(Bindings.createStringBinding(
-                        () -> "Max " + (orientedGraph.isSelected() ? "outdegre : " : "degree : ") + graph.getMaxDegree(),
-                        orientedGraph.selectedProperty(),
-                        graph.maxDegreeProperty()
-                ));
+                        () -> "Max " + (orientedGraph.isSelected() ? "outdegre : " : "degree : ") +
+                                graph.getMaxDegree(), orientedGraph.selectedProperty(), graph.maxDegreeProperty()));
         minDegree.textProperty()
                 .bind(Bindings.createStringBinding(
-                        () -> "Min " + (orientedGraph.isSelected() ? "outdegre : " : "degree : ") + graph.getMinDegree(),
-                        orientedGraph.selectedProperty(),
-                        graph.minDegreeProperty()
-                ));
+                        () -> "Min " + (orientedGraph.isSelected() ? "outdegre : " : "degree : ") +
+                                graph.getMinDegree(), orientedGraph.selectedProperty(), graph.minDegreeProperty()));
         maxIndegree.textProperty()
                 .bind(Bindings.createStringBinding(
                         () -> (orientedGraph.isSelected() ? "Max indegree : " + graph.getMaxIndegree() : ""),
-                        orientedGraph.selectedProperty(),
-                        graph.maxIndegreeProperty()
-                ));
+                        orientedGraph.selectedProperty(), graph.maxIndegreeProperty()));
         minIndegree.textProperty()
                 .bind(Bindings.createStringBinding(
                         () -> (orientedGraph.isSelected() ? "Min indegree : " + graph.getMinIndegree() : ""),
-                        orientedGraph.selectedProperty(),
-                        graph.minIndegreeProperty()
-                ));
+                        orientedGraph.selectedProperty(), graph.minIndegreeProperty()));
         bellmanButton.disableProperty().bind(orientedGraph.selectedProperty().not());
         primButton.disableProperty().bind(orientedGraph.selectedProperty());
         graph.orientedProperty().bind(orientedGraph.selectedProperty());
-        flowNetwork.disableProperty()
-                .bind(orientedGraph.selectedProperty()
-                        .not());
-        flowNetwork.selectedProperty()
-                .addListener((observable, oldValue, newValue) -> {
-                    if (newValue) {
-                        costAreVisible.setSelected(true);
-                    }
-                });
-        zombieButton.disableProperty()
-                    .bind(flowNetwork.selectedProperty());
-        costAreVisible.disableProperty()
-                .bind(flowNetwork.selectedProperty());
-        graph.flowNetworkProperty()
-                .bind(flowNetwork.selectedProperty());
+        flowNetwork.disableProperty().bind(orientedGraph.selectedProperty().not());
+        flowNetwork.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                costAreVisible.setSelected(true);
+            }
+        });
+        zombieButton.disableProperty().bind(flowNetwork.selectedProperty());
+        costAreVisible.disableProperty().bind(flowNetwork.selectedProperty());
+        graph.flowNetworkProperty().bind(flowNetwork.selectedProperty());
 
     }
 
@@ -188,12 +173,10 @@ public class InfoBoxController {
         EdgeFactory factory = new EdgeFactory(mainController.getGraph());
         vertices.forEach(v -> vertices.forEach(u -> {
             if (v != u && !v.pointsTo(u)) {
-                mainController.getGraphPaneController()
-                              .addEdge(factory.makeEdge(v, u));
+                mainController.getGraphPaneController().addEdge(factory.makeEdge(v, u));
             }
         }));
-        oldEdges.forEach(e -> mainController.getGraphPaneController()
-                                            .removeEdge(e));
+        oldEdges.forEach(e -> mainController.getGraphPaneController().removeEdge(e));
     }
 
     public CheckBox getCostAreVisible() {

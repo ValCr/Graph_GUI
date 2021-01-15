@@ -4,6 +4,11 @@ import graph.Vertex;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 
+/**
+ * Controller for the popup window when the user changes the name of a vertex.
+ *
+ * @see <a href="https://github.com/ValCr/Graph_GUI/blob/master/src/main/resources/fxml/RenameVertex.fxml">RenameVertex.fxml</a>
+ */
 public class RenameVertexController extends BasePopup {
 
     private static MainController mainController;

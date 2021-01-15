@@ -10,6 +10,11 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller that handles the logic between the other controllers.
+ *
+ * @see <a href="https://github.com/ValCr/Graph_GUI/blob/master/src/main/resources/fxml/MainController.fxml">MainController.fxml</a>
+ */
 public class MainController {
     @FXML
     private SplitPane mainSplitPane;
@@ -36,10 +41,8 @@ public class MainController {
     }
 
     public void clearGraph() {
-        graph.getVertices()
-                .clear();
-        graph.getEdges()
-                .clear();
+        graph.getVertices().clear();
+        graph.getEdges().clear();
         graphPaneController.clearGraph();
         graph.setContainsCircuit(false);
     }
