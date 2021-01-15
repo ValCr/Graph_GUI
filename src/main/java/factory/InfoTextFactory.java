@@ -10,12 +10,18 @@ public class InfoTextFactory {
     private static final String INFO_ARC = "Right Click to remove this arc";
     private static final String INFO_EDGE = "Right Click to remove this edge";
     private static final String INFO_CHANGE_COST = "SHIFT + Left Click to change cost";
-    private static final String INFO_VERTEX_EDGE =
-            "Left Click and Drag to create an edge\n" + "Right Click to delete\n" + "CTRL + Left Click to move\n" +
-                    "SHIFT + Left Click to rename";
-    private static final String INFO_VERTEX_ARC =
-            "Left Click and Drag to create an arc\n" + "Right Click to delete\n" + "CTRL + Left Click to move\n" +
-                    "SHIFT + Left Click to rename";
+    private static final String INFO_VERTEX_EDGE = """
+            Left Click and Drag to create an edge
+            Right Click to delete
+            CTRL + Left Click to move
+            SHIFT + Left Click to rename
+            """;
+    private static final String INFO_VERTEX_ARC = """
+            Left Click and Drag to create an arc
+            Right Click to delete
+            CTRL + Left Click to move 
+            SHIFT + Left Click to rename
+            """;
     private final SimpleBooleanProperty graphIsOriented;
 
     public InfoTextFactory(Graph graph) {
